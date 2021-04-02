@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+	<ItemGroup>
+	</ItemGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<DocumentationFile>DDD.Applaction.xml</DocumentationFile>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Update="DDD.Applaction.xml">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="AutoMapper" Version="10.1.1" />
+		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\DDD.Domain\DDD.Domain.csproj" />
+	  <ProjectReference Include="..\DDD.Infrastructure\DDD.Infrastructure.csproj" />
+	</ItemGroup>
+</Project>

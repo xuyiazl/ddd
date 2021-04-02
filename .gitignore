@@ -3,3 +3,12 @@
 ################################################################################
 
 /DDD.Applaction/bin/Debug/net5.0
+/DDD.Applaction/obj
+/DDD.Domain/bin/Debug/net5.0
+/DDD.Domain/obj
+/DDD.Infrastructure/bin/Debug/net5.0
+/DDD.Infrastructure/obj
+/DDD.Persistence/bin/Debug/net5.0
+/DDD.Persistence/obj
+/DDD.WebApi/bin/Debug/net5.0
+/DDD.WebApi/obj

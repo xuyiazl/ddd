@@ -1,0 +1,17 @@
+﻿using FluentValidation;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DDD.Domain.AdminUsers.Commands.Delete
+{
+    public class DeleteAdminUserCommandValidator : AbstractValidator<DeleteAdminUserCommand>
+    {
+        public DeleteAdminUserCommandValidator()
+        {
+            RuleFor(v => v.Id).NotEmpty().GreaterThan(0);
+        }
+    }
+}

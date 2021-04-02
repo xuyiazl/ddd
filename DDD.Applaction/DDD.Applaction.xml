@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DDD.Applaction</name>
+    </assembly>
+    <members>
+        <member name="T:DDD.Applaction.AdminUsers.Services.AdminUserAppService">
+            <summary>
+            管理员账号管理
+            </summary>
+        </member>
+        <member name="M:DDD.Applaction.AdminUsers.Services.AdminUserAppService.CreateAsync(DDD.Domain.AdminUsers.Commands.Create.CreateAdminUserCommand,System.Threading.CancellationToken)">
+            <summary>
+            增加记录
+            </summary>
+            <param name="command"></param>
+            <param name="cancellationToken"></param>
+        </member>
+        <member name="M:DDD.Applaction.AdminUsers.Services.AdminUserAppService.UpdateAsync(DDD.Domain.AdminUsers.Commands.Update.UpdateAdminUserCommand,System.Threading.CancellationToken)">
+            <summary>
+            修改记录
+            </summary>
+            <param name="command"></param>
+            <param name="cancellationToken"></param>
+        </member>
+        <member name="M:DDD.Applaction.AdminUsers.Services.AdminUserAppService.DeleteAsync(System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            删除一条记录
+            </summary>
+            <param name="id">主键id</param>
+            <param name="cancellationToken"></param>
+        </member>
+        <member name="M:DDD.Applaction.AdminUsers.Services.AdminUserAppService.GetAsync(System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            获取一条记录
+            </summary>
+            <param name="id"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DDD.Applaction.AdminUsers.Services.AdminUserAppService.GetListAsync(System.Int32,System.String,System.Threading.CancellationToken)">
+            <summary>
+            获取列表
+            </summary>
+            <param name="limit"></param>
+            <param name="keyword"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DDD.Applaction.AdminUsers.Services.AdminUserAppService.GetPageAsync(System.Int32,System.Int32,System.String,System.Threading.CancellationToken)">
+            <summary>
+            获取列表
+            </summary>
+            <param name="currentPage"></param>
+            <param name="pageSize"></param>
+            <param name="keyword"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
