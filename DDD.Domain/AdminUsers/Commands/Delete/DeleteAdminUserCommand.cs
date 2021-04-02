@@ -15,6 +15,7 @@ namespace DDD.Domain.AdminUsers.Commands.Delete
     public class DeleteAdminUserCommand : IRequest<Result<int>>
     {
         public long Id { get; set; }
+
         public class DeleteAdminUserCommandHandler : IRequestHandler<DeleteAdminUserCommand, Result<int>>
         {
             private readonly INigelDbRepository<AdminUser> repository;
@@ -31,7 +32,7 @@ namespace DDD.Domain.AdminUsers.Commands.Delete
                 var has = await repository.AnyAsync(c => c.Id == request.Id);
 
                 if (!has)
-                    return ResultModel.Fail(SubCode.Undefind, 0);
+                    return Return.Fail(SubCode.Undefind, 0);
 
                 var res = await repository.DeleteAsync(c => c.Id == request.Id);
 
@@ -39,9 +40,9 @@ namespace DDD.Domain.AdminUsers.Commands.Delete
                 {
                     await mediator.Publish(new DeleteAdminUserEvent { Id = request.Id }, cancellationToken);
 
-                    return ResultModel.Success(SubCode.Success, res);
+                    return Return.Success(SubCode.Success, res);
                 }
-                return ResultModel.Fail(SubCode.Fail, res);
+                return Return.Fail(SubCode.Fail, res);
             }
         }
     }

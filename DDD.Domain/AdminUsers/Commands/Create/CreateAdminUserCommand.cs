@@ -1,6 +1,7 @@
 ﻿using DDD.Domain.Common;
 using DDD.Domain.Common.Interfaces;
 using DDD.Domain.Entities;
+using FluentValidation.Results;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using XUCore.Extensions;
 using XUCore.NetCore;
 
 namespace DDD.Domain.AdminUsers.Commands.Create
@@ -59,10 +61,10 @@ namespace DDD.Domain.AdminUsers.Commands.Create
                 {
                     await mediator.Publish(new CreateAdminUserEvent { User = entity }, cancellationToken);
 
-                    return ResultModel.Success(SubCode.Success, res);
+                    return Return.Success(SubCode.Success, res);
                 }
                 else
-                    return ResultModel.Success(SubCode.Fail, res);
+                    return Return.Success(SubCode.Fail, res);
             }
         }
     }

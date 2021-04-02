@@ -45,9 +45,9 @@ namespace DDD.Domain.AdminUsers.Queries.GetPagedList
                     cancellationToken: cancellationToken);
 
                 if (page == null)
-                    return ResultModel.Fail(SubCode.Fail, default(PagedList<AdminUser>));
+                    return Return.Fail(SubCode.Fail, default(PagedList<AdminUser>));
 
-                return ResultModel.Success(SubCode.Success, page);
+                return Return.Success(SubCode.Success, page);
             }
         }
     }

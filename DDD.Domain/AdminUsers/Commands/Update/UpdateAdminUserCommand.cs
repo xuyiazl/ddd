@@ -36,7 +36,7 @@ namespace DDD.Domain.AdminUsers.Commands.Update
                 var entity = await repository.GetByIdAsync(request.Id);
 
                 if (entity == null)
-                    return ResultModel.Fail(SubCode.Undefind, 0);
+                    return Return.Fail(SubCode.Undefind, 0);
 
                 entity.Id = request.Id;
                 entity.Name = request.Name;
@@ -51,9 +51,9 @@ namespace DDD.Domain.AdminUsers.Commands.Update
                 {
                     await mediator.Publish(new UpdateAdminUserEvent { User = entity }, cancellationToken);
 
-                    return ResultModel.Success(SubCode.Success, res);
+                    return Return.Success(SubCode.Success, res);
                 }
-                return ResultModel.Fail(SubCode.Fail, res);
+                return Return.Fail(SubCode.Fail, res);
             }
         }
     }

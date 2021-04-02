@@ -40,7 +40,7 @@ namespace DDD.Domain.AdminUsers.Queries.GetList
                     limit: request.Limit,
                     cancellationToken: cancellationToken);
 
-                return ResultModel.Success(SubCode.Success, list);
+                return Return.Success(SubCode.Success, list);
             }
         }
     }

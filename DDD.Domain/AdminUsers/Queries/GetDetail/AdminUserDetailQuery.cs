@@ -29,7 +29,7 @@ namespace DDD.Domain.AdminUsers.Queries.GetDetail
             {
                 var entity = await repository.GetByIdAsync(request.Id, cancellationToken: cancellationToken);
 
-                return ResultModel.Success(SubCode.Success, entity);
+                return Return.Success(SubCode.Success, entity);
             }
         }
     }

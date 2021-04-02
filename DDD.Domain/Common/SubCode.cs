@@ -42,7 +42,7 @@ namespace DDD.Domain.Common
     }
 
 
-    public static class ResultModel
+    public static class Return
     {
         /// <summary>
         /// 返回成功消息
@@ -82,6 +82,26 @@ namespace DDD.Domain.Common
                 operationTime = DateTime.Now
             };
         }
+        /// <summary>
+        /// 返回成功消息
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="subCode"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static Result<T> Success<T>(SubCode subCode, string message, T data = default)
+        {
+            (var code, _) = SubCodeMessage.Message(subCode);
+            return new Result<T>()
+            {
+                code = 0,
+                subCode = code,
+                message = message,
+                data = data,
+                elapsedTime = -1,
+                operationTime = DateTime.Now
+            };
+        }
 
         /// <summary>
         /// 返回失败消息
@@ -101,6 +121,26 @@ namespace DDD.Domain.Common
                  elapsedTime = -1,
                  operationTime = DateTime.Now
              };
+        /// <summary>
+        /// 返回失败消息
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="subCode"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static Result<T> Fail<T>(SubCode subCode, string message, T data = default)
+        {
+            (var code, _) = SubCodeMessage.Message(subCode);
+            return new Result<T>()
+            {
+                code = 0,
+                subCode = code,
+                message = message,
+                data = data,
+                elapsedTime = -1,
+                operationTime = DateTime.Now
+            };
+        }
         /// <summary>
         /// 返回失败消息
         /// </summary>
