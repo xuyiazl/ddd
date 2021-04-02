@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using XUCore.Extensions;
 using XUCore.NetCore;
+using XUCore.NetCore.Data.DbService;
 
 namespace DDD.Domain.AdminUsers.Queries.GetList
 {
@@ -21,11 +22,11 @@ namespace DDD.Domain.AdminUsers.Queries.GetList
 
         public class AdminUserListQueryHandler : IRequestHandler<AdminUserListQuery, Result<List<AdminUser>>>
         {
-            private readonly INigelDbRepository<AdminUser> repository;
+            private readonly INigelDbUnitOfWork unitOfWork;
 
-            public AdminUserListQueryHandler(INigelDbRepository<AdminUser> repository)
+            public AdminUserListQueryHandler(INigelDbUnitOfWork unitOfWork)
             {
-                this.repository = repository;
+                this.unitOfWork = unitOfWork;
             }
 
             public async Task<Result<List<AdminUser>>> Handle(AdminUserListQuery request, CancellationToken cancellationToken)
@@ -34,7 +35,7 @@ namespace DDD.Domain.AdminUsers.Queries.GetList
 
                 selector = selector.And(c => c.Name.Contains(request.Keyword), !request.Keyword.IsEmpty());
 
-                var list = await repository.GetListAsync(
+                var list = await unitOfWork.GetListAsync<AdminUser>(
                     selector: selector,
                     orderby: "Id desc",
                     limit: request.Limit,

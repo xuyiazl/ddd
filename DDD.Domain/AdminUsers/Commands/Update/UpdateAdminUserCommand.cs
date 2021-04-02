@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using XUCore.NetCore;
+using XUCore.NetCore.Data.DbService;
 
 namespace DDD.Domain.AdminUsers.Commands.Update
 {
@@ -22,18 +23,18 @@ namespace DDD.Domain.AdminUsers.Commands.Update
         public string Company { get; set; }
         public class UpdateAdminUserCommandHandler : IRequestHandler<UpdateAdminUserCommand, Result<int>>
         {
-            private readonly INigelDbRepository<AdminUser> repository;
+            private readonly INigelDbUnitOfWork unitOfWork;
             private readonly IMediator mediator;
 
-            public UpdateAdminUserCommandHandler(INigelDbRepository<AdminUser> repository, IMediator mediator)
+            public UpdateAdminUserCommandHandler(INigelDbUnitOfWork unitOfWork, IMediator mediator)
             {
-                this.repository = repository;
+                this.unitOfWork = unitOfWork;
                 this.mediator = mediator;
             }
 
             public async Task<Result<int>> Handle(UpdateAdminUserCommand request, CancellationToken cancellationToken)
             {
-                var entity = await repository.GetByIdAsync(request.Id);
+                var entity = await unitOfWork.GetByIdAsync<AdminUser>(request.Id);
 
                 if (entity == null)
                     return Return.Fail(SubCode.Undefind, 0);
@@ -45,7 +46,9 @@ namespace DDD.Domain.AdminUsers.Commands.Update
                 entity.Picture = request.Picture;
                 entity.Position = request.Position;
 
-                var res = await repository.UpdateAsync(entity, cancellationToken: cancellationToken);
+                unitOfWork.Update(entity);
+
+                var res = unitOfWork.Commit();
 
                 if (res > 0)
                 {

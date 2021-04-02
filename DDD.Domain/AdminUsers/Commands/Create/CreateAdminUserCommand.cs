@@ -1,16 +1,12 @@
 ﻿using DDD.Domain.Common;
 using DDD.Domain.Common.Interfaces;
 using DDD.Domain.Entities;
-using FluentValidation.Results;
 using MediatR;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using XUCore.Extensions;
 using XUCore.NetCore;
+using XUCore.NetCore.Data.DbService;
 
 namespace DDD.Domain.AdminUsers.Commands.Create
 {
@@ -27,12 +23,12 @@ namespace DDD.Domain.AdminUsers.Commands.Create
 
         public class AddAdminUserCommandHandler : IRequestHandler<CreateAdminUserCommand, Result<int>>
         {
-            private readonly INigelDbRepository<AdminUser> repository;
+            private readonly INigelDbUnitOfWork unitOfWork;
             private readonly IMediator mediator;
 
-            public AddAdminUserCommandHandler(INigelDbRepository<AdminUser> repository, IMediator mediator)
+            public AddAdminUserCommandHandler(INigelDbUnitOfWork unitOfWork, IMediator mediator)
             {
-                this.repository = repository;
+                this.unitOfWork = unitOfWork;
                 this.mediator = mediator;
             }
 
@@ -55,7 +51,9 @@ namespace DDD.Domain.AdminUsers.Commands.Create
                     UserName = request.UserName
                 };
 
-                var res = await repository.AddAsync(entity, cancellationToken: cancellationToken);
+                unitOfWork.Add(entity);
+
+                var res = unitOfWork.Commit();
 
                 if (res > 0)
                 {

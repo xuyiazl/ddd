@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using XUCore.NetCore;
+using XUCore.NetCore.Data.DbService;
 
 namespace DDD.Domain.AdminUsers.Queries.GetDetail
 {
@@ -18,16 +19,16 @@ namespace DDD.Domain.AdminUsers.Queries.GetDetail
 
         public class AdminUserListQueryHandler : IRequestHandler<AdminUserDetailQuery, Result<AdminUser>>
         {
-            private readonly INigelDbRepository<AdminUser> repository;
+            private readonly INigelDbUnitOfWork unitOfWork;
 
-            public AdminUserListQueryHandler(INigelDbRepository<AdminUser> repository)
+            public AdminUserListQueryHandler(INigelDbUnitOfWork unitOfWork)
             {
-                this.repository = repository;
+                this.unitOfWork = unitOfWork;
             }
 
             public async Task<Result<AdminUser>> Handle(AdminUserDetailQuery request, CancellationToken cancellationToken)
             {
-                var entity = await repository.GetByIdAsync(request.Id, cancellationToken: cancellationToken);
+                var entity = await unitOfWork.GetByIdAsync<AdminUser>(request.Id, cancellationToken: cancellationToken);
 
                 return Return.Success(SubCode.Success, entity);
             }

@@ -50,8 +50,8 @@ namespace DDD.Persistence
             //    //options.UseLoggerFactory(MyLoggerFactory);
             //});
 
-            services.AddScoped(typeof(INigelDbRepository<>), typeof(NigelDbRepository<>));
             services.AddScoped(typeof(INigelDbContext), typeof(NigelDbContext));
+            services.AddScoped(typeof(INigelDbUnitOfWork), typeof(NigelDbUnitOfWork));
 
             return services;
         }

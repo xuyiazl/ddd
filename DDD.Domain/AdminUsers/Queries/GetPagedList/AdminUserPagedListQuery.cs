@@ -12,6 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using XUCore.Extensions;
 using XUCore.NetCore;
+using XUCore.NetCore.Data.DbService;
 using XUCore.Paging;
 
 namespace DDD.Domain.AdminUsers.Queries.GetPagedList
@@ -24,11 +25,11 @@ namespace DDD.Domain.AdminUsers.Queries.GetPagedList
 
         public class AdminUserListQueryHandler : IRequestHandler<AdminUserPagedListQuery, Result<PagedList<AdminUser>>>
         {
-            private readonly INigelDbRepository<AdminUser> repository;
+            private readonly INigelDbUnitOfWork unitOfWork;
 
-            public AdminUserListQueryHandler(INigelDbRepository<AdminUser> repository)
+            public AdminUserListQueryHandler(INigelDbUnitOfWork unitOfWork)
             {
-                this.repository = repository;
+                this.unitOfWork = unitOfWork;
             }
 
             public async Task<Result<PagedList<AdminUser>>> Handle(AdminUserPagedListQuery request, CancellationToken cancellationToken)
@@ -37,7 +38,7 @@ namespace DDD.Domain.AdminUsers.Queries.GetPagedList
 
                 selector = selector.And(c => c.Name.Contains(request.Keyword), !request.Keyword.IsEmpty());
 
-                var page = await repository.GetPagedListAsync(
+                var page = await unitOfWork.GetPagedListAsync<AdminUser>(
                     selector: selector,
                     orderby: "Id desc",
                     currentPage: request.CurrentPage,

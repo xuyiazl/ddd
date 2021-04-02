@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using XUCore.NetCore;
+using XUCore.NetCore.Data.DbService;
 
 namespace DDD.Domain.AdminUsers.Commands.Delete
 {
@@ -18,23 +19,23 @@ namespace DDD.Domain.AdminUsers.Commands.Delete
 
         public class DeleteAdminUserCommandHandler : IRequestHandler<DeleteAdminUserCommand, Result<int>>
         {
-            private readonly INigelDbRepository<AdminUser> repository;
+            private readonly INigelDbUnitOfWork unitOfWork;
             private readonly IMediator mediator;
 
-            public DeleteAdminUserCommandHandler(INigelDbRepository<AdminUser> repository, IMediator mediator)
+            public DeleteAdminUserCommandHandler(INigelDbUnitOfWork unitOfWork, IMediator mediator)
             {
-                this.repository = repository;
+                this.unitOfWork = unitOfWork;
                 this.mediator = mediator;
             }
 
             public async Task<Result<int>> Handle(DeleteAdminUserCommand request, CancellationToken cancellationToken)
             {
-                var has = await repository.AnyAsync(c => c.Id == request.Id);
+                var has = await unitOfWork.AnyAsync<AdminUser>(c => c.Id == request.Id);
 
                 if (!has)
                     return Return.Fail(SubCode.Undefind, 0);
 
-                var res = await repository.DeleteAsync(c => c.Id == request.Id);
+                var res = await unitOfWork.DeleteAsync<AdminUser>(c => c.Id == request.Id);
 
                 if (res > 0)
                 {
