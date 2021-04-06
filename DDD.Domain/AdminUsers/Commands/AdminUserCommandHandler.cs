@@ -7,6 +7,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using XUCore.NetCore;
+using XUCore.NetCore.AspectCore.Cache;
 using XUCore.NetCore.Data.DbService;
 
 namespace DDD.Domain.AdminUsers.Commands

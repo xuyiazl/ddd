@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using XUCore.Extensions;
 using XUCore.NetCore;
+using XUCore.NetCore.AspectCore.Cache;
 using XUCore.NetCore.Data.DbService;
 using XUCore.Paging;
 

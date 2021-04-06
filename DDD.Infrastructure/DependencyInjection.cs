@@ -12,6 +12,7 @@ using XUCore.NetCore.DynamicWebApi;
 using XUCore.NetCore.MessagePack;
 using XUCore.Serializer;
 using DDD.Domain.Mappings;
+using XUCore.NetCore.AspectCore.Cache;
 
 namespace DDD.Infrastructure
 {
@@ -48,6 +49,8 @@ namespace DDD.Infrastructure
 
 
             services.AddDynamicWebApi();
+
+            //services.AddCacheService<MemoryCacheService>();
 
             return services;
         }
