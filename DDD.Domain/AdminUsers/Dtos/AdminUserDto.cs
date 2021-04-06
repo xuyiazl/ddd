@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
-using DDD.Applaction.Common.Mappings;
 using DDD.Domain.Entities;
+using DDD.Domain.Mappings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DDD.Applaction.Dtos
+namespace DDD.Domain.AdminUsers.Dtos
 {
     public class AdminUserDto : IMapFrom<AdminUser>
     {

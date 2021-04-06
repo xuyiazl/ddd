@@ -11,6 +11,7 @@ using System.Reflection;
 using XUCore.NetCore.DynamicWebApi;
 using XUCore.NetCore.MessagePack;
 using XUCore.Serializer;
+using DDD.Domain.Mappings;
 
 namespace DDD.Infrastructure
 {
@@ -18,6 +19,7 @@ namespace DDD.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration, IWebHostEnvironment environment)
         {
+            services.AddAutoMapper(Assembly.GetAssembly(typeof(IMapFrom<>)));
             services.AddMediatR(Assembly.GetAssembly(typeof(INigelDbContext)));
             services.AddTransient(typeof(IRequestPreProcessor<>), typeof(RequestLogger<>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceBehaviour<,>));

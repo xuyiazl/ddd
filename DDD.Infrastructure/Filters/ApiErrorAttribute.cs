@@ -2,14 +2,12 @@
 using DDD.Domain.Common.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using XUCore.Extensions;
 using XUCore.Helpers;
 using XUCore.NetCore;
@@ -53,7 +51,7 @@ namespace DDD.Infrastructure.Filters
             {
                 var ex = context.Exception as ValidationException;
 
-                var message = ex.Failures.Select(c => c.Value.Join("")).Join("");
+                var message = ex.Failures.Select(c => c.Value.Join("，")).Join("");
 
                 (var code, _) = SubCodeMessage.Message(SubCode.Fail);
 

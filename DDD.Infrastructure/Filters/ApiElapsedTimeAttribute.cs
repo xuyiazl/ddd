@@ -1,11 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using XUCore.NetCore;
 
 namespace DDD.Infrastructure.Filters
@@ -41,7 +36,8 @@ namespace DDD.Infrastructure.Filters
                 var res = (Result)actionExecutedContext.Result;
                 if (res != null)
                 {
-                    res.Value?.GetType().GetProperty("elapsedTime").SetValue(res.Value, stopwatch.ElapsedMilliseconds);
+                    res.elapsedTime = stopwatch.ElapsedMilliseconds;
+                    //res.Value?.GetType().GetProperty("elapsedTime").SetValue(res.Value, stopwatch.ElapsedMilliseconds);
 
                     actionExecutedContext.Result = res;
                 }

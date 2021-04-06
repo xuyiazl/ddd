@@ -1,15 +1,20 @@
-﻿using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DDD.Domain.Common;
+using FluentValidation;
+using MediatR;
+using XUCore.NetCore;
 
-namespace DDD.Domain.AdminUsers.Commands.Update
+namespace DDD.Domain.AdminUsers.Commands
 {
-    public class UpdateAdminUserCommandValidator : AbstractValidator<UpdateAdminUserCommand>
+    public class UpdateAdminUserCommand : AbstractValidator<UpdateAdminUserCommand>,IRequest<(SubCode, int)>
     {
-        public UpdateAdminUserCommandValidator()
+        public long Id { get; set; }
+        public string Name { get; set; }
+        public string Picture { get; set; }
+        public string Location { get; set; }
+        public string Position { get; set; }
+        public string Company { get; set; }
+
+        public UpdateAdminUserCommand()
         {
             RuleFor(x => x.Id)
                 .NotEmpty().WithMessage("Id不可为空")

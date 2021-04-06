@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace DDD.Domain.AdminUsers.Commands.Create
+namespace DDD.Domain.AdminUsers.Commands.Event
 {
     public class CreateAdminUserEvent : INotification
     {

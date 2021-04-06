@@ -1,15 +1,27 @@
-﻿using FluentValidation;
+﻿using DDD.Domain.Common;
+using FluentValidation;
+using MediatR;
+using XUCore.NetCore;
 
-namespace DDD.Domain.AdminUsers.Commands.Create
+namespace DDD.Domain.AdminUsers.Commands
 {
-    public class CreateAdminUserCommandValidator : AbstractValidator<CreateAdminUserCommand>
+    public class CreateAdminUserCommand : AbstractValidator<CreateAdminUserCommand>, IRequest<(SubCode, int)>
     {
-        public CreateAdminUserCommandValidator()
+        public string UserName { get; set; }
+        public string Mobile { get; set; }
+        public string Password { get; set; }
+        public string Name { get; set; }
+        public string Picture { get; set; }
+        public string Location { get; set; }
+        public string Position { get; set; }
+        public string Company { get; set; }
+
+        public CreateAdminUserCommand()
         {
             //RuleFor(x => x.Id).Length(5).NotEmpty();
             RuleFor(x => x.UserName)
                 .NotEmpty().WithMessage("账号不可为空")
-                .MaximumLength(20).WithMessage(c=>$"账号不能超过20个字符，当前{c.UserName.Length}个字符");
+                .MaximumLength(20).WithMessage(c => $"账号不能超过20个字符，当前{c.UserName.Length}个字符");
 
             RuleFor(x => x.Mobile)
                 .NotEmpty().WithMessage("手机号码不可为空")

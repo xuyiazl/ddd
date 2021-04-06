@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DDD.Applaction.Common.Mappings
+namespace DDD.Domain.Mappings
 {
     public interface IMapFrom<T>
     {
