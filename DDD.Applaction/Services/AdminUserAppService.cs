@@ -7,7 +7,6 @@ using DDD.Domain.AdminUsers.Commands.Update;
 using DDD.Domain.AdminUsers.Queries.GetDetail;
 using DDD.Domain.AdminUsers.Queries.GetList;
 using DDD.Domain.AdminUsers.Queries.GetPagedList;
-using DDD.Domain.Common;
 using DDD.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -31,6 +30,7 @@ namespace DDD.Applaction.AdminUsers.Services
         /// </summary>
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
+        [HttpPost]
         public async Task<Result<int>> CreateAsync(CreateAdminUserCommand command, CancellationToken cancellationToken)
             => await mediator.Send(command, cancellationToken);
         /// <summary>
@@ -38,6 +38,7 @@ namespace DDD.Applaction.AdminUsers.Services
         /// </summary>
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
+        [HttpPut]
         public async Task<Result<int>> UpdateAsync(UpdateAdminUserCommand command, CancellationToken cancellationToken)
             => await mediator.Send(command, cancellationToken);
         /// <summary>
@@ -68,6 +69,7 @@ namespace DDD.Applaction.AdminUsers.Services
         /// <param name="keyword"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
+        [HttpGet]
         public async Task<Result<IList<AdminUserDto>>> GetListAsync(int limit, string keyword, CancellationToken cancellationToken)
         {
             var res = await mediator.Send(new AdminUserListQuery { Limit = limit, Keyword = keyword }, cancellationToken);
@@ -82,6 +84,7 @@ namespace DDD.Applaction.AdminUsers.Services
         /// <param name="keyword"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
+        [HttpGet]
         public async Task<Result<PagedModel<AdminUserDto>>> GetPageAsync(int currentPage, int pageSize, string keyword, CancellationToken cancellationToken)
         {
             var res = await mediator.Send(new AdminUserPagedListQuery { CurrentPage = currentPage, PageSize = pageSize, Keyword = keyword }, cancellationToken);

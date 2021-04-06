@@ -15,7 +15,7 @@ namespace DDD.Domain.AdminUsers.Queries.GetDetail
 {
     public class AdminUserDetailQuery : IRequest<Result<AdminUser>>
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         public class AdminUserListQueryHandler : IRequestHandler<AdminUserDetailQuery, Result<AdminUser>>
         {
