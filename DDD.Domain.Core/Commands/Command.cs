@@ -28,6 +28,10 @@ namespace DDD.Domain.Core.Commands
             ValidationResult = new ValidationResult();
         }
 
+        public virtual IList<ValidationFailure> GetErrors() => ValidationResult.Errors;
+
+        public virtual string GetErrors(string separator) => ValidationResult.ToString(separator);
+
         public virtual bool IsVaild()
         {
             return ValidationResult.IsValid;

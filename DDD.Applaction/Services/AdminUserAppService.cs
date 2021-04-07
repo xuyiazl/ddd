@@ -1,9 +1,9 @@
-﻿using DDD.Applaction.Common;
+﻿using DDD.Applaction.AdminUsers.Interfaces;
+using DDD.Applaction.Common;
 using DDD.Domain.AdminUsers.Commands;
 using DDD.Domain.AdminUsers.Dtos;
 using DDD.Domain.AdminUsers.Queries;
 using DDD.Domain.Core.Bus;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading;
@@ -16,7 +16,7 @@ namespace DDD.Applaction.AdminUsers.Services
     /// <summary>
     /// 管理员账号管理
     /// </summary>
-    public class AdminUserAppService : AppService
+    public class AdminUserAppService : AppService, IAdminUserAppService
     {
         public AdminUserAppService(IMediatorHandler bus) : base(bus) { }
 
