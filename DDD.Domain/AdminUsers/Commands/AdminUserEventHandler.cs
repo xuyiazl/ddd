@@ -1,6 +1,4 @@
-﻿using DDD.Domain.Common.Interfaces;
-using DDD.Domain.Notifications.Models;
-using MediatR;
+﻿using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,11 +16,8 @@ namespace DDD.Domain.AdminUsers.Commands
         INotificationHandler<UpdateAdminUserEvent>,
         INotificationHandler<DeleteAdminUserEvent>
     {
-        private readonly INotificationService notification;
-
-        public AdminUserEventHandler(INotificationService notification)
+        public AdminUserEventHandler()
         {
-            this.notification = notification;
         }
         /// <summary>
         /// 接受消息处理创建后的业务
@@ -32,7 +27,7 @@ namespace DDD.Domain.AdminUsers.Commands
         /// <returns></returns>
         public async Task Handle(CreateAdminUserEvent notification, CancellationToken cancellationToken)
         {
-            await this.notification.SendAsync(new MessageDto());
+            
         }
         /// <summary>
         /// 接受消息处理修改后的业务

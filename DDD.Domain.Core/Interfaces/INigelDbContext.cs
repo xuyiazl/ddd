@@ -1,6 +1,6 @@
 ﻿using XUCore.NetCore.Data.DbService;
 
-namespace DDD.Domain.Common.Interfaces
+namespace DDD.Domain.Core.Interfaces
 {
     public interface INigelDbContext : IDbContext { }
 }

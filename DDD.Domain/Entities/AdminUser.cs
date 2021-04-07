@@ -1,4 +1,5 @@
-﻿using DDD.Domain.Common;
+﻿using DDD.Domain.Core;
+using DDD.Domain.Core.Models;
 using System;
 
 namespace DDD.Domain.Entities

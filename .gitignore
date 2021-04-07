@@ -14,3 +14,5 @@
 /DDD.WebApi/obj
 /.vs/Demo/v16
 /.vs/Demo/DesignTimeBuild
+/DDD.Domain.Core/bin/Debug/net5.0
+/DDD.Domain.Core/obj

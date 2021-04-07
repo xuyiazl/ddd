@@ -14,7 +14,7 @@
             <param name="data"></param>
             <returns></returns>
         </member>
-        <member name="M:DDD.Applaction.Common.AppService.Success``1(DDD.Domain.Common.SubCode,``0)">
+        <member name="M:DDD.Applaction.Common.AppService.Success``1(DDD.Domain.Core.SubCode,``0)">
             <summary>
             返回成功消息
             </summary>
@@ -23,7 +23,7 @@
             <param name="data"></param>
             <returns></returns>
         </member>
-        <member name="M:DDD.Applaction.Common.AppService.Success``1(DDD.Domain.Common.SubCode,System.String,``0)">
+        <member name="M:DDD.Applaction.Common.AppService.Success``1(DDD.Domain.Core.SubCode,System.String,``0)">
             <summary>
             返回成功消息
             </summary>
@@ -43,7 +43,7 @@
             <param name="data"></param>
             <returns></returns>
         </member>
-        <member name="M:DDD.Applaction.Common.AppService.Fail``1(DDD.Domain.Common.SubCode,System.String,``0)">
+        <member name="M:DDD.Applaction.Common.AppService.Fail``1(DDD.Domain.Core.SubCode,System.String,``0)">
             <summary>
             返回失败消息
             </summary>
@@ -53,7 +53,7 @@
             <param name="data"></param>
             <returns></returns>
         </member>
-        <member name="M:DDD.Applaction.Common.AppService.Fail``1(DDD.Domain.Common.SubCode,``0)">
+        <member name="M:DDD.Applaction.Common.AppService.Fail``1(DDD.Domain.Core.SubCode,``0)">
             <summary>
             返回失败消息
             </summary>

@@ -1,6 +1,6 @@
-﻿using AutoMapper;
-using DDD.Applaction.Common.Interfaces;
-using DDD.Domain.Common;
+﻿using DDD.Applaction.Common.Interfaces;
+using DDD.Domain.Core;
+using DDD.Domain.Core.Bus;
 using DDD.Infrastructure.Filters;
 using MediatR;
 using System;
@@ -14,11 +14,12 @@ namespace DDD.Applaction.Common
     [ApiElapsedTime]
     public class AppService : IAppService
     {
-        public readonly IMediator mediator;
+        // 中介者 总线
+        public readonly IMediatorHandler bus;
 
-        public AppService(IMediator mediator)
+        public AppService(IMediatorHandler bus)
         {
-            this.mediator ??= mediator;
+            this.bus ??= bus;
         }
 
         /// <summary>

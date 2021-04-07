@@ -1,5 +1,5 @@
-﻿using DDD.Domain.Common;
-using DDD.Domain.Common.Exceptions;
+﻿using DDD.Domain.Core;
+using DDD.Domain.Core.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;

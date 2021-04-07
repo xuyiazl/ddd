@@ -1,5 +1,10 @@
-﻿using DDD.Domain.Common.Interfaces;
+﻿using DDD.Domain;
+using DDD.Domain.Core.Bus;
+using DDD.Domain.Core.Events;
+using DDD.Domain.Core.Interfaces;
 using DDD.Infrastructure.Behaviours;
+using DDD.Infrastructure.Bus;
+using DDD.Infrastructure.Events;
 using FluentValidation.AspNetCore;
 using MediatR;
 using MediatR.Pipeline;
@@ -11,8 +16,6 @@ using System.Reflection;
 using XUCore.NetCore.DynamicWebApi;
 using XUCore.NetCore.MessagePack;
 using XUCore.Serializer;
-using DDD.Domain.Mappings;
-using XUCore.NetCore.AspectCore.Cache;
 
 namespace DDD.Infrastructure
 {
@@ -20,18 +23,25 @@ namespace DDD.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration, IWebHostEnvironment environment)
         {
-            services.AddAutoMapper(Assembly.GetAssembly(typeof(IMapFrom<>)));
-            services.AddMediatR(Assembly.GetAssembly(typeof(INigelDbContext)));
+            services.AddHttpContextAccessor();
+
+            services.AddAutoMapper(typeof(IMapFrom<>));
+            services.AddMediatR(typeof(IMapFrom<>));
             services.AddTransient(typeof(IRequestPreProcessor<>), typeof(RequestLogger<>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceBehaviour<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
 
+            // 命令总线Domain Bus (Mediator)
+            services.AddScoped<IMediatorHandler, InMemoryBus>();
+
+            // 注入 基础设施层 - 事件溯源
+            //services.AddScoped<IEventStoreRepository, EventStoreSQLRepository>();
+            services.AddScoped<IEventStoreService, SqlEventStoreService>();
+            //services.AddScoped<EventStoreSQLContext>();
+
             //services.AddScoped<IUserManager, UserManagerService>();
-            services.AddScoped<INotificationService, NotificationService>();
 
             //services.AddAuthentication();
-
-            services.AddHttpContextAccessor();
 
             services.AddControllers()
                 .AddMessagePackFormatters(options =>
@@ -45,7 +55,7 @@ namespace DDD.Infrastructure
                     options.Options = MessagePackSerializerResolver.UnixDateTimeOptions;
 
                 })
-                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<INigelDbContext>());
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining(typeof(IMapFrom<>)));
 
 
             services.AddDynamicWebApi();

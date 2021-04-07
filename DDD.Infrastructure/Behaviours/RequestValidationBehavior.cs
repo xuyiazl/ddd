@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using FluentValidation;
 using MediatR;
-using ValidationException = DDD.Domain.Common.Exceptions.ValidationException;
+using ValidationException = DDD.Domain.Core.Exceptions.ValidationException;
 
 namespace DDD.Infrastructure.Behaviours
 {

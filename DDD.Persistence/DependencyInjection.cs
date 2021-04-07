@@ -1,4 +1,4 @@
-﻿using DDD.Domain.Common.Interfaces;
+﻿using DDD.Domain.Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

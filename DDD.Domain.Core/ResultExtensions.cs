@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using XUCore.NetCore;
 using XUCore.Paging;
 
-namespace DDD.Domain.Common
+namespace DDD.Domain.Core
 {
     public static class ResultExtensions
     {

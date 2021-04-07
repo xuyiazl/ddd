@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DDD.Domain.Mappings
+namespace DDD.Domain
 {
     public class MappingProfile : Profile
     {

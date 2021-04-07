@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="FluentValidation" Version="9.5.3" />
+		<PackageReference Include="AutoMapper" Version="10.1.1" />
+		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+		<PackageReference Include="MediatR" Version="9.0.0" />
+		<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+		<PackageReference Include="XUCore.NetCore" Version="5.0.2" />
+		<PackageReference Include="XUCore.NetCore.AspectCore" Version="5.0.2" />
+		<PackageReference Include="XUCore.NetCore.Data" Version="5.0.2" />
+	</ItemGroup>
+</Project>

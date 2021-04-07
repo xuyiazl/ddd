@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using XUCore.NetCore;
 
-namespace DDD.Domain.Common
+namespace DDD.Domain.Core
 {
     public static class SubCodeMessage
     {

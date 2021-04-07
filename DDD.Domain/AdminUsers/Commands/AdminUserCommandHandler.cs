@@ -1,6 +1,8 @@
-﻿using DDD.Domain.Common;
-using DDD.Domain.Common.Interfaces;
+﻿using DDD.Domain.Core;
+using DDD.Domain.Core.Bus;
+using DDD.Domain.Core.Interfaces;
 using DDD.Domain.Entities;
+using DDD.Domain.Notifications;
 using MediatR;
 using System;
 using System.Threading;
@@ -9,22 +11,22 @@ using XUCore.NetCore.Data.DbService;
 
 namespace DDD.Domain.AdminUsers.Commands
 {
-    public class AdminUserCommandHandler :
+    public class AdminUserCommandHandler : CommandHandler,
         IRequestHandler<CreateAdminUserCommand, (SubCode, int)>,
         IRequestHandler<UpdateAdminUserCommand, (SubCode, int)>,
         IRequestHandler<DeleteAdminUserCommand, (SubCode, int)>
     {
         private readonly INigelDbUnitOfWork unitOfWork;
-        private readonly IMediator mediator;
 
-        public AdminUserCommandHandler(INigelDbUnitOfWork unitOfWork, IMediator mediator)
+        public AdminUserCommandHandler(INigelDbUnitOfWork unitOfWork, IMediatorHandler bus) : base(bus)
         {
             this.unitOfWork = unitOfWork;
-            this.mediator = mediator;
         }
 
         public async Task<(SubCode, int)> Handle(CreateAdminUserCommand request, CancellationToken cancellationToken)
         {
+            //await bus.PublishEvent(new DomainNotification("", "开始注册...."), cancellationToken);
+
             var entity = new AdminUser
             {
                 Name = request.Name,
@@ -46,9 +48,11 @@ namespace DDD.Domain.AdminUsers.Commands
 
             var res = unitOfWork.Commit();
 
+            //await bus.PublishEvent(new DomainNotification("", "结束注册...."), cancellationToken);
+
             if (res > 0)
             {
-                await mediator.Publish(new CreateAdminUserEvent(entity.Id, entity), cancellationToken);
+                await bus.PublishEvent(new CreateAdminUserEvent(entity.Id, entity), cancellationToken);
 
                 return (SubCode.Success, res);
             }
@@ -76,7 +80,7 @@ namespace DDD.Domain.AdminUsers.Commands
 
             if (res > 0)
             {
-                await mediator.Publish(new UpdateAdminUserEvent(entity.Id, entity), cancellationToken);
+                await bus.PublishEvent(new UpdateAdminUserEvent(entity.Id, entity), cancellationToken);
 
                 return (SubCode.Success, res);
             }
@@ -94,7 +98,7 @@ namespace DDD.Domain.AdminUsers.Commands
 
             if (res > 0)
             {
-                await mediator.Publish(new DeleteAdminUserEvent(request.Id), cancellationToken);
+                await bus.PublishEvent(new DeleteAdminUserEvent(request.Id), cancellationToken);
 
                 return (SubCode.Success, res);
             }

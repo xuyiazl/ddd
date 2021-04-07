@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using DDD.Domain.Entities;
-using DDD.Domain.Mappings;
 using System;
 using System.Collections.Generic;
 using System.Linq;

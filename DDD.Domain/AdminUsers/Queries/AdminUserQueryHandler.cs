@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using DDD.Domain.AdminUsers.Dtos;
-using DDD.Domain.Common;
-using DDD.Domain.Common.Interfaces;
+using DDD.Domain.Core;
+using DDD.Domain.Core.Interfaces;
 using DDD.Domain.Entities;
 using MediatR;
 using System;
@@ -10,8 +10,6 @@ using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using XUCore.Extensions;
-using XUCore.NetCore;
-using XUCore.NetCore.AspectCore.Cache;
 using XUCore.NetCore.Data.DbService;
 using XUCore.Paging;
 

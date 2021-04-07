@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DDD.Domain.Common
+namespace DDD.Domain.Core
 {
     public interface IAggregateRoot
     {
