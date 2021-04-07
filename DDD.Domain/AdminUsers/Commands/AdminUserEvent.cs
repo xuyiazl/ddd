@@ -1,68 +1,36 @@
-﻿using DDD.Domain.Common.Interfaces;
-using DDD.Domain.Notifications.Models;
-using DDD.Domain.Entities;
+﻿using DDD.Domain.Entities;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace DDD.Domain.AdminUsers.Commands.Event
+namespace DDD.Domain.AdminUsers.Commands
 {
     public class CreateAdminUserEvent : INotification
     {
+        public long Id { get; set; }
         public AdminUser User { get; set; }
-        public class AdminUserCreatedHandler : INotificationHandler<CreateAdminUserEvent>
+        public CreateAdminUserEvent(long id, AdminUser user)
         {
-            private readonly INotificationService notification;
-
-            public AdminUserCreatedHandler(INotificationService notification)
-            {
-                this.notification = notification;
-            }
-
-            public async Task Handle(CreateAdminUserEvent notification, CancellationToken cancellationToken)
-            {
-                //接受消息处理创建后的业务
-                await this.notification.SendAsync(new MessageDto());
-            }
+            Id = id;
+            User = user;
         }
     }
 
     public class UpdateAdminUserEvent : INotification
     {
+        public long Id { get; set; }
         public AdminUser User { get; set; }
-        public class AdminUserCreatedHandler : INotificationHandler<UpdateAdminUserEvent>
+        public UpdateAdminUserEvent(long id, AdminUser user)
         {
-            private readonly INotificationService notification;
-
-            public AdminUserCreatedHandler(INotificationService notification)
-            {
-                this.notification = notification;
-            }
-
-            public async Task Handle(UpdateAdminUserEvent notification, CancellationToken cancellationToken)
-            {
-                //接受消息处理修改后的业务
-            }
+            Id = id;
+            User = user;
         }
     }
 
     public class DeleteAdminUserEvent : INotification
     {
         public long Id { get; set; }
-        public class AdminUserCreatedHandler : INotificationHandler<DeleteAdminUserEvent>
+        public DeleteAdminUserEvent(long id)
         {
-            public AdminUserCreatedHandler()
-            {
-            }
-
-            public async Task Handle(DeleteAdminUserEvent notification, CancellationToken cancellationToken)
-            {
-                //接受消息处理删除后的业务
-            }
+            Id = id;
         }
     }
 }

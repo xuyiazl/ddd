@@ -1,13 +1,10 @@
-﻿using DDD.Domain.AdminUsers.Commands.Event;
-using DDD.Domain.Common;
+﻿using DDD.Domain.Common;
 using DDD.Domain.Common.Interfaces;
 using DDD.Domain.Entities;
 using MediatR;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using XUCore.NetCore;
-using XUCore.NetCore.AspectCore.Cache;
 using XUCore.NetCore.Data.DbService;
 
 namespace DDD.Domain.AdminUsers.Commands
@@ -51,7 +48,7 @@ namespace DDD.Domain.AdminUsers.Commands
 
             if (res > 0)
             {
-                await mediator.Publish(new CreateAdminUserEvent { User = entity }, cancellationToken);
+                await mediator.Publish(new CreateAdminUserEvent(entity.Id, entity), cancellationToken);
 
                 return (SubCode.Success, res);
             }
@@ -79,7 +76,7 @@ namespace DDD.Domain.AdminUsers.Commands
 
             if (res > 0)
             {
-                await mediator.Publish(new UpdateAdminUserEvent { User = entity }, cancellationToken);
+                await mediator.Publish(new UpdateAdminUserEvent(entity.Id, entity), cancellationToken);
 
                 return (SubCode.Success, res);
             }
@@ -97,7 +94,7 @@ namespace DDD.Domain.AdminUsers.Commands
 
             if (res > 0)
             {
-                await mediator.Publish(new DeleteAdminUserEvent { Id = request.Id }, cancellationToken);
+                await mediator.Publish(new DeleteAdminUserEvent(request.Id), cancellationToken);
 
                 return (SubCode.Success, res);
             }

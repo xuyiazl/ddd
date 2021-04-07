@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DDD.Domain.Common;
+using System;
 
 namespace DDD.Domain.Entities
 {
-    public class AdminUser: Entity
+    public class AdminUser : Entity, IAggregateRoot
     {
         public string UserName { get; set; }
         public string Mobile { get; set; }
