@@ -37,7 +37,7 @@ namespace DDD.Applaction.AdminUsers.Services
         }
 
         [HttpDelete("{id:int}")]
-        public async Task<Result<int>> DeleteAsync(int id, CancellationToken cancellationToken)
+        public async Task<Result<int>> DeleteAsync(long id, CancellationToken cancellationToken)
         {
             var (subCode, res) = await bus.SendCommand(new DeleteAdminUserCommand { Id = id }, cancellationToken);
 
@@ -45,7 +45,7 @@ namespace DDD.Applaction.AdminUsers.Services
         }
 
         [HttpGet("{id:int}")]
-        public async Task<Result<AdminUserDto>> GetAsync(int id, CancellationToken cancellationToken)
+        public async Task<Result<AdminUserDto>> GetAsync(long id, CancellationToken cancellationToken)
         {
             var (subCode, res) = await bus.SendCommand(new AdminUserDetailQuery { Id = id }, cancellationToken);
 
