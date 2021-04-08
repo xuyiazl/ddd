@@ -43,10 +43,8 @@ namespace DDD.Domain.AdminUsers.Commands
                 Status = true,
                 UserName = request.UserName
             };
-
-            db.Add(entity);
-
-            var res = db.UnitOfWork.Commit();
+            
+            var res = db.Add(entity);
 
             //await bus.PublishEvent(new DomainNotification("", "结束注册...."), cancellationToken);
 
@@ -74,9 +72,7 @@ namespace DDD.Domain.AdminUsers.Commands
             entity.Picture = request.Picture;
             entity.Position = request.Position;
 
-            db.Update(entity);
-
-            var res = db.UnitOfWork.Commit();
+            var res = db.Update(entity);
 
             if (res > 0)
             {
