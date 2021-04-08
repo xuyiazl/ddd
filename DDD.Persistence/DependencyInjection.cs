@@ -51,7 +51,7 @@ namespace DDD.Persistence
             //});
 
             services.AddScoped(typeof(INigelDbContext), typeof(NigelDbContext));
-            services.AddScoped(typeof(INigelDbUnitOfWork), typeof(NigelDbUnitOfWork));
+            services.AddScoped(typeof(INigelDbRepository<>), typeof(NigelDbRepository<>));
 
             return services;
         }

@@ -16,11 +16,11 @@ namespace DDD.Domain.AdminUsers.Commands
         IRequestHandler<UpdateAdminUserCommand, (SubCode, int)>,
         IRequestHandler<DeleteAdminUserCommand, (SubCode, int)>
     {
-        private readonly INigelDbUnitOfWork unitOfWork;
+        private readonly INigelDbRepository<AdminUser> db;
 
-        public AdminUserCommandHandler(INigelDbUnitOfWork unitOfWork, IMediatorHandler bus) : base(bus)
+        public AdminUserCommandHandler(INigelDbRepository<AdminUser> db, IMediatorHandler bus) : base(bus)
         {
-            this.unitOfWork = unitOfWork;
+            this.db = db;
         }
 
         public async Task<(SubCode, int)> Handle(CreateAdminUserCommand request, CancellationToken cancellationToken)
@@ -44,9 +44,9 @@ namespace DDD.Domain.AdminUsers.Commands
                 UserName = request.UserName
             };
 
-            unitOfWork.Add(entity);
+            db.Add(entity);
 
-            var res = unitOfWork.Commit();
+            var res = db.UnitOfWork.Commit();
 
             //await bus.PublishEvent(new DomainNotification("", "结束注册...."), cancellationToken);
 
@@ -62,7 +62,7 @@ namespace DDD.Domain.AdminUsers.Commands
 
         public async Task<(SubCode, int)> Handle(UpdateAdminUserCommand request, CancellationToken cancellationToken)
         {
-            var entity = await unitOfWork.GetByIdAsync<AdminUser>(request.Id);
+            var entity = await db.GetByIdAsync(request.Id);
 
             if (entity == null)
                 return (SubCode.Undefind, 0);
@@ -74,9 +74,9 @@ namespace DDD.Domain.AdminUsers.Commands
             entity.Picture = request.Picture;
             entity.Position = request.Position;
 
-            unitOfWork.Update(entity);
+            db.Update(entity);
 
-            var res = unitOfWork.Commit();
+            var res = db.UnitOfWork.Commit();
 
             if (res > 0)
             {
@@ -89,12 +89,12 @@ namespace DDD.Domain.AdminUsers.Commands
 
         public async Task<(SubCode, int)> Handle(DeleteAdminUserCommand request, CancellationToken cancellationToken)
         {
-            var has = await unitOfWork.AnyAsync<AdminUser>(c => c.Id == request.Id);
+            var has = await db.AnyAsync(c => c.Id == request.Id);
 
             if (!has)
                 return (SubCode.Undefind, 0);
 
-            var res = await unitOfWork.DeleteAsync<AdminUser>(c => c.Id == request.Id);
+            var res = await db.DeleteAsync(c => c.Id == request.Id);
 
             if (res > 0)
             {

@@ -6,6 +6,7 @@ using DDD.Domain.Entities;
 using MediatR;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,18 +21,18 @@ namespace DDD.Domain.AdminUsers.Queries
         IRequestHandler<AdminUserListQuery, (SubCode, IList<AdminUserDto>)>,
         IRequestHandler<AdminUserPagedListQuery, (SubCode, PagedModel<AdminUserDto>)>
     {
-        private readonly INigelDbUnitOfWork unitOfWork;
+        private readonly INigelDbRepository<AdminUser> db;
         private readonly IMapper mapper;
 
-        public AdminUserQueryHandler(INigelDbUnitOfWork unitOfWork, IMapper mapper)
+        public AdminUserQueryHandler(INigelDbRepository<AdminUser> db, IMapper mapper)
         {
-            this.unitOfWork = unitOfWork;
+            this.db = db;
             this.mapper = mapper;
         }
 
         public async Task<(SubCode, AdminUserDto)> Handle(AdminUserDetailQuery request, CancellationToken cancellationToken)
         {
-            var entity = await unitOfWork.GetByIdAsync<AdminUser>(request.Id, cancellationToken: cancellationToken);
+            var entity = await db.GetByIdAsync(request.Id, cancellationToken: cancellationToken);
 
             if (entity != null && entity.Status == false)
                 return (SubCode.SoldOut, default);
@@ -48,7 +49,7 @@ namespace DDD.Domain.AdminUsers.Queries
 
             selector = selector.And(c => c.Name.Contains(request.Keyword), !request.Keyword.IsEmpty());
 
-            var list = await unitOfWork.GetListAsync<AdminUser>(
+            var list = await db.GetListAsync(
                 selector: selector,
                 orderby: "Id desc",
                 limit: request.Limit,
@@ -66,7 +67,7 @@ namespace DDD.Domain.AdminUsers.Queries
 
             selector = selector.And(c => c.Name.Contains(request.Keyword), !request.Keyword.IsEmpty());
 
-            var page = await unitOfWork.GetPagedListAsync<AdminUser>(
+            var page = await db.GetPagedListAsync(
                 selector: selector,
                 orderby: "Id desc",
                 currentPage: request.CurrentPage,
