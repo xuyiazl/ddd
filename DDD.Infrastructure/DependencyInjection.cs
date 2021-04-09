@@ -1,7 +1,6 @@
-﻿using DDD.Domain;
+﻿using DDD.Domain.Common.Mappings;
 using DDD.Domain.Core.Bus;
 using DDD.Domain.Core.Events;
-using DDD.Domain.Core.Interfaces;
 using DDD.Infrastructure.Behaviours;
 using DDD.Infrastructure.Bus;
 using DDD.Infrastructure.Events;
@@ -12,7 +11,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
-using System.Reflection;
 using XUCore.NetCore.DynamicWebApi;
 using XUCore.NetCore.MessagePack;
 using XUCore.Serializer;

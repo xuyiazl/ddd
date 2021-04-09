@@ -1,12 +1,7 @@
-﻿using DDD.Domain.Core.Interfaces;
+﻿using DDD.Domain.Common.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DDD.Persistence
 {
@@ -51,7 +46,7 @@ namespace DDD.Persistence
             //});
 
             services.AddScoped(typeof(INigelDbContext), typeof(NigelDbContext));
-            services.AddScoped(typeof(INigelDbRepository<>), typeof(NigelDbRepository<>));
+            services.AddScoped(typeof(INigelDbRepository), typeof(NigelDbRepository));
 
             return services;
         }

@@ -1,17 +1,15 @@
 ﻿using AutoMapper;
 using DDD.Domain.AdminUsers.Dtos;
+using DDD.Domain.Common.Interfaces;
 using DDD.Domain.Core;
-using DDD.Domain.Core.Interfaces;
 using DDD.Domain.Entities;
 using MediatR;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using XUCore.Extensions;
-using XUCore.NetCore.Data.DbService;
 using XUCore.Paging;
 
 namespace DDD.Domain.AdminUsers.Queries
@@ -21,10 +19,10 @@ namespace DDD.Domain.AdminUsers.Queries
         IRequestHandler<AdminUserListQuery, (SubCode, IList<AdminUserDto>)>,
         IRequestHandler<AdminUserPagedListQuery, (SubCode, PagedModel<AdminUserDto>)>
     {
-        private readonly INigelDbRepository<AdminUser> db;
+        private readonly INigelDbRepository db;
         private readonly IMapper mapper;
 
-        public AdminUserQueryHandler(INigelDbRepository<AdminUser> db, IMapper mapper)
+        public AdminUserQueryHandler(INigelDbRepository db, IMapper mapper)
         {
             this.db = db;
             this.mapper = mapper;
@@ -32,7 +30,7 @@ namespace DDD.Domain.AdminUsers.Queries
 
         public async Task<(SubCode, AdminUserDto)> Handle(AdminUserDetailQuery request, CancellationToken cancellationToken)
         {
-            var entity = await db.GetByIdAsync(request.Id, cancellationToken: cancellationToken);
+            var entity = await db.GetByIdAsync<AdminUser>(request.Id, cancellationToken: cancellationToken);
 
             if (entity != null && entity.Status == false)
                 return (SubCode.SoldOut, default);

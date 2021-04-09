@@ -1,9 +1,9 @@
-﻿using DDD.Domain.Core.Interfaces;
+﻿using DDD.Domain.Common.Interfaces;
 using XUCore.NetCore.Data.DbService;
 
 namespace DDD.Persistence
 {
-    public class NigelDbRepository<TEntity> : MsSqlRepository<TEntity>, INigelDbRepository<TEntity> where TEntity : class, new()
+    public class NigelDbRepository : Repository<INigelDbContext>, INigelDbRepository
     {
         public NigelDbRepository(INigelDbContext context) : base(context) { }
     }

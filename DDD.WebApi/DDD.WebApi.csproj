@@ -5,7 +5,7 @@
   </PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="XUCore.NetCore.Swagger" Version="5.0.4" />
+		<PackageReference Include="XUCore.NetCore.Swagger" Version="5.0.5" />
 	</ItemGroup>
 
 	<ItemGroup>

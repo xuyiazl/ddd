@@ -1,13 +1,11 @@
-﻿using DDD.Domain.Core;
+﻿using DDD.Domain.Common.Interfaces;
+using DDD.Domain.Core;
 using DDD.Domain.Core.Bus;
-using DDD.Domain.Core.Interfaces;
 using DDD.Domain.Entities;
-using DDD.Domain.Notifications;
 using MediatR;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using XUCore.NetCore.Data.DbService;
 
 namespace DDD.Domain.AdminUsers.Commands
 {
@@ -16,9 +14,9 @@ namespace DDD.Domain.AdminUsers.Commands
         IRequestHandler<UpdateAdminUserCommand, (SubCode, int)>,
         IRequestHandler<DeleteAdminUserCommand, (SubCode, int)>
     {
-        private readonly INigelDbRepository<AdminUser> db;
+        private readonly INigelDbRepository db;
 
-        public AdminUserCommandHandler(INigelDbRepository<AdminUser> db, IMediatorHandler bus) : base(bus)
+        public AdminUserCommandHandler(INigelDbRepository db, IMediatorHandler bus) : base(bus)
         {
             this.db = db;
         }
@@ -60,7 +58,7 @@ namespace DDD.Domain.AdminUsers.Commands
 
         public async Task<(SubCode, int)> Handle(UpdateAdminUserCommand request, CancellationToken cancellationToken)
         {
-            var entity = await db.GetByIdAsync(request.Id);
+            var entity = await db.GetByIdAsync<AdminUser>(request.Id);
 
             if (entity == null)
                 return (SubCode.Undefind, 0);
@@ -85,12 +83,12 @@ namespace DDD.Domain.AdminUsers.Commands
 
         public async Task<(SubCode, int)> Handle(DeleteAdminUserCommand request, CancellationToken cancellationToken)
         {
-            var has = await db.AnyAsync(c => c.Id == request.Id);
+            var has = await db.AnyAsync<AdminUser>(c => c.Id == request.Id);
 
             if (!has)
                 return (SubCode.Undefind, 0);
 
-            var res = await db.DeleteAsync(c => c.Id == request.Id);
+            var res = await db.DeleteAsync<AdminUser>(c => c.Id == request.Id);
 
             if (res > 0)
             {
