@@ -1,15 +1,19 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using DDD.Domain.AdminUsers.Dtos;
 using DDD.Domain.Common.Interfaces;
 using DDD.Domain.Core;
 using DDD.Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using XUCore.Extensions;
+using XUCore.NetCore.Data.DbService;
 using XUCore.Paging;
 
 namespace DDD.Domain.AdminUsers.Queries
@@ -30,7 +34,7 @@ namespace DDD.Domain.AdminUsers.Queries
 
         public async Task<(SubCode, AdminUserDto)> Handle(AdminUserDetailQuery request, CancellationToken cancellationToken)
         {
-            var entity = await db.GetByIdAsync<AdminUser>(request.Id, cancellationToken: cancellationToken);
+            var entity = await db.Context.AdminUser.FirstOrDefaultAsync(c => c.Id == request.Id, cancellationToken);
 
             if (entity != null && entity.Status == false)
                 return (SubCode.SoldOut, default);
@@ -43,37 +47,68 @@ namespace DDD.Domain.AdminUsers.Queries
 
         public async Task<(SubCode, IList<AdminUserDto>)> Handle(AdminUserListQuery request, CancellationToken cancellationToken)
         {
-            Expression<Func<AdminUser, bool>> selector = c => true;
+            // 仓储提供的单表查询
 
-            selector = selector.And(c => c.Name.Contains(request.Keyword), !request.Keyword.IsEmpty());
+            //Expression<Func<AdminUser, bool>> selector = c => true;
 
-            var list = await db.GetListAsync(
-                selector: selector,
-                orderby: "Id desc",
-                limit: request.Limit,
-                cancellationToken: cancellationToken);
+            //selector = selector.And(c => c.Name.Contains(request.Keyword), !request.Keyword.IsEmpty());
+
+            //var list = await db.GetListAsync(
+            //    selector: selector,
+            //    orderby: "Id desc",
+            //    limit: request.Limit,
+            //    cancellationToken: cancellationToken);
+
+            //if (list != null)
+            //    return (SubCode.Success, mapper.ToResult<List<AdminUser>, IList<AdminUserDto>>(list));
+
+            //return (SubCode.Fail, default);
+
+            // ef 直接查询
+
+            var list = await db.Context.AdminUser
+                 .WhereIf(c => c.Name.Contains(request.Keyword), !request.Keyword.IsEmpty())
+                 .OrderBy(c => c.Id)
+                 .Take(request.Limit)
+                 .ProjectTo<AdminUserDto>(mapper.ConfigurationProvider)
+                 .ToListAsync(cancellationToken);
 
             if (list != null)
-                return (SubCode.Success, mapper.ToResult<List<AdminUser>, IList<AdminUserDto>>(list));
+                return (SubCode.Success, list);
 
             return (SubCode.Fail, default);
         }
 
         public async Task<(SubCode, PagedModel<AdminUserDto>)> Handle(AdminUserPagedListQuery request, CancellationToken cancellationToken)
         {
-            Expression<Func<AdminUser, bool>> selector = c => true;
+            // 仓储提供的单表查询
 
-            selector = selector.And(c => c.Name.Contains(request.Keyword), !request.Keyword.IsEmpty());
+            //Expression<Func<AdminUser, bool>> selector = c => true;
 
-            var page = await db.GetPagedListAsync(
-                selector: selector,
-                orderby: "Id desc",
-                currentPage: request.CurrentPage,
-                pageSize: request.PageSize,
-                cancellationToken: cancellationToken);
+            //selector = selector.And(c => c.Name.Contains(request.Keyword), !request.Keyword.IsEmpty());
+
+            //var page = await db.GetPagedListAsync(
+            //    selector: selector,
+            //    orderby: "Id desc",
+            //    currentPage: request.CurrentPage,
+            //    pageSize: request.PageSize,
+            //    cancellationToken: cancellationToken);
+
+            //if (page != null)
+            //    return (SubCode.Success, mapper.ToPageResult<AdminUser, AdminUserDto>(page));
+
+            //return (SubCode.Fail, default);
+
+            // ef 直接查询
+
+            var page = await db.Context.AdminUser
+                 .WhereIf(c => c.Name.Contains(request.Keyword), !request.Keyword.IsEmpty())
+                 .OrderBy(c => c.Id)
+                 .ProjectTo<AdminUserDto>(mapper.ConfigurationProvider)
+                 .CreatePagedListAsync(request.CurrentPage, request.PageSize, cancellationToken);
 
             if (page != null)
-                return (SubCode.Success, mapper.ToPageResult<AdminUser, AdminUserDto>(page));
+                return (SubCode.Success, page.Model);
 
             return (SubCode.Fail, default);
         }
