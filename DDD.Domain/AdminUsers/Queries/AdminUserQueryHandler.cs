@@ -40,7 +40,7 @@ namespace DDD.Domain.AdminUsers.Queries
                 return (SubCode.SoldOut, default);
 
             if (entity != null)
-                return (SubCode.Success, mapper.ToResult<AdminUser, AdminUserDto>(entity));
+                return (SubCode.Success, mapper.Map<AdminUserDto>(entity));
 
             return (SubCode.Fail, default);
         }
