@@ -105,7 +105,7 @@ namespace DDD.Domain.AdminUsers.Queries
                  .WhereIf(c => c.Name.Contains(request.Keyword), !request.Keyword.IsEmpty())
                  .OrderBy(c => c.Id)
                  .ProjectTo<AdminUserDto>(mapper.ConfigurationProvider)
-                 .CreatePagedListAsync(request.CurrentPage, request.PageSize, cancellationToken);
+                 .ToPagedListAsync(request.CurrentPage, request.PageSize, cancellationToken);
 
             if (page != null)
                 return (SubCode.Success, page.Model);

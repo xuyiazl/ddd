@@ -3,7 +3,9 @@ using DDD.Domain.Core;
 using DDD.Domain.Core.Bus;
 using DDD.Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -41,7 +43,7 @@ namespace DDD.Domain.AdminUsers.Commands
                 Status = true,
                 UserName = request.UserName
             };
-            
+
             var res = db.Add(entity);
 
             //await bus.PublishEvent(new DomainNotification("", "结束注册...."), cancellationToken);
@@ -58,7 +60,7 @@ namespace DDD.Domain.AdminUsers.Commands
 
         public async Task<(SubCode, int)> Handle(UpdateAdminUserCommand request, CancellationToken cancellationToken)
         {
-            var entity = await db.GetByIdAsync<AdminUser>(request.Id);
+            var entity = await db.Context.AdminUser.Where(c => c.Id == request.Id).FirstOrDefaultAsync(cancellationToken);
 
             if (entity == null)
                 return (SubCode.Undefind, 0);
@@ -83,7 +85,7 @@ namespace DDD.Domain.AdminUsers.Commands
 
         public async Task<(SubCode, int)> Handle(DeleteAdminUserCommand request, CancellationToken cancellationToken)
         {
-            var has = await db.AnyAsync<AdminUser>(c => c.Id == request.Id);
+            var has = await db.Context.AdminUser.AnyAsync(c => c.Id == request.Id, cancellationToken);
 
             if (!has)
                 return (SubCode.Undefind, 0);
