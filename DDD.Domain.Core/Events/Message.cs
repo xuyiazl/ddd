@@ -13,8 +13,18 @@ namespace DDD.Domain.Core.Events
     /// </summary>
     public abstract class Message<TResponse> : IRequest<TResponse>
     {
+        /// <summary>
+        /// 消息类型（执行操作的命令）
+        /// </summary>
         public string MessageType { get; protected set; }
+        /// <summary>
+        /// 聚合根（表主键）
+        /// </summary>
         public long AggregateId { get; protected set; }
+        /// <summary>
+        /// 聚合类型（实体名，如果聚合根使用Guid可以不使用，避免查询的时候主键冲突）
+        /// </summary>
+        public string AggregateType { get;protected set; }
 
         protected Message()
         {

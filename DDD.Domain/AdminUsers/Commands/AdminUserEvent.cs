@@ -13,6 +13,7 @@ namespace DDD.Domain.AdminUsers.Commands
             Id = id;
             User = user;
             AggregateId = id;
+            AggregateType = nameof(AdminUser);
         }
     }
 
@@ -25,6 +26,7 @@ namespace DDD.Domain.AdminUsers.Commands
             Id = id;
             User = user;
             AggregateId = id;
+            AggregateType = nameof(AdminUser);
         }
     }
 
@@ -35,6 +37,7 @@ namespace DDD.Domain.AdminUsers.Commands
         {
             Id = id;
             AggregateId = id;
+            AggregateType = nameof(AdminUser);
         }
     }
 }

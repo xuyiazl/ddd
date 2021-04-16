@@ -21,6 +21,7 @@ namespace DDD.Domain.Core.Events
         {
             Id = Guid.NewGuid();
             AggregateId = theEvent.AggregateId;
+            AggregateType = theEvent.AggregateType;
             MessageType = theEvent.MessageType;
             Data = data;
             User = user;
