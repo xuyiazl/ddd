@@ -13,7 +13,7 @@ namespace DDD.Domain.AdminUsers
 {
     public partial class AdminUserCommand
     {
-        public class Create : Command<(SubCode, int)>
+        public class CreateCommand : Command<(SubCode, int)>
         {
             public string UserName { get; set; }
             public string Mobile { get; set; }
@@ -30,7 +30,7 @@ namespace DDD.Domain.AdminUsers
                 return ValidationResult.IsValid;
             }
 
-            public class Validator : AbstractValidator<Create>
+            public class Validator : AbstractValidator<CreateCommand>
             {
                 public Validator()
                 {
@@ -66,7 +66,7 @@ namespace DDD.Domain.AdminUsers
             }
 
             internal class AdminUserCommandHandler : CommandHandler,
-                IRequestHandler<Create, (SubCode, int)>
+                IRequestHandler<CreateCommand, (SubCode, int)>
             {
                 private readonly INigelDbRepository db;
 
@@ -75,7 +75,7 @@ namespace DDD.Domain.AdminUsers
                     this.db = db;
                 }
 
-                public async Task<(SubCode, int)> Handle(Create request, CancellationToken cancellationToken)
+                public async Task<(SubCode, int)> Handle(CreateCommand request, CancellationToken cancellationToken)
                 {
                     //await bus.PublishEvent(new DomainNotification("", "开始注册...."), cancellationToken);
 

@@ -16,7 +16,7 @@ namespace DDD.Domain.AdminUsers
 {
     public partial class AdminUserCommand
     {
-        public class Paged : Command<(SubCode, PagedModel<AdminUserDto>)>
+        public class QueryPaged : Command<(SubCode, PagedModel<AdminUserDto>)>
         {
             public int CurrentPage { get; set; }
             public int PageSize { get; set; }
@@ -28,7 +28,7 @@ namespace DDD.Domain.AdminUsers
                 return ValidationResult.IsValid;
             }
 
-            public class Validator : AbstractValidator<Paged>
+            public class Validator : AbstractValidator<QueryPaged>
             {
                 public Validator()
                 {
@@ -44,7 +44,7 @@ namespace DDD.Domain.AdminUsers
             }
 
             internal class Handler :
-                IRequestHandler<Paged, (SubCode, PagedModel<AdminUserDto>)>
+                IRequestHandler<QueryPaged, (SubCode, PagedModel<AdminUserDto>)>
             {
                 private readonly INigelDbRepository db;
                 private readonly IMapper mapper;
@@ -55,7 +55,7 @@ namespace DDD.Domain.AdminUsers
                     this.mapper = mapper;
                 }
 
-                public async Task<(SubCode, PagedModel<AdminUserDto>)> Handle(Paged request, CancellationToken cancellationToken)
+                public async Task<(SubCode, PagedModel<AdminUserDto>)> Handle(QueryPaged request, CancellationToken cancellationToken)
                 {
                     // 仓储提供的单表查询
 

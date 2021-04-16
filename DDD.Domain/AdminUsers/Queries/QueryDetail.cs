@@ -14,7 +14,7 @@ namespace DDD.Domain.AdminUsers
 {
     public partial class AdminUserCommand
     {
-        public class Detail : Command<(SubCode, AdminUserDto)>
+        public class QueryDetail : Command<(SubCode, AdminUserDto)>
         {
             public long Id { get; set; }
 
@@ -23,7 +23,7 @@ namespace DDD.Domain.AdminUsers
                 ValidationResult = new Validator().Validate(this);
                 return ValidationResult.IsValid;
             }
-            public class Validator : AbstractValidator<Detail>
+            public class Validator : AbstractValidator<QueryDetail>
             {
                 public Validator()
                 {
@@ -34,7 +34,7 @@ namespace DDD.Domain.AdminUsers
             }
 
             internal class Handler :
-                IRequestHandler<Detail, (SubCode, AdminUserDto)>
+                IRequestHandler<QueryDetail, (SubCode, AdminUserDto)>
             {
                 private readonly INigelDbRepository db;
                 private readonly IMapper mapper;
@@ -45,7 +45,7 @@ namespace DDD.Domain.AdminUsers
                     this.mapper = mapper;
                 }
 
-                public async Task<(SubCode, AdminUserDto)> Handle(Detail request, CancellationToken cancellationToken)
+                public async Task<(SubCode, AdminUserDto)> Handle(QueryDetail request, CancellationToken cancellationToken)
                 {
                     var entity = await db.Context.AdminUser.FirstOrDefaultAsync(c => c.Id == request.Id, cancellationToken);
 

@@ -17,7 +17,7 @@ namespace DDD.Domain.AdminUsers
 {
     public partial class AdminUserCommand
     {
-        public class List : Command<(SubCode, IList<AdminUserDto>)>
+        public class QueryList : Command<(SubCode, IList<AdminUserDto>)>
         {
             public int Limit { get; set; }
             public string Keyword { get; set; }
@@ -27,7 +27,7 @@ namespace DDD.Domain.AdminUsers
                 ValidationResult = new Validator().Validate(this);
                 return ValidationResult.IsValid;
             }
-            public class Validator : AbstractValidator<List>
+            public class Validator : AbstractValidator<QueryList>
             {
                 public Validator()
                 {
@@ -38,7 +38,7 @@ namespace DDD.Domain.AdminUsers
                 }
             }
             internal class Handler :
-                IRequestHandler<List, (SubCode, IList<AdminUserDto>)>
+                IRequestHandler<QueryList, (SubCode, IList<AdminUserDto>)>
             {
                 private readonly INigelDbRepository db;
                 private readonly IMapper mapper;
@@ -49,7 +49,7 @@ namespace DDD.Domain.AdminUsers
                     this.mapper = mapper;
                 }
 
-                public async Task<(SubCode, IList<AdminUserDto>)> Handle(List request, CancellationToken cancellationToken)
+                public async Task<(SubCode, IList<AdminUserDto>)> Handle(QueryList request, CancellationToken cancellationToken)
                 {
                     // 仓储提供的单表查询
 
