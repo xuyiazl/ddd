@@ -2,9 +2,9 @@
 using DDD.Domain.Common.Mappings;
 using DDD.Domain.Entities;
 
-namespace DDD.Domain.AdminUsers.Dtos
+namespace DDD.Domain.AdminUsers
 {
-    public class AdminUserDto : IMapFrom<AdminUser>
+    public class AdminUserDto : IMapFrom<AdminUserEntity>
     {
         public long Id { get; set; }
         public string Mobile { get; set; }
@@ -16,7 +16,7 @@ namespace DDD.Domain.AdminUsers.Dtos
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<AdminUser, AdminUserDto>()
+            profile.CreateMap<AdminUserEntity, AdminUserDto>()
                 .ForMember(d => d.Id, opt => opt.MapFrom(s => s.Id))
                 .ForMember(d => d.Mobile, opt => opt.MapFrom(s => s.Mobile))
                 .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name))

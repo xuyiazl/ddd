@@ -1,8 +1,6 @@
 ﻿using DDD.Applaction.AdminUsers.Interfaces;
 using DDD.Applaction.Common;
-using DDD.Domain.AdminUsers.Commands;
-using DDD.Domain.AdminUsers.Dtos;
-using DDD.Domain.AdminUsers.Queries;
+using DDD.Domain.AdminUsers;
 using DDD.Domain.Core.Bus;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -21,7 +19,7 @@ namespace DDD.Applaction.AdminUsers.Services
         public AdminUserAppService(IMediatorHandler bus) : base(bus) { }
 
         [HttpPost]
-        public async Task<Result<int>> CreateAsync(CreateAdminUserCommand command, CancellationToken cancellationToken)
+        public async Task<Result<int>> CreateAsync(AdminUserCommand.Create command, CancellationToken cancellationToken)
         {
             var (subCode, res) = await bus.SendCommand(command, cancellationToken);
 
@@ -29,7 +27,7 @@ namespace DDD.Applaction.AdminUsers.Services
         }
 
         [HttpPut]
-        public async Task<Result<int>> UpdateAsync(UpdateAdminUserCommand command, CancellationToken cancellationToken)
+        public async Task<Result<int>> UpdateAsync(AdminUserCommand.Update command, CancellationToken cancellationToken)
         {
             var (subCode, res) = await bus.SendCommand(command, cancellationToken);
 
@@ -39,7 +37,7 @@ namespace DDD.Applaction.AdminUsers.Services
         [HttpDelete("{id:int}")]
         public async Task<Result<int>> DeleteAsync(long id, CancellationToken cancellationToken)
         {
-            var (subCode, res) = await bus.SendCommand(new DeleteAdminUserCommand { Id = id }, cancellationToken);
+            var (subCode, res) = await bus.SendCommand(new AdminUserCommand.Delete { Id = id }, cancellationToken);
 
             return Success(subCode, res);
         }
@@ -47,7 +45,7 @@ namespace DDD.Applaction.AdminUsers.Services
         [HttpGet("{id:int}")]
         public async Task<Result<AdminUserDto>> GetAsync(long id, CancellationToken cancellationToken)
         {
-            var (subCode, res) = await bus.SendCommand(new AdminUserDetailQuery { Id = id }, cancellationToken);
+            var (subCode, res) = await bus.SendCommand(new AdminUserCommand.Detail { Id = id }, cancellationToken);
 
             return Success(subCode, res);
         }
@@ -55,7 +53,7 @@ namespace DDD.Applaction.AdminUsers.Services
         [HttpGet]
         public async Task<Result<IList<AdminUserDto>>> GetListAsync(int limit, string keyword, CancellationToken cancellationToken)
         {
-            var (subCode, res) = await bus.SendCommand(new AdminUserListQuery { Limit = limit, Keyword = keyword }, cancellationToken);
+            var (subCode, res) = await bus.SendCommand(new AdminUserCommand.List { Limit = limit, Keyword = keyword }, cancellationToken);
 
             return Success(subCode, res);
         }
@@ -63,7 +61,7 @@ namespace DDD.Applaction.AdminUsers.Services
         [HttpGet]
         public async Task<Result<PagedModel<AdminUserDto>>> GetPageAsync(int currentPage, int pageSize, string keyword, CancellationToken cancellationToken)
         {
-            var (subCode, res) = await bus.SendCommand(new AdminUserPagedListQuery { CurrentPage = currentPage, PageSize = pageSize, Keyword = keyword }, cancellationToken);
+            var (subCode, res) = await bus.SendCommand(new AdminUserCommand.Paged { CurrentPage = currentPage, PageSize = pageSize, Keyword = keyword }, cancellationToken);
 
             return Success(subCode, res);
         }

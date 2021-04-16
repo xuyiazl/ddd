@@ -9,6 +9,6 @@ namespace DDD.Persistence
     {
         public NigelDbContext(DbContextOptions<NigelDbContext> options) : base(options) { }
 
-        public DbSet<AdminUser> AdminUser => Set<AdminUser>();
+        public DbSet<AdminUserEntity> AdminUser => Set<AdminUserEntity>();
     }
 }

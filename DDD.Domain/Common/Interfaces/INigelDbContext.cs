@@ -6,6 +6,6 @@ namespace DDD.Domain.Common.Interfaces
 {
     public interface INigelDbContext : IDbContext
     {
-        DbSet<AdminUser> AdminUser { get; }
+        DbSet<AdminUserEntity> AdminUser { get; }
     }
 }

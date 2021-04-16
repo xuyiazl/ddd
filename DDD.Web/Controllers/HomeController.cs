@@ -1,5 +1,5 @@
 ﻿using DDD.Applaction.AdminUsers.Interfaces;
-using DDD.Domain.AdminUsers.Commands;
+using DDD.Domain.AdminUsers;
 using DDD.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -27,7 +27,7 @@ namespace DDD.Web.Controllers
         {
             var res = await adminUserAppService.GetListAsync(10, "", CancellationToken.None);
 
-            var user = new CreateAdminUserCommand() { };
+            var user = new AdminUserCommand.Create() { };
 
             var vaild = user.IsVaild();
 

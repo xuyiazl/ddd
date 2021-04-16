@@ -4,7 +4,7 @@ using System;
 
 namespace DDD.Domain.Entities
 {
-    public class AdminUser : Entity, IAggregateRoot
+    public class AdminUserEntity : Entity, IAggregateRoot
     {
         public string UserName { get; set; }
         public string Mobile { get; set; }
