@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DDD.Domain.AdminUsers
 {
-    internal class DeleteEvent : Event
+    public class DeleteEvent : Event
     {
         public long Id { get; set; }
         public DeleteEvent(long id)

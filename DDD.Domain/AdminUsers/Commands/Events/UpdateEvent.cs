@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DDD.Domain.AdminUsers
 {
-    internal class UpdateEvent : Event
+    public class UpdateEvent : Event
     {
         public long Id { get; set; }
         public AdminUserEntity User { get; set; }
