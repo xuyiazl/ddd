@@ -43,8 +43,7 @@ namespace DDD.Domain.AdminUsers
                 }
             }
 
-            internal class Handler :
-                IRequestHandler<QueryPaged, (SubCode, PagedModel<AdminUserDto>)>
+            internal class Handler : IRequestHandler<QueryPaged, (SubCode, PagedModel<AdminUserDto>)>
             {
                 private readonly INigelDbRepository db;
                 private readonly IMapper mapper;
