@@ -20,8 +20,7 @@ namespace DDD.Domain.AdminUsers
         /// <summary>
         /// 事件通知操作
         /// </summary>
-        internal class Handler :
-            INotificationHandler<UpdateEvent>
+        public class Handler : INotificationHandler<UpdateEvent>
         {
             public Handler()
             {

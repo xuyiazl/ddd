@@ -37,8 +37,7 @@ namespace DDD.Domain.AdminUsers
                         .LessThanOrEqualTo(100).WithMessage(c => $"limit必须小于等于100");
                 }
             }
-            public class Handler :
-                IRequestHandler<QueryList, (SubCode, IList<AdminUserDto>)>
+            public class Handler : IRequestHandler<QueryList, (SubCode, IList<AdminUserDto>)>
             {
                 private readonly INigelDbRepository db;
                 private readonly IMapper mapper;

@@ -33,8 +33,7 @@ namespace DDD.Domain.AdminUsers
                 }
             }
 
-            public class Handler :
-                IRequestHandler<QueryDetail, (SubCode, AdminUserDto)>
+            public class Handler : IRequestHandler<QueryDetail, (SubCode, AdminUserDto)>
             {
                 private readonly INigelDbRepository db;
                 private readonly IMapper mapper;

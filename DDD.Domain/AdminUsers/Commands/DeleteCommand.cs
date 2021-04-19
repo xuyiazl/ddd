@@ -33,8 +33,7 @@ namespace DDD.Domain.AdminUsers
                 }
             }
 
-            public class Handler : CommandHandler,
-                IRequestHandler<DeleteCommand, (SubCode, int)>
+            public class Handler : CommandHandler, IRequestHandler<DeleteCommand, (SubCode, int)>
             {
                 private readonly INigelDbRepository db;
 

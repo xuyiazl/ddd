@@ -18,8 +18,7 @@ namespace DDD.Domain.AdminUsers
         /// <summary>
         /// 事件通知操作
         /// </summary>
-        internal class Handler :
-            INotificationHandler<DeleteEvent>
+        public class Handler : INotificationHandler<DeleteEvent>
         {
             public Handler()
             {

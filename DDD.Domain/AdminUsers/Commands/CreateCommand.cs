@@ -65,8 +65,7 @@ namespace DDD.Domain.AdminUsers
                 }
             }
 
-            public class Handler : CommandHandler,
-                IRequestHandler<CreateCommand, (SubCode, int)>
+            public class Handler : CommandHandler, IRequestHandler<CreateCommand, (SubCode, int)>
             {
                 private readonly INigelDbRepository db;
 
