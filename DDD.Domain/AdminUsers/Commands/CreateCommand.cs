@@ -65,12 +65,12 @@ namespace DDD.Domain.AdminUsers
                 }
             }
 
-            internal class AdminUserCommandHandler : CommandHandler,
+            public class Handler : CommandHandler,
                 IRequestHandler<CreateCommand, (SubCode, int)>
             {
                 private readonly INigelDbRepository db;
 
-                public AdminUserCommandHandler(INigelDbRepository db, IMediatorHandler bus) : base(bus)
+                public Handler(INigelDbRepository db, IMediatorHandler bus) : base(bus)
                 {
                     this.db = db;
                 }
