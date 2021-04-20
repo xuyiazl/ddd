@@ -20,7 +20,7 @@ namespace DDD.Applaction.AdminUsers.Services
         public AdminUserAppService(IMediatorHandler bus) : base(bus) { }
 
         [HttpPost]
-        public async Task<Result<int>> CreateAsync(AdminUserCommand.CreateCommand command, CancellationToken cancellationToken)
+        public async Task<Result<int>> CreateAsync([FromBody] CreateAdminUserCommand command, CancellationToken cancellationToken)
         {
             var (subCode, res) = await bus.SendCommand(command, cancellationToken);
 
@@ -28,7 +28,7 @@ namespace DDD.Applaction.AdminUsers.Services
         }
 
         [HttpPut]
-        public async Task<Result<int>> UpdateAsync(AdminUserCommand.UpdateCommand command, CancellationToken cancellationToken)
+        public async Task<Result<int>> UpdateAsync([FromBody] UpdateAdminUserCommand command, CancellationToken cancellationToken)
         {
             var (subCode, res) = await bus.SendCommand(command, cancellationToken);
 
@@ -38,7 +38,7 @@ namespace DDD.Applaction.AdminUsers.Services
         [HttpDelete("{id:int}")]
         public async Task<Result<int>> DeleteAsync(long id, CancellationToken cancellationToken)
         {
-            var (subCode, res) = await bus.SendCommand(new AdminUserCommand.DeleteCommand { Id = id }, cancellationToken);
+            var (subCode, res) = await bus.SendCommand(new DeleteAdminUserCommand { Id = id }, cancellationToken);
 
             return Success(subCode, res);
         }
@@ -46,7 +46,7 @@ namespace DDD.Applaction.AdminUsers.Services
         [HttpGet("{id:int}")]
         public async Task<Result<AdminUserDto>> GetAsync(long id, CancellationToken cancellationToken)
         {
-            var (subCode, res) = await bus.SendCommand(new AdminUserCommand.QueryDetail { Id = id }, cancellationToken);
+            var (subCode, res) = await bus.SendCommand(new QueryAdminUserDetail { Id = id }, cancellationToken);
 
             return Success(subCode, res);
         }
@@ -54,7 +54,7 @@ namespace DDD.Applaction.AdminUsers.Services
         [HttpGet]
         public async Task<Result<IList<AdminUserDto>>> GetListAsync(int limit, string keyword, CancellationToken cancellationToken)
         {
-            var (subCode, res) = await bus.SendCommand(new AdminUserCommand.QueryList { Limit = limit, Keyword = keyword }, cancellationToken);
+            var (subCode, res) = await bus.SendCommand(new QueryAdminUserList { Limit = limit, Keyword = keyword }, cancellationToken);
 
             return Success(subCode, res);
         }
@@ -62,7 +62,7 @@ namespace DDD.Applaction.AdminUsers.Services
         [HttpGet]
         public async Task<Result<PagedModel<AdminUserDto>>> GetPageAsync(int currentPage, int pageSize, string keyword, CancellationToken cancellationToken)
         {
-            var (subCode, res) = await bus.SendCommand(new AdminUserCommand.QueryPaged { CurrentPage = currentPage, PageSize = pageSize, Keyword = keyword }, cancellationToken);
+            var (subCode, res) = await bus.SendCommand(new QueryAdminUserPaged { CurrentPage = currentPage, PageSize = pageSize, Keyword = keyword }, cancellationToken);
 
             return Success(subCode, res);
         }

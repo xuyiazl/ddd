@@ -14,74 +14,71 @@ using XUCore.Extensions;
 
 namespace DDD.Domain.AdminUsers
 {
-    public partial class AdminUserCommand
+    public class QueryAdminUserList : Command<(SubCode, IList<AdminUserDto>)>
     {
-        public class QueryList : Command<(SubCode, IList<AdminUserDto>)>
+        public int Limit { get; set; }
+        public string Keyword { get; set; }
+
+        public override bool IsVaild()
         {
-            public int Limit { get; set; }
-            public string Keyword { get; set; }
+            ValidationResult = new Validator().Validate(this);
+            return ValidationResult.IsValid;
+        }
 
-            public override bool IsVaild()
+        public class Validator : AbstractValidator<QueryAdminUserList>
+        {
+            public Validator()
             {
-                ValidationResult = new Validator().Validate(this);
-                return ValidationResult.IsValid;
+                RuleFor(x => x.Limit)
+                    .NotEmpty().WithMessage("limit不可为空")
+                    .GreaterThan(0).WithMessage(c => $"limit必须大于0")
+                    .LessThanOrEqualTo(100).WithMessage(c => $"limit必须小于等于100");
+            }
+        }
+
+        public class Handler : CommandHandler<QueryAdminUserList, (SubCode, IList<AdminUserDto>)>
+        {
+            private readonly INigelDbRepository db;
+            private readonly IMapper mapper;
+
+            public Handler(INigelDbRepository db, IMapper mapper)
+            {
+                this.db = db;
+                this.mapper = mapper;
             }
 
-            public class Validator : AbstractValidator<QueryList>
+            public override async Task<(SubCode, IList<AdminUserDto>)> Handle(QueryAdminUserList request, CancellationToken cancellationToken)
             {
-                public Validator()
-                {
-                    RuleFor(x => x.Limit)
-                        .NotEmpty().WithMessage("limit不可为空")
-                        .GreaterThan(0).WithMessage(c => $"limit必须大于0")
-                        .LessThanOrEqualTo(100).WithMessage(c => $"limit必须小于等于100");
-                }
-            }
+                // 仓储提供的单表查询
 
-            public class Handler : CommandHandler<QueryList, (SubCode, IList<AdminUserDto>)>
-            {
-                private readonly INigelDbRepository db;
-                private readonly IMapper mapper;
+                //Expression<Func<AdminUser, bool>> selector = c => true;
 
-                public Handler(INigelDbRepository db, IMapper mapper)
-                {
-                    this.db = db;
-                    this.mapper = mapper;
-                }
+                //selector = selector.And(c => c.Name.Contains(request.Keyword), !request.Keyword.IsEmpty());
 
-                public override async Task<(SubCode, IList<AdminUserDto>)> Handle(QueryList request, CancellationToken cancellationToken)
-                {
-                    // 仓储提供的单表查询
+                //var list = await db.GetListAsync(
+                //    selector: selector,
+                //    orderby: "Id desc",
+                //    limit: request.Limit,
+                //    cancellationToken: cancellationToken);
 
-                    //Expression<Func<AdminUser, bool>> selector = c => true;
+                //if (list != null)
+                //    return (SubCode.Success, mapper.ToResult<List<AdminUser>, IList<AdminUserDto>>(list));
 
-                    //selector = selector.And(c => c.Name.Contains(request.Keyword), !request.Keyword.IsEmpty());
+                //return (SubCode.Fail, default);
 
-                    //var list = await db.GetListAsync(
-                    //    selector: selector,
-                    //    orderby: "Id desc",
-                    //    limit: request.Limit,
-                    //    cancellationToken: cancellationToken);
+                // ef 直接查询
 
-                    //if (list != null)
-                    //    return (SubCode.Success, mapper.ToResult<List<AdminUser>, IList<AdminUserDto>>(list));
+                var list = await db.Context.AdminUser
+                     .WhereIf(c => c.Name.Contains(request.Keyword), !request.Keyword.IsEmpty())
+                     .OrderBy(c => c.Id)
+                     .Take(request.Limit)
+                     .ProjectTo<AdminUserDto>(mapper.ConfigurationProvider)
+                     .ToListAsync(cancellationToken);
 
-                    //return (SubCode.Fail, default);
+                if (list != null)
+                    return (SubCode.Success, list);
 
-                    // ef 直接查询
-
-                    var list = await db.Context.AdminUser
-                         .WhereIf(c => c.Name.Contains(request.Keyword), !request.Keyword.IsEmpty())
-                         .OrderBy(c => c.Id)
-                         .Take(request.Limit)
-                         .ProjectTo<AdminUserDto>(mapper.ConfigurationProvider)
-                         .ToListAsync(cancellationToken);
-
-                    if (list != null)
-                        return (SubCode.Success, list);
-
-                    return (SubCode.Fail, default);
-                }
+                return (SubCode.Fail, default);
             }
         }
     }

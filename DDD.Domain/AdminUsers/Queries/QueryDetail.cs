@@ -10,51 +10,48 @@ using XUCore.Extensions;
 
 namespace DDD.Domain.AdminUsers
 {
-    public partial class AdminUserCommand
+    public class QueryAdminUserDetail : Command<(SubCode, AdminUserDto)>
     {
-        public class QueryDetail : Command<(SubCode, AdminUserDto)>
+        public long Id { get; set; }
+
+        public override bool IsVaild()
         {
-            public long Id { get; set; }
+            ValidationResult = new Validator().Validate(this);
+            return ValidationResult.IsValid;
+        }
 
-            public override bool IsVaild()
+        public class Validator : CommandValidator<QueryAdminUserDetail>
+        {
+            public Validator()
             {
-                ValidationResult = new Validator().Validate(this);
-                return ValidationResult.IsValid;
+                RuleFor(x => x.Id)
+                    .NotEmpty().WithMessage("Id不可为空")
+                    .GreaterThan(0).WithMessage(c => $"Id必须大于0");
+            }
+        }
+
+        public class Handler : CommandHandler<QueryAdminUserDetail, (SubCode, AdminUserDto)>
+        {
+            private readonly INigelDbRepository db;
+            private readonly IMapper mapper;
+
+            public Handler(INigelDbRepository db, IMapper mapper)
+            {
+                this.db = db;
+                this.mapper = mapper;
             }
 
-            public class Validator : CommandValidator<QueryDetail>
+            public override async Task<(SubCode, AdminUserDto)> Handle(QueryAdminUserDetail request, CancellationToken cancellationToken)
             {
-                public Validator()
-                {
-                    RuleFor(x => x.Id)
-                        .NotEmpty().WithMessage("Id不可为空")
-                        .GreaterThan(0).WithMessage(c => $"Id必须大于0");
-                }
-            }
+                var entity = await db.Context.AdminUser.FirstOrDefaultAsync(c => c.Id == request.Id, cancellationToken);
 
-            public class Handler : CommandHandler<QueryDetail, (SubCode, AdminUserDto)>
-            {
-                private readonly INigelDbRepository db;
-                private readonly IMapper mapper;
+                if (entity != null && entity.Status == false)
+                    return (SubCode.SoldOut, default);
 
-                public Handler(INigelDbRepository db, IMapper mapper)
-                {
-                    this.db = db;
-                    this.mapper = mapper;
-                }
+                if (entity != null)
+                    return (SubCode.Success, mapper.Map<AdminUserDto>(entity));
 
-                public override async Task<(SubCode, AdminUserDto)> Handle(QueryDetail request, CancellationToken cancellationToken)
-                {
-                    var entity = await db.Context.AdminUser.FirstOrDefaultAsync(c => c.Id == request.Id, cancellationToken);
-
-                    if (entity != null && entity.Status == false)
-                        return (SubCode.SoldOut, default);
-
-                    if (entity != null)
-                        return (SubCode.Success, mapper.Map<AdminUserDto>(entity));
-
-                    return (SubCode.Fail, default);
-                }
+                return (SubCode.Fail, default);
             }
         }
     }
