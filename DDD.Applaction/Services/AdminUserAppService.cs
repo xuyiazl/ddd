@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using XUCore.Ddd.Domain.Bus;
 using XUCore.NetCore;
+using XUCore.NetCore.DynamicWebApi;
 using XUCore.Paging;
 
 namespace DDD.Applaction.AdminUsers.Services
