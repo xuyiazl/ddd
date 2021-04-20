@@ -1,6 +1,5 @@
-﻿using DDD.Domain.Core;
-using DDD.Domain.Core.Models;
-using System;
+﻿using System;
+using XUCore.Ddd.Domain;
 
 namespace DDD.Domain.Entities
 {

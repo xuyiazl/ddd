@@ -1,13 +1,10 @@
-﻿using DDD.Domain.Core.Bus;
-using DDD.Domain.Core.Commands;
-using DDD.Domain.Core.Events;
-using MediatR;
+﻿using MediatR;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using XUCore.Ddd.Domain.Bus;
+using XUCore.Ddd.Domain.Commands;
+using XUCore.Ddd.Domain.Events;
 
 namespace DDD.Infrastructure.Bus
 {

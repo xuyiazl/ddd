@@ -1,11 +1,11 @@
 ﻿using DDD.Applaction.AdminUsers.Interfaces;
 using DDD.Applaction.Common;
 using DDD.Domain.AdminUsers;
-using DDD.Domain.Core.Bus;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using XUCore.Ddd.Domain.Bus;
 using XUCore.NetCore;
 using XUCore.Paging;
 

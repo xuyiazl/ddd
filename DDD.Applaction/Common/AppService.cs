@@ -1,9 +1,8 @@
 ﻿using DDD.Applaction.Common.Interfaces;
 using DDD.Domain.Core;
-using DDD.Domain.Core.Bus;
 using DDD.Infrastructure.Filters;
-using MediatR;
 using System;
+using XUCore.Ddd.Domain.Bus;
 using XUCore.NetCore;
 using XUCore.NetCore.DynamicWebApi;
 

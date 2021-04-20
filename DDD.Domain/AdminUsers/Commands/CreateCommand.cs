@@ -1,13 +1,12 @@
 ﻿using DDD.Domain.Common.Interfaces;
 using DDD.Domain.Core;
-using DDD.Domain.Core.Bus;
-using DDD.Domain.Core.Commands;
 using DDD.Domain.Entities;
 using FluentValidation;
-using MediatR;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using XUCore.Ddd.Domain.Bus;
+using XUCore.Ddd.Domain.Commands;
 
 namespace DDD.Domain.AdminUsers
 {

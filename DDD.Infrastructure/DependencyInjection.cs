@@ -1,7 +1,4 @@
 ﻿using DDD.Domain.Common.Mappings;
-using DDD.Domain.Core.Bus;
-using DDD.Domain.Core.Events;
-using DDD.Infrastructure.Behaviours;
 using DDD.Infrastructure.Bus;
 using DDD.Infrastructure.Events;
 using FluentValidation.AspNetCore;
@@ -11,6 +8,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using XUCore.Ddd.Domain.Behaviours;
+using XUCore.Ddd.Domain.Bus;
+using XUCore.Ddd.Domain.Events;
 using XUCore.NetCore.DynamicWebApi;
 using XUCore.NetCore.MessagePack;
 using XUCore.Serializer;

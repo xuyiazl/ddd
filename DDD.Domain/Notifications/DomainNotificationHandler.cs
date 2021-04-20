@@ -1,10 +1,8 @@
-﻿using MediatR;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using XUCore.Ddd.Domain.Events;
 
 namespace DDD.Domain.Notifications
 {
@@ -12,7 +10,7 @@ namespace DDD.Domain.Notifications
     /// 领域通知处理程序，把所有的通知信息放到事件总线中
     /// 继承 INotificationHandler<T>
     /// </summary>
-    public class DomainNotificationHandler : INotificationHandler<DomainNotification>
+    public class DomainNotificationHandler : NotificationEventHandler<DomainNotification>
     {
         // 通知信息列表
         private List<DomainNotification> _notifications;
@@ -24,7 +22,7 @@ namespace DDD.Domain.Notifications
         }
 
         // 处理方法，把全部的通知信息，添加到内存里
-        public Task Handle(DomainNotification message, CancellationToken cancellationToken)
+        public override Task Handle(DomainNotification message, CancellationToken cancellationToken)
         {
             _notifications.Add(message);
             return Task.CompletedTask;

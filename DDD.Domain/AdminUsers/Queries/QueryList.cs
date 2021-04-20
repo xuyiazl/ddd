@@ -2,14 +2,13 @@
 using AutoMapper.QueryableExtensions;
 using DDD.Domain.Common.Interfaces;
 using DDD.Domain.Core;
-using DDD.Domain.Core.Commands;
 using FluentValidation;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using XUCore.Ddd.Domain.Commands;
 using XUCore.Extensions;
 
 
@@ -27,6 +26,7 @@ namespace DDD.Domain.AdminUsers
                 ValidationResult = new Validator().Validate(this);
                 return ValidationResult.IsValid;
             }
+
             public class Validator : AbstractValidator<QueryList>
             {
                 public Validator()
@@ -37,6 +37,7 @@ namespace DDD.Domain.AdminUsers
                         .LessThanOrEqualTo(100).WithMessage(c => $"limit必须小于等于100");
                 }
             }
+
             public class Handler : CommandHandler<QueryList, (SubCode, IList<AdminUserDto>)>
             {
                 private readonly INigelDbRepository db;

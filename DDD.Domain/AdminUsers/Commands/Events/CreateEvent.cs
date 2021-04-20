@@ -3,6 +3,7 @@ using DDD.Domain.Entities;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using XUCore.Ddd.Domain.Events;
 
 namespace DDD.Domain.AdminUsers
 {
@@ -17,10 +18,11 @@ namespace DDD.Domain.AdminUsers
             AggregateId = id;
             AggregateType = nameof(AdminUserEntity);
         }
+
         /// <summary>
         /// 事件通知操作
         /// </summary>
-        public class Handler : INotificationHandler<CreateEvent>
+        public class Handler : NotificationEventHandler<CreateEvent>
         {
             public Handler()
             {
@@ -31,7 +33,7 @@ namespace DDD.Domain.AdminUsers
             /// <param name="notification"></param>
             /// <param name="cancellationToken"></param>
             /// <returns></returns>
-            public async Task Handle(CreateEvent notification, CancellationToken cancellationToken)
+            public override async Task Handle(CreateEvent notification, CancellationToken cancellationToken)
             {
 
             }

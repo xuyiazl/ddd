@@ -2,12 +2,11 @@
 using AutoMapper.QueryableExtensions;
 using DDD.Domain.Common.Interfaces;
 using DDD.Domain.Core;
-using DDD.Domain.Core.Commands;
 using FluentValidation;
-using MediatR;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using XUCore.Ddd.Domain.Commands;
 using XUCore.Extensions;
 using XUCore.Paging;
 

@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using DDD.Domain.Common.Interfaces;
 using DDD.Domain.Core;
-using DDD.Domain.Core.Commands;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
+using XUCore.Ddd.Domain.Commands;
 using XUCore.Extensions;
 
 namespace DDD.Domain.AdminUsers
