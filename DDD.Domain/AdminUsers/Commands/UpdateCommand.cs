@@ -28,7 +28,7 @@ namespace DDD.Domain.AdminUsers
                 return ValidationResult.IsValid;
             }
 
-            public class Validator : AbstractValidator<UpdateCommand>
+            public class Validator : CommandValidator<UpdateCommand>
             {
                 public Validator()
                 {
@@ -54,7 +54,7 @@ namespace DDD.Domain.AdminUsers
                 }
             }
 
-            public class Handler : CommandHandler, IRequestHandler<UpdateCommand, (SubCode, int)>
+            public class Handler : CommandHandler<UpdateCommand, (SubCode, int)>
             {
                 private readonly INigelDbRepository db;
 
@@ -63,7 +63,7 @@ namespace DDD.Domain.AdminUsers
                     this.db = db;
                 }
 
-                public async Task<(SubCode, int)> Handle(UpdateCommand request, CancellationToken cancellationToken)
+                public override async Task<(SubCode, int)> Handle(UpdateCommand request, CancellationToken cancellationToken)
                 {
                     var entity = await db.Context.AdminUser.Where(c => c.Id == request.Id).FirstOrDefaultAsync(cancellationToken);
 

@@ -37,7 +37,7 @@ namespace DDD.Domain.AdminUsers
                         .LessThanOrEqualTo(100).WithMessage(c => $"limit必须小于等于100");
                 }
             }
-            public class Handler : IRequestHandler<QueryList, (SubCode, IList<AdminUserDto>)>
+            public class Handler : CommandHandler<QueryList, (SubCode, IList<AdminUserDto>)>
             {
                 private readonly INigelDbRepository db;
                 private readonly IMapper mapper;
@@ -48,7 +48,7 @@ namespace DDD.Domain.AdminUsers
                     this.mapper = mapper;
                 }
 
-                public async Task<(SubCode, IList<AdminUserDto>)> Handle(QueryList request, CancellationToken cancellationToken)
+                public override async Task<(SubCode, IList<AdminUserDto>)> Handle(QueryList request, CancellationToken cancellationToken)
                 {
                     // 仓储提供的单表查询
 

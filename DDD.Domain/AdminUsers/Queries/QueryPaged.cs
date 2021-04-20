@@ -28,7 +28,7 @@ namespace DDD.Domain.AdminUsers
                 return ValidationResult.IsValid;
             }
 
-            public class Validator : AbstractValidator<QueryPaged>
+            public class Validator : CommandValidator<QueryPaged>
             {
                 public Validator()
                 {
@@ -43,7 +43,7 @@ namespace DDD.Domain.AdminUsers
                 }
             }
 
-            public class Handler : IRequestHandler<QueryPaged, (SubCode, PagedModel<AdminUserDto>)>
+            public class Handler : CommandHandler<QueryPaged, (SubCode, PagedModel<AdminUserDto>)>
             {
                 private readonly INigelDbRepository db;
                 private readonly IMapper mapper;
@@ -54,7 +54,7 @@ namespace DDD.Domain.AdminUsers
                     this.mapper = mapper;
                 }
 
-                public async Task<(SubCode, PagedModel<AdminUserDto>)> Handle(QueryPaged request, CancellationToken cancellationToken)
+                public override async Task<(SubCode, PagedModel<AdminUserDto>)> Handle(QueryPaged request, CancellationToken cancellationToken)
                 {
                     // 仓储提供的单表查询
 

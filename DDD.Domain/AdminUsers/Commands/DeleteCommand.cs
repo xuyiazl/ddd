@@ -23,7 +23,7 @@ namespace DDD.Domain.AdminUsers
                 return ValidationResult.IsValid;
             }
 
-            public class Validator : AbstractValidator<DeleteCommand>
+            public class Validator : CommandValidator<DeleteCommand>
             {
                 public Validator()
                 {
@@ -33,7 +33,7 @@ namespace DDD.Domain.AdminUsers
                 }
             }
 
-            public class Handler : CommandHandler, IRequestHandler<DeleteCommand, (SubCode, int)>
+            public class Handler : CommandHandler<DeleteCommand, (SubCode, int)>
             {
                 private readonly INigelDbRepository db;
 
@@ -42,7 +42,7 @@ namespace DDD.Domain.AdminUsers
                     this.db = db;
                 }
 
-                public async Task<(SubCode, int)> Handle(DeleteCommand request, CancellationToken cancellationToken)
+                public override async Task<(SubCode, int)> Handle(DeleteCommand request, CancellationToken cancellationToken)
                 {
                     var has = await db.Context.AdminUser.AnyAsync(c => c.Id == request.Id, cancellationToken);
 

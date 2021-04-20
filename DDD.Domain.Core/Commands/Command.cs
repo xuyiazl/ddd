@@ -16,6 +16,7 @@ namespace DDD.Domain.Core.Commands
     {
         //时间戳
         public DateTime Timestamp { get; private set; }
+
         protected ValidationResult ValidationResult
         {
             get;

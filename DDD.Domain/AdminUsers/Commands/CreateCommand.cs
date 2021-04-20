@@ -30,7 +30,7 @@ namespace DDD.Domain.AdminUsers
                 return ValidationResult.IsValid;
             }
 
-            public class Validator : AbstractValidator<CreateCommand>
+            public class Validator : CommandValidator<CreateCommand>
             {
                 public Validator()
                 {
@@ -65,7 +65,7 @@ namespace DDD.Domain.AdminUsers
                 }
             }
 
-            public class Handler : CommandHandler, IRequestHandler<CreateCommand, (SubCode, int)>
+            public class Handler : CommandHandler<CreateCommand, (SubCode, int)>
             {
                 private readonly INigelDbRepository db;
 
@@ -74,7 +74,7 @@ namespace DDD.Domain.AdminUsers
                     this.db = db;
                 }
 
-                public async Task<(SubCode, int)> Handle(CreateCommand request, CancellationToken cancellationToken)
+                public override async Task<(SubCode, int)> Handle(CreateCommand request, CancellationToken cancellationToken)
                 {
                     //await bus.PublishEvent(new DomainNotification("", "开始注册...."), cancellationToken);
 
