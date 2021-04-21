@@ -1,6 +1,5 @@
-﻿using DDD.Domain.Common.Interfaces;
-using DDD.Domain.Core;
-using DDD.Domain.Entities;
+﻿using DDD.Domain.Core;
+using DDD.Domain.Core.Entities;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using System.Threading;

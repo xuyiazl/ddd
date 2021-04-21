@@ -1,7 +1,7 @@
 ﻿using System;
 using XUCore.Ddd.Domain;
 
-namespace DDD.Domain.Entities
+namespace DDD.Domain.Core.Entities
 {
     public class AdminUserEntity : Entity, IAggregateRoot
     {

@@ -1,5 +1,5 @@
-﻿using DDD.Domain.Common.Interfaces;
-using DDD.Domain.Entities;
+﻿using DDD.Domain.Core;
+using DDD.Domain.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using XUCore.NetCore.Data.DbService;
 

@@ -1,6 +1,4 @@
-﻿using DDD.Domain.Core.Events;
-using DDD.Domain.Entities;
-using MediatR;
+﻿using DDD.Domain.Core.Entities;
 using System.Threading;
 using System.Threading.Tasks;
 using XUCore.Ddd.Domain.Events;

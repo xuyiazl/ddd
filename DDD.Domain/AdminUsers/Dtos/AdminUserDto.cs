@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using DDD.Domain.Common.Mappings;
-using DDD.Domain.Entities;
+using DDD.Domain.Core.Entities;
 
 namespace DDD.Domain.AdminUsers
 {

@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using DDD.Domain.Common.Interfaces;
 using DDD.Domain.Core;
 using FluentValidation;
 using System.Linq;

@@ -1,4 +1,4 @@
-﻿using DDD.Domain.Common.Interfaces;
+﻿using DDD.Domain.Core;
 using XUCore.NetCore.Data.DbService;
 
 namespace DDD.Persistence

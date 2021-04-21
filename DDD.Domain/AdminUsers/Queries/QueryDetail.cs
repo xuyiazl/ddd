@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using DDD.Domain.Common.Interfaces;
 using DDD.Domain.Core;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;

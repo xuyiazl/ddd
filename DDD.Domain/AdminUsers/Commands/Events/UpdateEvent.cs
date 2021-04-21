@@ -1,4 +1,4 @@
-﻿using DDD.Domain.Entities;
+﻿using DDD.Domain.Core.Entities;
 using System.Threading;
 using System.Threading.Tasks;
 using XUCore.Ddd.Domain.Events;
