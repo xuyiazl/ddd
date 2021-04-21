@@ -3,14 +3,11 @@ using DDD.Infrastructure.Bus;
 using DDD.Infrastructure.Events;
 using FluentValidation.AspNetCore;
 using MediatR;
-using MediatR.Pipeline;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
-using XUCore.Ddd.Domain.Behaviours;
-using XUCore.Ddd.Domain.Bus;
-using XUCore.Ddd.Domain.Events;
+using XUCore.Ddd.Domain;
 using XUCore.NetCore.DynamicWebApi;
 using XUCore.NetCore.MessagePack;
 using XUCore.Serializer;
@@ -25,16 +22,17 @@ namespace DDD.Infrastructure
 
             services.AddAutoMapper(typeof(IMapFrom<>));
             services.AddMediatR(typeof(IMapFrom<>));
-            services.AddTransient(typeof(IRequestPreProcessor<>), typeof(RequestLogger<>));
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceBehaviour<,>));
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
+
+            services.AddPerformanceBehaviour();
+
+            services.AddValidationBehavior();
 
             // 命令总线Domain Bus (Mediator)
-            services.AddScoped<IMediatorHandler, InMemoryBus>();
+            services.AddMediatorBus<InMemoryBus>();
 
             // 注入 基础设施层 - 事件溯源
             //services.AddScoped<IEventStoreRepository, EventStoreSQLRepository>();
-            services.AddScoped<IEventStoreService, SqlEventStoreService>();
+            services.AddEventStore<SqlEventStoreService>();
             //services.AddScoped<EventStoreSQLContext>();
 
             //services.AddScoped<IUserManager, UserManagerService>();
