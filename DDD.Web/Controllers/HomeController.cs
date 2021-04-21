@@ -27,7 +27,7 @@ namespace DDD.Web.Controllers
         {
             var res = await adminUserAppService.GetListAsync(10, "", CancellationToken.None);
 
-            var user = new CreateAdminUserCommand() { };
+            var user = new AdminUserCreateCommand() { };
 
             var vaild = user.IsVaild();
 

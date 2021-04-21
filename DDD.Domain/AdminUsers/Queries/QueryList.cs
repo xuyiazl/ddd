@@ -13,7 +13,7 @@ using XUCore.Extensions;
 
 namespace DDD.Domain.AdminUsers
 {
-    public class QueryAdminUserList : Command<(SubCode, IList<AdminUserDto>)>
+    public class AdminUserQueryList : Command<(SubCode, IList<AdminUserDto>)>
     {
         public int Limit { get; set; }
         public string Keyword { get; set; }
@@ -24,7 +24,7 @@ namespace DDD.Domain.AdminUsers
             return ValidationResult.IsValid;
         }
 
-        public class Validator : AbstractValidator<QueryAdminUserList>
+        public class Validator : AbstractValidator<AdminUserQueryList>
         {
             public Validator()
             {
@@ -35,7 +35,7 @@ namespace DDD.Domain.AdminUsers
             }
         }
 
-        public class Handler : CommandHandler<QueryAdminUserList, (SubCode, IList<AdminUserDto>)>
+        public class Handler : CommandHandler<AdminUserQueryList, (SubCode, IList<AdminUserDto>)>
         {
             private readonly INigelDbRepository db;
             private readonly IMapper mapper;
@@ -46,7 +46,7 @@ namespace DDD.Domain.AdminUsers
                 this.mapper = mapper;
             }
 
-            public override async Task<(SubCode, IList<AdminUserDto>)> Handle(QueryAdminUserList request, CancellationToken cancellationToken)
+            public override async Task<(SubCode, IList<AdminUserDto>)> Handle(AdminUserQueryList request, CancellationToken cancellationToken)
             {
                 // 仓储提供的单表查询
 
@@ -68,6 +68,7 @@ namespace DDD.Domain.AdminUsers
                 // ef 直接查询
 
                 var list = await db.Context.AdminUser
+                     .Where(c => c.Status == true)
                      .WhereIf(c => c.Name.Contains(request.Keyword), !request.Keyword.IsEmpty())
                      .OrderBy(c => c.Id)
                      .Take(request.Limit)

@@ -9,7 +9,7 @@ using XUCore.Ddd.Domain.Commands;
 
 namespace DDD.Domain.AdminUsers
 {
-    public class UpdateAdminUserCommand : Command<(SubCode, int)>
+    public class AdminUserUpdateCommand : Command<(SubCode, int)>
     {
         public long Id { get; set; }
         public string Name { get; set; }
@@ -24,7 +24,7 @@ namespace DDD.Domain.AdminUsers
             return ValidationResult.IsValid;
         }
 
-        public class Validator : CommandValidator<UpdateAdminUserCommand>
+        public class Validator : CommandValidator<AdminUserUpdateCommand>
         {
             public Validator()
             {
@@ -50,7 +50,7 @@ namespace DDD.Domain.AdminUsers
             }
         }
 
-        public class Handler : CommandHandler<UpdateAdminUserCommand, (SubCode, int)>
+        public class Handler : CommandHandler<AdminUserUpdateCommand, (SubCode, int)>
         {
             private readonly INigelDbRepository db;
 
@@ -59,7 +59,7 @@ namespace DDD.Domain.AdminUsers
                 this.db = db;
             }
 
-            public override async Task<(SubCode, int)> Handle(UpdateAdminUserCommand request, CancellationToken cancellationToken)
+            public override async Task<(SubCode, int)> Handle(AdminUserUpdateCommand request, CancellationToken cancellationToken)
             {
                 var entity = await db.Context.AdminUser.Where(c => c.Id == request.Id).FirstOrDefaultAsync(cancellationToken);
 

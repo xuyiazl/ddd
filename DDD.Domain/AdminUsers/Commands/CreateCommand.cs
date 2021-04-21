@@ -9,7 +9,7 @@ using XUCore.Ddd.Domain.Commands;
 
 namespace DDD.Domain.AdminUsers
 {
-    public class CreateAdminUserCommand : Command<(SubCode, int)>
+    public class AdminUserCreateCommand : Command<(SubCode, int)>
     {
         public string UserName { get; set; }
         public string Mobile { get; set; }
@@ -26,7 +26,7 @@ namespace DDD.Domain.AdminUsers
             return ValidationResult.IsValid;
         }
 
-        public class Validator : CommandValidator<CreateAdminUserCommand>
+        public class Validator : CommandValidator<AdminUserCreateCommand>
         {
             public Validator()
             {
@@ -61,7 +61,7 @@ namespace DDD.Domain.AdminUsers
             }
         }
 
-        public class Handler : CommandHandler<CreateAdminUserCommand, (SubCode, int)>
+        public class Handler : CommandHandler<AdminUserCreateCommand, (SubCode, int)>
         {
             private readonly INigelDbRepository db;
 
@@ -70,7 +70,7 @@ namespace DDD.Domain.AdminUsers
                 this.db = db;
             }
 
-            public override async Task<(SubCode, int)> Handle(CreateAdminUserCommand request, CancellationToken cancellationToken)
+            public override async Task<(SubCode, int)> Handle(AdminUserCreateCommand request, CancellationToken cancellationToken)
             {
                 //await bus.PublishEvent(new DomainNotification("", "开始注册...."), cancellationToken);
 

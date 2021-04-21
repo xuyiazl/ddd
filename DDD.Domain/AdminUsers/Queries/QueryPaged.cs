@@ -12,7 +12,7 @@ using XUCore.Paging;
 
 namespace DDD.Domain.AdminUsers
 {
-    public class QueryAdminUserPaged : Command<(SubCode, PagedModel<AdminUserDto>)>
+    public class AdminUserQueryPaged : Command<(SubCode, PagedModel<AdminUserDto>)>
     {
         public int CurrentPage { get; set; }
         public int PageSize { get; set; }
@@ -24,7 +24,7 @@ namespace DDD.Domain.AdminUsers
             return ValidationResult.IsValid;
         }
 
-        public class Validator : CommandValidator<QueryAdminUserPaged>
+        public class Validator : CommandValidator<AdminUserQueryPaged>
         {
             public Validator()
             {
@@ -39,7 +39,7 @@ namespace DDD.Domain.AdminUsers
             }
         }
 
-        public class Handler : CommandHandler<QueryAdminUserPaged, (SubCode, PagedModel<AdminUserDto>)>
+        public class Handler : CommandHandler<AdminUserQueryPaged, (SubCode, PagedModel<AdminUserDto>)>
         {
             private readonly INigelDbRepository db;
             private readonly IMapper mapper;
@@ -50,7 +50,7 @@ namespace DDD.Domain.AdminUsers
                 this.mapper = mapper;
             }
 
-            public override async Task<(SubCode, PagedModel<AdminUserDto>)> Handle(QueryAdminUserPaged request, CancellationToken cancellationToken)
+            public override async Task<(SubCode, PagedModel<AdminUserDto>)> Handle(AdminUserQueryPaged request, CancellationToken cancellationToken)
             {
                 // 仓储提供的单表查询
 
