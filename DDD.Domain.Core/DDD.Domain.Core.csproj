@@ -5,7 +5,7 @@
   </PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="XUCore.Ddd.Domain" Version="5.0.3" />
+		<PackageReference Include="XUCore.Ddd.Domain" Version="5.0.4" />
 		<PackageReference Include="XUCore.NetCore" Version="5.0.6" />
 		<PackageReference Include="XUCore.NetCore.AspectCore" Version="5.0.6" />
 		<PackageReference Include="XUCore.NetCore.Data" Version="5.0.6" />
