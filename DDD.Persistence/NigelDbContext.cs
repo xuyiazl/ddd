@@ -7,7 +7,10 @@ namespace DDD.Persistence
 {
     public class NigelDbContext : DBContextFactory, INigelDbContext
     {
-        public NigelDbContext(DbContextOptions<NigelDbContext> options) : base(options) { }
+        public NigelDbContext(DbContextOptions<NigelDbContext> options) : base(options)
+        {
+            base.Database.Migrate();
+        }
 
         public DbSet<AdminUserEntity> AdminUser => Set<AdminUserEntity>();
     }

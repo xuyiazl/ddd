@@ -18,6 +18,7 @@ namespace DDD.Persistence
                         options.EnableRetryOnFailure();
                         //options.ExecutionStrategy(c => new MySqlRetryingExecutionStrategy(c.CurrentContext.Context));
                         //options.ExecutionStrategy(c => new SqlServerRetryingExecutionStrategy(c.CurrentContext.Context));
+                        options.MigrationsAssembly("DDD.Persistence");
                     }
                     )
                 .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
