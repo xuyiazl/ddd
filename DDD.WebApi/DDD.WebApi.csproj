@@ -5,7 +5,6 @@
   </PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.5"></PackageReference>
 		<PackageReference Include="XUCore.NetCore.Swagger" Version="5.0.6" />
 	</ItemGroup>
 
