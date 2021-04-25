@@ -4,13 +4,9 @@
 		<TargetFramework>net5.0</TargetFramework>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.4"></PackageReference>
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.4"></PackageReference>
-	</ItemGroup>
-	<ItemGroup>
-		<PackageReference Include="XUCore.Ddd.Domain" Version="5.0.4" />
-		<PackageReference Include="XUCore.NetCore" Version="5.0.6" />
-		<PackageReference Include="XUCore.NetCore.AspectCore" Version="5.0.6" />
-		<PackageReference Include="XUCore.NetCore.Data" Version="5.0.6" />
+		<PackageReference Include="XUCore.Ddd.Domain" Version="5.0.7" />
+		<PackageReference Include="XUCore.NetCore" Version="5.0.7" />
+		<PackageReference Include="XUCore.NetCore.AspectCore" Version="5.0.7" />
+		<PackageReference Include="XUCore.NetCore.Data" Version="5.0.7" />
 	</ItemGroup>
 </Project>
