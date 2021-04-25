@@ -3,12 +3,17 @@ using DDD.Infrastructure.Bus;
 using DDD.Infrastructure.Events;
 using FluentValidation.AspNetCore;
 using MediatR;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
+using System.Text.Encodings.Web;
+using System.Text.Unicode;
 using XUCore.Ddd.Domain;
 using XUCore.NetCore.DynamicWebApi;
+using XUCore.NetCore.Extensions;
 using XUCore.NetCore.MessagePack;
 using XUCore.Serializer;
 
@@ -18,6 +23,8 @@ namespace DDD.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration, IWebHostEnvironment environment, string project = "api")
         {
+            services.AddSingleton(HtmlEncoder.Create(UnicodeRanges.All));
+
             services.AddHttpContextAccessor();
 
             services.AddAutoMapper(typeof(IMapFrom<>));
@@ -46,6 +53,8 @@ namespace DDD.Infrastructure
                 mvcBuilder = services.AddControllers();
 
                 services.AddDynamicWebApi();
+
+                services.AddSwagger();
             }
             else
             {
@@ -66,10 +75,60 @@ namespace DDD.Infrastructure
                 })
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining(typeof(IMapFrom<>)));
 
-
             //services.AddCacheService<MemoryCacheService>();
 
             return services;
+        }
+
+        public static IApplicationBuilder UseInfrastructure(this IApplicationBuilder app, IWebHostEnvironment env, string project = "api")
+        {
+            if (project == "api")
+            {
+                if (env.IsDevelopment())
+                {
+                    app.UseDeveloperExceptionPage();
+                }
+
+                app.UseStaticFiles();
+            }
+            else
+            {
+                if (env.IsDevelopment())
+                {
+                    app.UseDeveloperExceptionPage();
+                }
+                else
+                {
+                    app.UseExceptionHandler("/Home/Error");
+                }
+            }
+
+            app.UseRouting();
+
+            app.UseAuthorization();
+
+            app.UseStaticHttpContext();
+
+            if (project == "api")
+            {
+                app.UseSwagger();
+
+                app.UseEndpoints(endpoints =>
+                {
+                    endpoints.MapControllers();
+                });
+            }
+            else
+            {
+                app.UseEndpoints(endpoints =>
+                {
+                    endpoints.MapControllerRoute(
+                        name: "default",
+                        pattern: "{controller=Home}/{action=Index}/{id?}");
+                });
+            }
+
+            return app;
         }
     }
 }

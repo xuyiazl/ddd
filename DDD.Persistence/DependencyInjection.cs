@@ -1,4 +1,5 @@
 ﻿using DDD.Domain.Core;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -50,6 +51,17 @@ namespace DDD.Persistence
             services.AddScoped(typeof(INigelDbRepository), typeof(NigelDbRepository));
 
             return services;
+        }
+
+        public static IApplicationBuilder UsePersistence(this IApplicationBuilder app)
+        {
+            var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope();
+
+            var dbContext = scope.ServiceProvider.GetService<NigelDbContext>();
+
+            dbContext.Database.Migrate();
+
+            return app;
         }
     }
 }

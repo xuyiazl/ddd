@@ -6,6 +6,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="XUCore.NetCore.DynamicWebApi" Version="5.0.7" />
+		<PackageReference Include="XUCore.NetCore.Swagger" Version="5.0.7" />
 	</ItemGroup>
 
 	<ItemGroup>

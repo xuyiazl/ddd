@@ -9,7 +9,7 @@ namespace DDD.Persistence
     {
         public NigelDbContext(DbContextOptions<NigelDbContext> options) : base(options)
         {
-            base.Database.Migrate();
+
         }
 
         public DbSet<AdminUserEntity> AdminUser => Set<AdminUserEntity>();

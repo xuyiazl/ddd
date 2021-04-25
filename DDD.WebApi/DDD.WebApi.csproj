@@ -5,10 +5,6 @@
   </PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="XUCore.NetCore.Swagger" Version="5.0.7" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <ProjectReference Include="..\DDD.Applaction\DDD.Applaction.csproj" />
 	</ItemGroup>
 
