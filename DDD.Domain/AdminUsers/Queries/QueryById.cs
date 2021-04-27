@@ -44,7 +44,7 @@ namespace DDD.Domain.AdminUsers
 
             public override async Task<(SubCode, AdminUserDto)> Handle(AdminUserQueryById request, CancellationToken cancellationToken)
             {
-                var entity = await db.Context.AdminUser.Where(c => c.Id == request.Id && c.Status == true)
+                var entity = await db.Context.AdminUser.Where(c => c.Id == request.Id && c.Status == Status.Show)
                     .ProjectTo<AdminUserDto>(mapper.ConfigurationProvider)
                     .FirstOrDefaultAsync(cancellationToken);
 

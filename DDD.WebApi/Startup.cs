@@ -29,6 +29,7 @@ namespace DDD.WebApi
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseInfrastructure(env, "api");
+            app.UsePersistence();
         }
     }
 }

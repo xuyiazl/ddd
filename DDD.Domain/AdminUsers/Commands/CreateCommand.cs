@@ -60,11 +60,14 @@ namespace DDD.Domain.AdminUsers
                 var entity = new AdminUserEntity
                 {
                     Name = request.Name,
-                    CreatedTime = DateTime.Now,
                     Password = request.Password,
                     Picture = request.Picture,
-                    Status = true,
-                    UserName = request.UserName
+                    Status = Status.Show,
+                    UserName = request.UserName,
+
+                    Updated_At = null,
+                    Deleted_At = null,
+                    Created_At = DateTime.Now
                 };
 
                 var res = db.Add(entity);

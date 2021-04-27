@@ -1,6 +1,7 @@
 ﻿using DDD.Domain.Core;
 using DDD.Domain.Core.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 using XUCore.NetCore.Data.DbService;
 
 namespace DDD.Persistence
@@ -12,6 +13,10 @@ namespace DDD.Persistence
 
         }
 
+        public override Assembly[] Assemblies => new Assembly[] { Assembly.GetExecutingAssembly() };
+
         public DbSet<AdminUserEntity> AdminUser => Set<AdminUserEntity>();
+        public DbSet<AdminUserInfoEntity> AdminUserInfo => Set<AdminUserInfoEntity>();
+        public DbSet<AdminUserLoginRecordEntity> AdminUserLoginRecord => Set<AdminUserLoginRecordEntity>();
     }
 }

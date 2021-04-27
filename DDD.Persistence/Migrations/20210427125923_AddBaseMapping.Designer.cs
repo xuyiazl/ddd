@@ -4,14 +4,16 @@ using DDD.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DDD.Persistence.Migrations
 {
     [DbContext(typeof(NigelDbContext))]
-    partial class NigelDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210427125923_AddBaseMapping")]
+    partial class AddBaseMapping
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -91,7 +93,7 @@ namespace DDD.Persistence.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("Status")
-                        .HasColumnType("int(1)")
+                        .HasColumnType("int")
                         .HasComment("数据状态（1、正常 2、不显示 3、已删除）");
 
                     b.Property<DateTime?>("Updated_At")

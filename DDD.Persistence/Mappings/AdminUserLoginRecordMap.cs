@@ -5,12 +5,9 @@ using XUCore.NetCore.Data.DbService;
 
 namespace DDD.Persistence.Mappings
 {
-    public class AdminUserLoginRecordMap : EntityTypeConfiguration<AdminUserLoginRecordEntity>
+    public class AdminUserLoginRecordMap : KeyMapping<AdminUserLoginRecordEntity>
     {
-        public AdminUserLoginRecordMap() : base("AdminUserLoginRecord", t => t.Id)
-        {
-            SetIndentity(t => t.Id);
-        }
+        public AdminUserLoginRecordMap() : base("AdminUserLoginRecord", t => t.Id) { }
 
         public override void Configure(EntityTypeBuilder<AdminUserLoginRecordEntity> builder)
         {

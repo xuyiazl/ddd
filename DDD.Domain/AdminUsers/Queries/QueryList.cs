@@ -68,7 +68,7 @@ namespace DDD.Domain.AdminUsers
                 // ef 直接查询
 
                 var list = await db.Context.AdminUser
-                     .Where(c => c.Status == true)
+                     .Where(c => c.Status == Status.Show)
                      .WhereIf(c => c.Name.Contains(request.Keyword), !request.Keyword.IsEmpty())
                      .OrderBy(c => c.Id)
                      .Take(request.Limit)

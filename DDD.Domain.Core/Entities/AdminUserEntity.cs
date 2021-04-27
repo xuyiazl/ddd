@@ -4,7 +4,7 @@ using XUCore.Ddd.Domain;
 
 namespace DDD.Domain.Core.Entities
 {
-    public class AdminUserEntity : Entity, IAggregateRoot
+    public class AdminUserEntity : BaseEntity
     {
         public AdminUserEntity()
         {
@@ -14,8 +14,6 @@ namespace DDD.Domain.Core.Entities
         public string Password { get; set; }
         public string Name { get; set; }
         public string Picture { get; set; }
-        public DateTime CreatedTime { get; set; }
-        public bool Status { get; set; }
 
         public AdminUserInfoEntity UserInfo { get; set; }
         public ICollection<AdminUserLoginRecordEntity> LoginRecords { get; set; }

@@ -5,7 +5,7 @@ using XUCore.Ddd.Domain;
 
 namespace DDD.Domain.Core.Entities
 {
-    public class AdminUserInfoEntity : Entity, IAggregateRoot
+    public class AdminUserInfoEntity : BaseEntity
     {
         public long UserId { get; set; }
         public int Sex { get; set; }

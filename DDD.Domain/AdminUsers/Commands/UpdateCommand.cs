@@ -1,6 +1,7 @@
 ﻿using DDD.Domain.Core;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -57,6 +58,8 @@ namespace DDD.Domain.AdminUsers
                 entity.Id = request.Id;
                 entity.Name = request.Name;
                 entity.Picture = request.Picture;
+
+                entity.Updated_At = DateTime.Now;
 
                 var res = db.Update(entity);
 

@@ -29,6 +29,7 @@ namespace DDD.Web
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseInfrastructure(env, "mvc");
+            app.UsePersistence();
         }
     }
 }
