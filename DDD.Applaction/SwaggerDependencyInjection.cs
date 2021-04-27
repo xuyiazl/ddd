@@ -4,7 +4,7 @@ using Microsoft.OpenApi.Models;
 using System.IO;
 using XUCore.NetCore.Swagger;
 
-namespace DDD.Infrastructure
+namespace DDD.Applaction
 {
     public static class SwaggerDependencyInjection
     {

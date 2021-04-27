@@ -23,13 +23,14 @@ namespace DDD.WebApi
         {
             services.AddInfrastructure(Configuration, Environment, "api");
             services.AddPersistence(Configuration);
-            services.AddApplication();
+            services.AddApplication("api");
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseInfrastructure(env, "api");
             app.UsePersistence();
+            app.UseApplication("api");
         }
     }
 }

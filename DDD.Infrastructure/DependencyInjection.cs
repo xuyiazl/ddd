@@ -53,8 +53,6 @@ namespace DDD.Infrastructure
                 mvcBuilder = services.AddControllers();
 
                 services.AddDynamicWebApi();
-
-                services.AddSwagger();
             }
             else
             {
@@ -111,8 +109,6 @@ namespace DDD.Infrastructure
 
             if (project == "api")
             {
-                app.UseSwagger();
-
                 app.UseEndpoints(endpoints =>
                 {
                     endpoints.MapControllers();
