@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using XUCore.Extensions;
 
 namespace DDD.Domain.Common.Mappings
 {
@@ -14,12 +16,7 @@ namespace DDD.Domain.Common.Mappings
 
         private void ApplyMappingsFromAssembly(Assembly assembly)
         {
-            var types = assembly.GetExportedTypes()
-                   .Where(t =>
-                       t.GetInterfaces()
-                       .Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IMapFrom<>)) && t != typeof(DtoBase<>) && t != typeof(DtoKeyBase<>)
-                   )
-                   .ToList();
+            var types = assembly.GetTypes(type => type.IsAbstract == false && type.GetInterfaces().Any(i => i.IsParticularGeneric(typeof(IMapFrom<>))));
 
             foreach (var type in types)
             {
