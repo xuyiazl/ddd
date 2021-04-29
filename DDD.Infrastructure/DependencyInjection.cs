@@ -12,9 +12,11 @@ using Newtonsoft.Json;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
 using XUCore.Ddd.Domain;
+using XUCore.NetCore.AspectCore.Cache;
 using XUCore.NetCore.DynamicWebApi;
 using XUCore.NetCore.Extensions;
 using XUCore.NetCore.MessagePack;
+using XUCore.NetCore.Redis;
 using XUCore.Serializer;
 
 namespace DDD.Infrastructure
@@ -45,6 +47,15 @@ namespace DDD.Infrastructure
             //services.AddScoped<IUserManager, UserManagerService>();
 
             //services.AddAuthentication();
+
+            // 注入redis插件，支持拦截器缓存
+            services.AddRedisService().AddJsonRedisSerializer();
+            // 注入缓存拦截器（缓存数据用）
+            services.AddCacheService<RedisCacheService>((option) =>
+            {
+                option.RedisRead = "cache-read";
+                option.RedisWrite = "cache-write";
+            });
 
             IMvcBuilder mvcBuilder;
 

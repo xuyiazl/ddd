@@ -1,4 +1,5 @@
-﻿using DDD.Domain.Core;
+﻿using DDD.Domain.Common;
+using DDD.Domain.Core;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -7,10 +8,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using XUCore.Ddd.Domain.Bus;
 using XUCore.Ddd.Domain.Commands;
+using XUCore.NetCore.AspectCore.Cache;
 
 namespace DDD.Domain.AdminUsers
 {
-    public class AdminUserUpdateCommand : Command<(SubCode, int)>
+    public class AdminUserUpdateCommand : Command<int>
     {
         public long Id { get; set; }
         public string Name { get; set; }
@@ -39,7 +41,7 @@ namespace DDD.Domain.AdminUsers
             }
         }
 
-        public class Handler : CommandHandler<AdminUserUpdateCommand, (SubCode, int)>
+        public class Handler : CommandHandler<AdminUserUpdateCommand, int>
         {
             private readonly INigelDbRepository db;
 
@@ -48,12 +50,13 @@ namespace DDD.Domain.AdminUsers
                 this.db = db;
             }
 
-            public override async Task<(SubCode, int)> Handle(AdminUserUpdateCommand request, CancellationToken cancellationToken)
+            [RedisCacheRemove(HashKey = RedisKey.Admin, Key = "{Id}")]
+            public override async Task<int> Handle(AdminUserUpdateCommand request, CancellationToken cancellationToken)
             {
                 var entity = await db.Context.AdminUser.Where(c => c.Id == request.Id).FirstOrDefaultAsync(cancellationToken);
 
                 if (entity == null)
-                    return (SubCode.Undefind, 0);
+                    return 0;
 
                 entity.Id = request.Id;
                 entity.Name = request.Name;
@@ -64,12 +67,10 @@ namespace DDD.Domain.AdminUsers
                 var res = db.Update(entity);
 
                 if (res > 0)
-                {
+
                     await bus.PublishEvent(new UpdateEvent(entity.Id, entity), cancellationToken);
 
-                    return (SubCode.Success, res);
-                }
-                return (SubCode.Fail, res);
+                return res;
             }
         }
     }

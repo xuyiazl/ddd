@@ -13,7 +13,7 @@ using XUCore.Extensions;
 
 namespace DDD.Domain.AdminUsers
 {
-    public class AdminUserQueryList : Command<(SubCode, IList<AdminUserDto>)>
+    public class AdminUserQueryList : Command<IList<AdminUserDto>>
     {
         public int Limit { get; set; }
         public string Keyword { get; set; }
@@ -35,7 +35,7 @@ namespace DDD.Domain.AdminUsers
             }
         }
 
-        public class Handler : CommandHandler<AdminUserQueryList, (SubCode, IList<AdminUserDto>)>
+        public class Handler : CommandHandler<AdminUserQueryList, IList<AdminUserDto>>
         {
             private readonly INigelDbRepository db;
             private readonly IMapper mapper;
@@ -46,7 +46,7 @@ namespace DDD.Domain.AdminUsers
                 this.mapper = mapper;
             }
 
-            public override async Task<(SubCode, IList<AdminUserDto>)> Handle(AdminUserQueryList request, CancellationToken cancellationToken)
+            public override async Task<IList<AdminUserDto>> Handle(AdminUserQueryList request, CancellationToken cancellationToken)
             {
                 // 仓储提供的单表查询
 
@@ -75,10 +75,7 @@ namespace DDD.Domain.AdminUsers
                      .ProjectTo<AdminUserDto>(mapper.ConfigurationProvider)
                      .ToListAsync(cancellationToken);
 
-                if (list != null)
-                    return (SubCode.Success, list);
-
-                return (SubCode.Fail, default);
+                return list;
             }
         }
     }

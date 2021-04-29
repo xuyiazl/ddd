@@ -1,4 +1,5 @@
-﻿using DDD.Domain.Core;
+﻿using DDD.Domain.Common;
+using DDD.Domain.Core;
 using DDD.Domain.Core.Entities;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
@@ -6,10 +7,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using XUCore.Ddd.Domain.Bus;
 using XUCore.Ddd.Domain.Commands;
+using XUCore.NetCore.AspectCore.Cache;
 
 namespace DDD.Domain.AdminUsers
 {
-    public class AdminUserDeleteCommand : Command<(SubCode, int)>
+    public class AdminUserDeleteCommand : Command<int>
     {
         public long Id { get; set; }
 
@@ -29,7 +31,7 @@ namespace DDD.Domain.AdminUsers
             }
         }
 
-        public class Handler : CommandHandler<AdminUserDeleteCommand, (SubCode, int)>
+        public class Handler : CommandHandler<AdminUserDeleteCommand, int>
         {
             private readonly INigelDbRepository db;
 
@@ -38,22 +40,21 @@ namespace DDD.Domain.AdminUsers
                 this.db = db;
             }
 
-            public override async Task<(SubCode, int)> Handle(AdminUserDeleteCommand request, CancellationToken cancellationToken)
+            [RedisCacheRemove(HashKey = RedisKey.Admin, Key = "{Id}")]
+            public override async Task<int> Handle(AdminUserDeleteCommand request, CancellationToken cancellationToken)
             {
                 var has = await db.Context.AdminUser.AnyAsync(c => c.Id == request.Id, cancellationToken);
 
                 if (!has)
-                    return (SubCode.Undefind, 0);
+                    return 0;
 
                 var res = await db.DeleteAsync<AdminUserEntity>(c => c.Id == request.Id);
 
                 if (res > 0)
-                {
+
                     await bus.PublishEvent(new DeleteEvent(request.Id), cancellationToken);
 
-                    return (SubCode.Success, res);
-                }
-                return (SubCode.Fail, res);
+                return res;
             }
         }
     }

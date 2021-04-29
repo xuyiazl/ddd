@@ -12,7 +12,7 @@ using XUCore.Paging;
 
 namespace DDD.Domain.AdminUsers
 {
-    public class AdminUserQueryPaged : Command<(SubCode, PagedModel<AdminUserDto>)>
+    public class AdminUserQueryPaged : Command<PagedModel<AdminUserDto>>
     {
         public int CurrentPage { get; set; }
         public int PageSize { get; set; }
@@ -39,7 +39,7 @@ namespace DDD.Domain.AdminUsers
             }
         }
 
-        public class Handler : CommandHandler<AdminUserQueryPaged, (SubCode, PagedModel<AdminUserDto>)>
+        public class Handler : CommandHandler<AdminUserQueryPaged, PagedModel<AdminUserDto>>
         {
             private readonly INigelDbRepository db;
             private readonly IMapper mapper;
@@ -50,7 +50,7 @@ namespace DDD.Domain.AdminUsers
                 this.mapper = mapper;
             }
 
-            public override async Task<(SubCode, PagedModel<AdminUserDto>)> Handle(AdminUserQueryPaged request, CancellationToken cancellationToken)
+            public override async Task<PagedModel<AdminUserDto>> Handle(AdminUserQueryPaged request, CancellationToken cancellationToken)
             {
                 // 仓储提供的单表查询
 
@@ -78,10 +78,7 @@ namespace DDD.Domain.AdminUsers
                      .ProjectTo<AdminUserDto>(mapper.ConfigurationProvider)
                      .ToPagedListAsync(request.CurrentPage, request.PageSize, cancellationToken);
 
-                if (page != null)
-                    return (SubCode.Success, page.Model);
-
-                return (SubCode.Fail, default);
+                return page?.Model;
             }
         }
     }

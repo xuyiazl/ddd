@@ -1,4 +1,5 @@
-﻿using DDD.Domain.Core;
+﻿using DDD.Domain.Common;
+using DDD.Domain.Core;
 using DDD.Domain.Core.Entities;
 using FluentValidation;
 using System;
@@ -6,10 +7,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using XUCore.Ddd.Domain.Bus;
 using XUCore.Ddd.Domain.Commands;
+using XUCore.NetCore.AspectCore.Cache;
 
 namespace DDD.Domain.AdminUsers
 {
-    public class AdminUserCreateCommand : Command<(SubCode, int)>
+    public class AdminUserCreateCommand : Command<int>
     {
         public string UserName { get; set; }
         public string Password { get; set; }
@@ -44,7 +46,7 @@ namespace DDD.Domain.AdminUsers
             }
         }
 
-        public class Handler : CommandHandler<AdminUserCreateCommand, (SubCode, int)>
+        public class Handler : CommandHandler<AdminUserCreateCommand, int>
         {
             private readonly INigelDbRepository db;
 
@@ -53,7 +55,7 @@ namespace DDD.Domain.AdminUsers
                 this.db = db;
             }
 
-            public override async Task<(SubCode, int)> Handle(AdminUserCreateCommand request, CancellationToken cancellationToken)
+            public override async Task<int> Handle(AdminUserCreateCommand request, CancellationToken cancellationToken)
             {
                 //await bus.PublishEvent(new DomainNotification("", "开始注册...."), cancellationToken);
 
@@ -75,13 +77,10 @@ namespace DDD.Domain.AdminUsers
                 //await bus.PublishEvent(new DomainNotification("", "结束注册...."), cancellationToken);
 
                 if (res > 0)
-                {
+
                     await bus.PublishEvent(new CreateEvent(entity.Id, entity), cancellationToken);
 
-                    return (SubCode.Success, res);
-                }
-                else
-                    return (SubCode.Fail, res);
+                return res;
             }
         }
     }

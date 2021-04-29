@@ -72,7 +72,7 @@ namespace DDD.WebApi
                       })
                       .UseStartup<Startup>();
                 })
-                //.UseInterceptorHostBuilder()
+                .UseInterceptorHostBuilder()
                 ;
     }
 }
