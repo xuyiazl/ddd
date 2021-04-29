@@ -3,18 +3,23 @@ using DDD.Infrastructure.Bus;
 using DDD.Infrastructure.Events;
 using FluentValidation.AspNetCore;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
+using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
+using XUCore.Configs;
 using XUCore.Ddd.Domain;
 using XUCore.NetCore.AspectCore.Cache;
 using XUCore.NetCore.DynamicWebApi;
 using XUCore.NetCore.Extensions;
+using XUCore.NetCore.Jwt;
 using XUCore.NetCore.MessagePack;
 using XUCore.NetCore.Redis;
 using XUCore.Serializer;
@@ -56,6 +61,44 @@ namespace DDD.Infrastructure
                 option.RedisRead = "cache-read";
                 option.RedisWrite = "cache-write";
             });
+
+            // 注入jwt（XUCore.NetCore.Jwt）
+            var jwtSettings = services.BindSection<JwtOptions>(configuration, "JwtOptions");
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtAuthenticationDefaults.AuthenticationScheme;
+            })
+            .AddJwt(JwtAuthenticationDefaults.AuthenticationScheme, options =>
+            {
+                options.Keys = new[] { jwtSettings.Secret };
+                options.VerifySignature = true;
+            });
+
+
+            // 以下部分为微软官方提供的JWT
+            // 注入jwt（Microsoft.AspNetCore.Authentication.JwtBearer）
+            //services.AddAuthentication(options=> {
+            //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            //})
+            //   .AddJwtBearer(o =>
+            //   {
+            //       o.TokenValidationParameters = new TokenValidationParameters()
+            //       {
+            //           ValidateIssuerSigningKey = true,
+            //           ValidIssuer = "",
+            //           ValidAudience = "",
+            //           //用于签名验证
+            //           IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtSettings.Secret)),
+            //           ValidateIssuer = false,
+            //           ValidateAudience = false,
+            //           ValidateActor = false
+            //       };
+            //   });
+
 
             IMvcBuilder mvcBuilder;
 
@@ -114,7 +157,11 @@ namespace DDD.Infrastructure
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
+
+            //全局验证jwt
+            //app.UseJwtMiddleware();
 
             app.UseStaticHttpContext();
 

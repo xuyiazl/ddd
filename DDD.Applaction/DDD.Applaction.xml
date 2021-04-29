@@ -67,5 +67,10 @@
             管理员账号管理
             </summary>
         </member>
+        <member name="T:DDD.Applaction.AdminUsers.Services.TokenAppService">
+            <summary>
+            Token管理
+            </summary>
+        </member>
     </members>
 </doc>
