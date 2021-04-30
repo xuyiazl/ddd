@@ -14,84 +14,37 @@ using XUCore.Ddd.Domain.Bus;
 using XUCore.Extensions;
 using XUCore.Helpers;
 using XUCore.NetCore;
-using XUCore.NetCore.Jwt;
-using XUCore.NetCore.Jwt.Algorithms;
-using XUCore.NetCore.Jwt.Builder;
 
 namespace DDD.Applaction.AdminUsers.Services
 {
     /// <summary>
     /// Token管理
     /// </summary>
-    [JwtAuthorize]
-    //[Authorize]
+    [Authorize]
     public class TokenAppService : AppService, ITokenAppService
     {
-        private readonly JwtOptions jwtOptions;
-        public TokenAppService(IMediatorHandler bus, JwtOptions jwtOptions) : base(bus)
+        private readonly JwtSettings jwtSettings;
+        public TokenAppService(IMediatorHandler bus, JwtSettings jwtSettings) : base(bus)
         {
-            this.jwtOptions = jwtOptions;
+            this.jwtSettings = jwtSettings;
         }
-
-        [HttpPost]
-        [JwtAllowAnonymous]
-        public async Task<Result<string>> CreateAsync(CancellationToken cancellationToken)
-        {
-            var token = new JwtBuilder()
-               .WithAlgorithm(new HMACSHA256Algorithm())
-               .WithSecret(jwtOptions.Secret)
-               .JwtId(Id.GuidGenerator.Create())
-               .Id(Id.LongGenerator.Create())
-               .Account("XUCore")
-               .NickName("Nigel")
-               .VerifiedPhoneNumber("19173100454")
-               .ExpirationTime(DateTime.UtcNow.AddMinutes(1))
-               .Build();
-
-            return Success(SubCode.Success, token);
-        }
-
-        [HttpGet]
-        public async Task<Result<TokenDto>> VerifyAsync(CancellationToken cancellationToken)
-        {
-            var jwtid = Web.HttpContext.User.Identity.GetValue<Guid>(ClaimName.JwtId);
-            var id = Web.HttpContext.User.Identity.GetValue<long>(ClaimName.Id);
-            var account = Web.HttpContext.User.Identity.GetValue<string>(ClaimName.Account);
-            var nickname = Web.HttpContext.User.Identity.GetValue<string>(ClaimName.NickName);
-            var phone = Web.HttpContext.User.Identity.GetValue<string>(ClaimName.VerifiedPhoneNumber);
-            var expirationtime = Web.HttpContext.User.Identity.GetValue<long>(ClaimName.ExpirationTime).ToDateTime();
-
-            return Success(SubCode.Success,
-                data: new TokenDto
-                {
-                    JwtId = jwtid,
-                    Id = id,
-                    Account = account,
-                    NickName = nickname,
-                    Phone = phone,
-                    Expirationtime = expirationtime
-                },
-                message: "验证成功");
-        }
-
-        /*
-         * 
-         // 以下部分为微软官方提供的JWT
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<Result<string>> CreateMsTokenAsync(CancellationToken cancellationToken)
+        public async Task<Result<string>> CreateTokenAsync(CancellationToken cancellationToken)
         {
             var claims = new Claim[]{
-                new Claim(ClaimTypes.NameIdentifier,"1"),
-                new Claim(ClaimTypes.Name,"Nigel")
+                new Claim("id","1"),
+                new Claim("name","Nigel"),
+                new Claim("account","account")
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.Secret));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.SecretKey));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            var token = new JwtSecurityToken("",
-               "",
+            var token = new JwtSecurityToken(
+                jwtSettings.Issuer,
+                jwtSettings.Audience,
                 claims,
                 DateTime.Now,
                 DateTime.Now.AddMinutes(1),
@@ -103,20 +56,21 @@ namespace DDD.Applaction.AdminUsers.Services
         }
 
         [HttpGet]
-        public async Task<Result<TokenDto>> VerifyMsTokenAsync(CancellationToken cancellationToken)
+        public async Task<Result<TokenDto>> VerifyTokenAsync(CancellationToken cancellationToken)
         {
-            var nameIdentifier = Web.HttpContext.User.Identity.GetValue<long>(ClaimTypes.NameIdentifier);
-            var name = Web.HttpContext.User.Identity.GetValue<string>(ClaimTypes.Name);
+            var id = Web.HttpContext.User.Identity.GetValue<long>("id");
+            var name = Web.HttpContext.User.Identity.GetValue<string>("name");
+            var account = Web.HttpContext.User.Identity.GetValue<string>("account");
 
             return Success(SubCode.Success,
                 data: new TokenDto
                 {
-                    Id = nameIdentifier,
+                    Id = id,
+                    Account = account,
                     NickName = name
                 },
                 message: "验证成功");
         }
-        */
     }
 
     public class TokenDto

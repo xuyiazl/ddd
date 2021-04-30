@@ -10,8 +10,8 @@ namespace DDD.Applaction.AdminUsers.Interfaces
 {
     public interface ITokenAppService
     {
-        Task<Result<string>> CreateAsync(CancellationToken cancellationToken);
+        Task<Result<string>> CreateTokenAsync(CancellationToken cancellationToken);
 
-        Task<Result<TokenDto>> VerifyAsync(CancellationToken cancellationToken);
+        Task<Result<TokenDto>> VerifyTokenAsync(CancellationToken cancellationToken);
     }
 }
