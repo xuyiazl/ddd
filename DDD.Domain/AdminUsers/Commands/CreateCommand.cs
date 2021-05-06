@@ -1,4 +1,5 @@
-﻿using DDD.Domain.Common;
+﻿using AutoMapper;
+using DDD.Domain.Common.Mappings;
 using DDD.Domain.Core;
 using DDD.Domain.Core.Entities;
 using FluentValidation;
@@ -7,16 +8,21 @@ using System.Threading;
 using System.Threading.Tasks;
 using XUCore.Ddd.Domain.Bus;
 using XUCore.Ddd.Domain.Commands;
-using XUCore.NetCore.AspectCore.Cache;
 
 namespace DDD.Domain.AdminUsers
 {
-    public class AdminUserCreateCommand : Command<int>
+    public class AdminUserCreateCommand : Command<int>, IMapFrom<AdminUserEntity>
     {
         public string UserName { get; set; }
         public string Password { get; set; }
         public string Name { get; set; }
         public string Picture { get; set; }
+
+        public void Mapping(Profile profile) =>
+            profile.CreateMap<AdminUserCreateCommand, AdminUserEntity>()
+                .ForMember(c => c.Status, opt => opt.MapFrom(s => Status.Show))
+                .ForMember(c => c.Created_At, opt => opt.MapFrom(s => DateTime.Now))
+            ;
 
         public override bool IsVaild()
         {
@@ -49,28 +55,19 @@ namespace DDD.Domain.AdminUsers
         public class Handler : CommandHandler<AdminUserCreateCommand, int>
         {
             private readonly INigelDbRepository db;
+            private readonly IMapper mapper;
 
-            public Handler(INigelDbRepository db, IMediatorHandler bus) : base(bus)
+            public Handler(INigelDbRepository db, IMediatorHandler bus, IMapper mapper) : base(bus)
             {
                 this.db = db;
+                this.mapper = mapper;
             }
 
             public override async Task<int> Handle(AdminUserCreateCommand request, CancellationToken cancellationToken)
             {
                 //await bus.PublishEvent(new DomainNotification("", "开始注册...."), cancellationToken);
 
-                var entity = new AdminUserEntity
-                {
-                    Name = request.Name,
-                    Password = request.Password,
-                    Picture = request.Picture,
-                    Status = Status.Show,
-                    UserName = request.UserName,
-
-                    Updated_At = null,
-                    Deleted_At = null,
-                    Created_At = DateTime.Now
-                };
+                var entity = mapper.Map<AdminUserCreateCommand, AdminUserEntity>(request);
 
                 var res = db.Add(entity);
 
