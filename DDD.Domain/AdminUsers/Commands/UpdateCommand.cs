@@ -1,5 +1,8 @@
-﻿using DDD.Domain.Common;
+﻿using AutoMapper;
+using DDD.Domain.Common;
+using DDD.Domain.Common.Mappings;
 using DDD.Domain.Core;
+using DDD.Domain.Core.Entities;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -12,7 +15,7 @@ using XUCore.NetCore.AspectCore.Cache;
 
 namespace DDD.Domain.AdminUsers
 {
-    public class AdminUserUpdateCommand : Command<int>
+    public class AdminUserUpdateCommand : Command<int>, IMapFrom<AdminUserEntity>
     {
         public long Id { get; set; }
         public string Name { get; set; }
@@ -23,6 +26,13 @@ namespace DDD.Domain.AdminUsers
             ValidationResult = new Validator().Validate(this);
             return ValidationResult.IsValid;
         }
+
+        public void Mapping(Profile profile) =>
+            profile.CreateMap<AdminUserUpdateCommand, AdminUserEntity>()
+                .ForMember(c => c.Name, opt => opt.MapFrom(s => s.Name))
+                .ForMember(c => c.Picture, opt => opt.MapFrom(s => s.Picture))
+                .ForMember(c => c.Updated_At, opt => opt.MapFrom(s => DateTime.Now))
+            ;
 
         public class Validator : CommandValidator<AdminUserUpdateCommand>
         {
@@ -44,10 +54,12 @@ namespace DDD.Domain.AdminUsers
         public class Handler : CommandHandler<AdminUserUpdateCommand, int>
         {
             private readonly INigelDbRepository db;
+            private readonly IMapper mapper;
 
-            public Handler(INigelDbRepository db, IMediatorHandler bus) : base(bus)
+            public Handler(INigelDbRepository db, IMediatorHandler bus, IMapper mapper) : base(bus)
             {
                 this.db = db;
+                this.mapper = mapper;
             }
 
             [RedisCacheRemove(HashKey = RedisKey.Admin, Key = "{Id}")]
@@ -58,11 +70,7 @@ namespace DDD.Domain.AdminUsers
                 if (entity == null)
                     return 0;
 
-                entity.Id = request.Id;
-                entity.Name = request.Name;
-                entity.Picture = request.Picture;
-
-                entity.Updated_At = DateTime.Now;
+                entity = mapper.Map(request, entity);
 
                 var res = db.Update(entity);
 
