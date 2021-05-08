@@ -28,10 +28,7 @@ namespace DDD.Domain.AdminUsers
         {
             public Validator()
             {
-                RuleFor(x => x.Limit)
-                    .NotEmpty().WithMessage("limit不可为空")
-                    .GreaterThan(0).WithMessage(c => $"limit必须大于0")
-                    .LessThanOrEqualTo(100).WithMessage(c => $"limit必须小于等于100");
+                RuleFor(x => x.Limit).NotEmpty().GreaterThan(0).LessThanOrEqualTo(100).WithName("limit");
             }
         }
 

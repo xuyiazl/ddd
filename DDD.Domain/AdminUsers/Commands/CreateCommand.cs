@@ -34,21 +34,10 @@ namespace DDD.Domain.AdminUsers
         {
             public Validator()
             {
-                //RuleFor(x => x.Id).Length(5).NotEmpty();
-                RuleFor(x => x.UserName)
-                    .NotEmpty().WithMessage("账号不可为空")
-                    .MaximumLength(20).WithMessage(c => $"账号不能超过20个字符，当前{c.UserName.Length}个字符");
-
-                RuleFor(x => x.Password)
-                    .NotEmpty().WithMessage("密码不可为空")
-                    .MaximumLength(30).WithMessage(c => $"密码不能超过30个字符，当前{c.Password.Length}个字符");
-
-                RuleFor(x => x.Name)
-                    .NotEmpty().WithMessage("名字不可为空")
-                    .MaximumLength(20).WithMessage(c => $"名字不能超过20个字符，当前{c.Name.Length}个字符");
-
-                RuleFor(x => x.Picture)
-                    .MaximumLength(250).WithMessage(c => $"头像不能超过250个字符，当前{c.Picture.Length}个字符");
+                RuleFor(x => x.UserName).NotEmpty().MaximumLength(20).WithName("账号");
+                RuleFor(x => x.Password).NotEmpty().MaximumLength(30).WithName("密码");
+                RuleFor(x => x.Name).NotEmpty().MaximumLength(20).WithName("名字");
+                RuleFor(x => x.Picture).MaximumLength(250).WithName("头像");
             }
         }
 

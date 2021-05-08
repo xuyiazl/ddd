@@ -4,9 +4,9 @@
 		<TargetFramework>net5.0</TargetFramework>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="XUCore.Ddd.Domain" Version="5.0.9" />
-		<PackageReference Include="XUCore.NetCore" Version="5.0.9" />
+		<PackageReference Include="XUCore.Ddd.Domain" Version="5.1.0" />
+		<PackageReference Include="XUCore.NetCore" Version="5.1.0" />
 		<PackageReference Include="XUCore.NetCore.AspectCore" Version="5.1.0" />
-		<PackageReference Include="XUCore.NetCore.Data" Version="5.0.9" />
+		<PackageReference Include="XUCore.NetCore.Data" Version="5.1.0" />
 	</ItemGroup>
 </Project>

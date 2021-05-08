@@ -27,9 +27,7 @@ namespace DDD.Domain.AdminUsers
         {
             public Validator()
             {
-                RuleFor(x => x.Id)
-                    .NotEmpty().WithMessage("Id不可为空")
-                    .GreaterThan(0).WithMessage(c => $"Id必须大于0");
+                RuleFor(x => x.Id).NotEmpty().GreaterThan(0).WithName("Id");
             }
         }
 

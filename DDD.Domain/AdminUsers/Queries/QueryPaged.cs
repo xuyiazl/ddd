@@ -28,14 +28,8 @@ namespace DDD.Domain.AdminUsers
         {
             public Validator()
             {
-                RuleFor(x => x.CurrentPage)
-                    .NotEmpty().WithMessage("页码不可为空")
-                    .GreaterThan(0).WithMessage(c => $"页码必须大于0");
-
-                RuleFor(x => x.PageSize)
-                    .NotEmpty().WithMessage("分页大小不可为空")
-                    .GreaterThan(0).WithMessage(c => $"分页大小必须大于0")
-                    .LessThanOrEqualTo(100).WithMessage(c => $"分页大小必须小于等于100");
+                RuleFor(x => x.CurrentPage).NotEmpty().GreaterThan(0).WithName("页码");
+                RuleFor(x => x.PageSize).NotEmpty().GreaterThan(0).LessThanOrEqualTo(100).WithName("分页大小");
             }
         }
 
