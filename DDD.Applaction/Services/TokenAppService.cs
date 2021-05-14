@@ -3,6 +3,7 @@ using DDD.Applaction.Common;
 using DDD.Domain.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
@@ -24,7 +25,7 @@ namespace DDD.Applaction.AdminUsers.Services
     public class TokenAppService : AppService, ITokenAppService
     {
         private readonly JwtSettings jwtSettings;
-        public TokenAppService(IMediatorHandler bus, JwtSettings jwtSettings) : base(bus)
+        public TokenAppService(IMediatorHandler bus, IStringLocalizer<SubCode> localizer, JwtSettings jwtSettings) : base(bus, localizer)
         {
             this.jwtSettings = jwtSettings;
         }

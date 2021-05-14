@@ -1,7 +1,9 @@
 ﻿using DDD.Applaction.AdminUsers.Interfaces;
 using DDD.Domain.AdminUsers;
+using DDD.Domain.Core;
 using DDD.Web.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -25,16 +27,6 @@ namespace DDD.Web.Controllers
 
         public async Task<IActionResult> IndexAsync()
         {
-            var res = await adminUserAppService.GetListAsync(10, "", CancellationToken.None);
-
-            var user = new AdminUserCreateCommand() { };
-
-            var vaild = user.IsVaild();
-
-            var errors = user.GetErrors();
-
-            var createRes = await adminUserAppService.CreateAsync(user, CancellationToken.None);
-
             return View();
         }
 

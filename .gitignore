@@ -19,3 +19,4 @@
 /.vs/Demo/config
 /DDD.Web/bin/Debug/net5.0
 /DDD.Web/obj
+*.user

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -53,12 +54,14 @@ namespace DDD.Infrastructure.Filters
 
                 var message = ex.Failures.Select(c => c.Value.Join("，")).Join("");
 
-                (var code, _) = SubCodeMessage.Message(SubCode.Fail);
+                var localizer = context.HttpContext.RequestServices.GetRequiredService<IStringLocalizer<SubCode>>();
+
+                var local = localizer[SubCode.Fail.GetName()];
 
                 context.Result = new ObjectResult(new Result<object>()
                 {
                     code = 0,
-                    subCode = code,
+                    subCode = local.Value,
                     message = message,
                     data = null,
                     elapsedTime = -1,

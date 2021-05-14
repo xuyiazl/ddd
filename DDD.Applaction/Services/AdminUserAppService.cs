@@ -3,12 +3,12 @@ using DDD.Applaction.Common;
 using DDD.Domain.AdminUsers;
 using DDD.Domain.Core;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using XUCore.Ddd.Domain.Bus;
 using XUCore.NetCore;
-using XUCore.NetCore.DynamicWebApi;
 using XUCore.Paging;
 
 namespace DDD.Applaction.AdminUsers.Services
@@ -16,9 +16,12 @@ namespace DDD.Applaction.AdminUsers.Services
     /// <summary>
     /// 管理员账号管理
     /// </summary>
+    [Route("{culture:culture}/api/[controller]/[action]")]
     public class AdminUserAppService : AppService, IAdminUserAppService
     {
-        public AdminUserAppService(IMediatorHandler bus) : base(bus) { }
+        public AdminUserAppService(IMediatorHandler bus, IStringLocalizer<SubCode> localizer) : base(bus, localizer)
+        {
+        }
 
         [HttpPost]
         public async Task<Result<int>> CreateAsync([FromBody] AdminUserCreateCommand command, CancellationToken cancellationToken)
