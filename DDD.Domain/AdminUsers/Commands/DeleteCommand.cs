@@ -11,21 +11,19 @@ using XUCore.NetCore.AspectCore.Cache;
 
 namespace DDD.Domain.AdminUsers
 {
-    public class AdminUserDeleteCommand : Command<int>
+    public class AdminUserDeleteCommand : CommandId<int>
     {
-        public long Id { get; set; }
-
         public override bool IsVaild()
         {
             ValidationResult = new Validator().Validate(this);
             return ValidationResult.IsValid;
         }
 
-        public class Validator : CommandValidator<AdminUserDeleteCommand>
+        public class Validator : CommandIdValidator<AdminUserDeleteCommand, int>
         {
             public Validator()
             {
-                RuleFor(x => x.Id).NotEmpty().GreaterThan(0).WithName("Id");
+                AddIdValidator();
             }
         }
 

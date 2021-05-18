@@ -15,9 +15,8 @@ using XUCore.NetCore.AspectCore.Cache;
 
 namespace DDD.Domain.AdminUsers
 {
-    public class AdminUserUpdateCommand : Command<int>, IMapFrom<AdminUserEntity>
+    public class AdminUserUpdateCommand : CommandId<int>, IMapFrom<AdminUserEntity>
     {
-        public long Id { get; set; }
         public string Name { get; set; }
         public string Picture { get; set; }
 
@@ -34,11 +33,12 @@ namespace DDD.Domain.AdminUsers
                 .ForMember(c => c.Updated_At, opt => opt.MapFrom(s => DateTime.Now))
             ;
 
-        public class Validator : CommandValidator<AdminUserUpdateCommand>
+        public class Validator : CommandIdValidator<AdminUserUpdateCommand, int>
         {
             public Validator()
             {
-                RuleFor(x => x.Id).NotEmpty().GreaterThan(0).WithName("Id");
+                AddIdValidator();
+
                 RuleFor(x => x.Name).NotEmpty().MaximumLength(20).WithName("名字");
                 RuleFor(x => x.Picture).MaximumLength(250).WithName("头像");
             }

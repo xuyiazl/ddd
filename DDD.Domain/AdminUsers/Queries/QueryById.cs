@@ -13,21 +13,19 @@ using XUCore.NetCore.AspectCore.Cache;
 
 namespace DDD.Domain.AdminUsers
 {
-    public class AdminUserQueryById : Command<AdminUserDto>
+    public class AdminUserQueryById : CommandId<AdminUserDto>
     {
-        public long Id { get; set; }
-
         public override bool IsVaild()
         {
             ValidationResult = new Validator().Validate(this);
             return ValidationResult.IsValid;
         }
 
-        public class Validator : CommandValidator<AdminUserQueryById>
+        public class Validator : CommandIdValidator<AdminUserQueryById, AdminUserDto>
         {
             public Validator()
             {
-                RuleFor(x => x.Id).NotEmpty().GreaterThan(0).WithName("Id");
+                AddIdValidator();
             }
         }
 

@@ -12,10 +12,8 @@ using XUCore.Paging;
 
 namespace DDD.Domain.AdminUsers
 {
-    public class AdminUserQueryPaged : Command<PagedModel<AdminUserDto>>
+    public class AdminUserQueryPaged : CommandPage<PagedModel<AdminUserDto>>
     {
-        public int CurrentPage { get; set; }
-        public int PageSize { get; set; }
         public string Keyword { get; set; }
 
         public override bool IsVaild()
@@ -24,12 +22,11 @@ namespace DDD.Domain.AdminUsers
             return ValidationResult.IsValid;
         }
 
-        public class Validator : CommandValidator<AdminUserQueryPaged>
+        public class Validator : CommandPageValidator<AdminUserQueryPaged, PagedModel<AdminUserDto>>
         {
             public Validator()
             {
-                RuleFor(x => x.CurrentPage).NotEmpty().GreaterThan(0).WithName("页码");
-                RuleFor(x => x.PageSize).NotEmpty().GreaterThan(0).LessThanOrEqualTo(100).WithName("分页大小");
+                AddPageVaildator();
             }
         }
 

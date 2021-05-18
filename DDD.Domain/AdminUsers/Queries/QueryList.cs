@@ -13,9 +13,8 @@ using XUCore.Extensions;
 
 namespace DDD.Domain.AdminUsers
 {
-    public class AdminUserQueryList : Command<IList<AdminUserDto>>
+    public class AdminUserQueryList : CommandLimit<IList<AdminUserDto>>
     {
-        public int Limit { get; set; }
         public string Keyword { get; set; }
 
         public override bool IsVaild()
@@ -24,11 +23,11 @@ namespace DDD.Domain.AdminUsers
             return ValidationResult.IsValid;
         }
 
-        public class Validator : AbstractValidator<AdminUserQueryList>
+        public class Validator : CommandLimitValidator<AdminUserQueryList, IList<AdminUserDto>>
         {
             public Validator()
             {
-                RuleFor(x => x.Limit).NotEmpty().GreaterThan(0).LessThanOrEqualTo(100).WithName("limit");
+                AddLimitVaildator();
             }
         }
 

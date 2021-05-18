@@ -21,6 +21,7 @@ namespace DDD.Applaction.AdminUsers.Services
     {
         public AdminUserAppService(IMediatorHandler bus, IStringLocalizer<SubCode> localizer) : base(bus, localizer)
         {
+
         }
 
         [HttpPost]
@@ -65,17 +66,17 @@ namespace DDD.Applaction.AdminUsers.Services
         }
 
         [HttpGet]
-        public async Task<Result<IList<AdminUserDto>>> GetListAsync(int limit, string keyword, CancellationToken cancellationToken)
+        public async Task<Result<IList<AdminUserDto>>> GetListAsync([FromQuery] AdminUserQueryList query, CancellationToken cancellationToken)
         {
-            var res = await bus.SendCommand(new AdminUserQueryList { Limit = limit, Keyword = keyword }, cancellationToken);
+            var res = await bus.SendCommand(query, cancellationToken);
 
             return Success(SubCode.Success, res);
         }
 
         [HttpGet]
-        public async Task<Result<PagedModel<AdminUserDto>>> GetPageAsync(int currentPage, int pageSize, string keyword, CancellationToken cancellationToken)
+        public async Task<Result<PagedModel<AdminUserDto>>> GetPageAsync([FromQuery] AdminUserQueryPaged query, CancellationToken cancellationToken)
         {
-            var res = await bus.SendCommand(new AdminUserQueryPaged { CurrentPage = currentPage, PageSize = pageSize, Keyword = keyword }, cancellationToken);
+            var res = await bus.SendCommand(query, cancellationToken);
 
             return Success(SubCode.Success, res);
         }

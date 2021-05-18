@@ -45,9 +45,12 @@ namespace DDD.Infrastructure
             services.AddAutoMapper(typeof(IMapFrom<>));
             services.AddMediatR(typeof(IMapFrom<>));
 
-            services.AddPerformanceBehaviour();
-
-            services.AddValidationBehavior();
+            services.AddRequestBehaviour(options =>
+            {
+                options.Logger = true;
+                options.Performance = true;
+                options.Validation = true;
+            });
 
             // 命令总线Domain Bus (Mediator)
             services.AddMediatorBus<InMemoryBus>();

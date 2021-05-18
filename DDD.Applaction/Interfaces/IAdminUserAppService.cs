@@ -1,4 +1,5 @@
 ﻿using DDD.Domain.AdminUsers;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,8 +13,8 @@ namespace DDD.Applaction.AdminUsers.Interfaces
         Task<Result<int>> CreateAsync(AdminUserCreateCommand command, CancellationToken cancellationToken);
         Task<Result<int>> DeleteAsync(long id, CancellationToken cancellationToken);
         Task<Result<AdminUserDto>> GetAsync(long id, CancellationToken cancellationToken);
-        Task<Result<IList<AdminUserDto>>> GetListAsync(int limit, string keyword, CancellationToken cancellationToken);
-        Task<Result<PagedModel<AdminUserDto>>> GetPageAsync(int currentPage, int pageSize, string keyword, CancellationToken cancellationToken);
+        Task<Result<IList<AdminUserDto>>> GetListAsync(AdminUserQueryList query, CancellationToken cancellationToken);
+        Task<Result<PagedModel<AdminUserDto>>> GetPageAsync(AdminUserQueryPaged query, CancellationToken cancellationToken);
         Task<Result<int>> UpdateAsync(AdminUserUpdateCommand command, CancellationToken cancellationToken);
     }
 }
