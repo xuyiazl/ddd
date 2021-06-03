@@ -44,12 +44,10 @@ namespace DDD.Domain.AdminUsers
         public class Handler : CommandHandler<AdminUserCreateCommand, int>
         {
             private readonly INigelDbRepository db;
-            private readonly IMapper mapper;
 
-            public Handler(INigelDbRepository db, IMediatorHandler bus, IMapper mapper) : base(bus)
+            public Handler(INigelDbRepository db, IMediatorHandler bus, IMapper mapper) : base(bus, mapper)
             {
                 this.db = db;
-                this.mapper = mapper;
             }
 
             public override async Task<int> Handle(AdminUserCreateCommand request, CancellationToken cancellationToken)
