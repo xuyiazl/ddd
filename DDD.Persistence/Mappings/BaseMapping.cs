@@ -7,12 +7,12 @@ using XUCore.NetCore.Data.DbService;
 
 namespace DDD.Persistence.Mappings
 {
-    public abstract class BaseMapping<T> : KeyMapping<T>
-         where T : BaseEntity, new()
+    public abstract class BaseMapping<TEntity> : KeyMapping<TEntity, long>
+         where TEntity : BaseEntity, new()
     {
-        public BaseMapping(string tableName, Expression<Func<T, object>> primaryKey) : base(tableName, primaryKey) { }
+        public BaseMapping(string tableName, Expression<Func<TEntity, object>> primaryKey) : base(tableName, primaryKey) { }
 
-        public override void Configure(EntityTypeBuilder<T> builder)
+        public override void Configure(EntityTypeBuilder<TEntity> builder)
         {
             base.Configure(builder);
 

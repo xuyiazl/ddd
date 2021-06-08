@@ -3,7 +3,7 @@ using XUCore.Ddd.Domain;
 
 namespace DDD.Domain.Core.Entities
 {
-    public class BaseEntity : Entity, IAggregateRoot
+    public class BaseEntity : Entity<long>, IAggregateRoot
     {
         /// <summary>
         /// 数据状态

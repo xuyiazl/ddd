@@ -3,7 +3,7 @@ using XUCore.Ddd.Domain;
 
 namespace DDD.Domain.Core.Entities
 {
-    public class AdminUserLoginRecordEntity : Entity, IAggregateRoot
+    public class AdminUserLoginRecordEntity : Entity<long>, IAggregateRoot
     {
         public long UserId { get; set; }
         public string Mode { get; set; }

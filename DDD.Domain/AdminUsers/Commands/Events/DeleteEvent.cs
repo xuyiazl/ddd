@@ -11,8 +11,7 @@ namespace DDD.Domain.AdminUsers
         public DeleteEvent(long id)
         {
             Id = id;
-            AggregateId = id;
-            AggregateType = nameof(AdminUserEntity);
+            AggregateId = id.ToString();
         }
 
         /// <summary>

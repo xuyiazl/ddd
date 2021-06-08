@@ -13,8 +13,7 @@ namespace DDD.Domain.AdminUsers
         {
             Id = id;
             User = user;
-            AggregateId = id;
-            AggregateType = nameof(AdminUserEntity);
+            AggregateId = id.ToString();
         }
 
         /// <summary>
