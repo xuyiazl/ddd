@@ -1,9 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net5.0</TargetFramework>
+	</PropertyGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\DDD.Domain\DDD.Domain.csproj" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.7"></PackageReference>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.7"></PackageReference>
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\DDD.Domain\DDD.Domain.csproj" />
 	</ItemGroup>
 </Project>
