@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace DDD.Persistence
 {
@@ -10,6 +11,8 @@ namespace DDD.Persistence
     {
         public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
         {
+            //mssql
+
             services.AddDbContext<NigelDbContext>(options =>
             {
                 options.UseSqlServer(
@@ -27,16 +30,16 @@ namespace DDD.Persistence
                 //options.UseLoggerFactory(MyLoggerFactory);
             });
 
-            // 5.0.0 mysql 暂时支持的只有预览版
+            // mysql
 
             //services.AddDbContext<NigelDbContext>(options =>
             //{
             //    options.UseMySql(
-            //        connectionString: config.GetConnectionString("NigelDB_Connection"),
-            //        serverVersion: new MySqlServerVersion(new Version(8, 0, 21)),
+            //        connectionString: configuration.GetConnectionString("NigelDBConnection-mysql"),
+            //        serverVersion: new MySqlServerVersion(new Version(5, 7, 29)),
             //        mySqlOptionsAction: options =>
             //        {
-            //            options.CharSetBehavior(CharSetBehavior.NeverAppend);
+            //            //options.CharSetBehavior(CharSetBehavior.NeverAppend);
             //            options.EnableRetryOnFailure();
             //            //options.ExecutionStrategy(c => new MySqlRetryingExecutionStrategy(c.CurrentContext.Context));
             //            //options.ExecutionStrategy(c => new SqlServerRetryingExecutionStrategy(c.CurrentContext.Context));
