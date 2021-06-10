@@ -1,5 +1,6 @@
 ﻿using DDD.Domain.Core;
 using DDD.Domain.Core.Entities;
+using DDD.Domain.Core.Entities.Sys.Admin;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using XUCore.NetCore.Data.DbService;
@@ -15,8 +16,15 @@ namespace DDD.Persistence
 
         public override Assembly[] Assemblies => new Assembly[] { Assembly.GetExecutingAssembly() };
 
+        #region [ 系统 ]
+
         public DbSet<AdminUserEntity> AdminUser => Set<AdminUserEntity>();
-        public DbSet<AdminUserInfoEntity> AdminUserInfo => Set<AdminUserInfoEntity>();
-        public DbSet<AdminUserLoginRecordEntity> AdminUserLoginRecord => Set<AdminUserLoginRecordEntity>();
+        public DbSet<AdminUserRoleEntity> AdminAuthUserRole => Set<AdminUserRoleEntity>();
+        public DbSet<LoginRecordEntity> AdminLoginRecord => Set<LoginRecordEntity>();
+        public DbSet<AdminRoleMenuEntity> AdminAuthRoleMenus => Set<AdminRoleMenuEntity>();
+        public DbSet<AdminRoleEntity> AdminAuthRole => Set<AdminRoleEntity>();
+        public DbSet<AdminMenuEntity> AdminAuthMenus => Set<AdminMenuEntity>();
+
+        #endregion
     }
 }

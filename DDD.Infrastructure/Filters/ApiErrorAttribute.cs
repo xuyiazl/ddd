@@ -52,16 +52,14 @@ namespace DDD.Infrastructure.Filters
             {
                 var ex = context.Exception as ValidationException;
 
-                var message = ex.Failures.Select(c => c.Value.Join("，")).Join("");
+                var message = ex.Failures.Select(c => c.Value.Join("")).Join("");
 
-                var localizer = context.HttpContext.RequestServices.GetRequiredService<IStringLocalizer<SubCode>>();
-
-                var local = localizer[SubCode.Fail.GetName()];
+                (var code, _) = SubCodeMessage.Message(SubCode.Fail);
 
                 context.Result = new ObjectResult(new Result<object>()
                 {
                     code = 0,
-                    subCode = local.Value,
+                    subCode = code,
                     message = message,
                     data = null,
                     elapsedTime = -1,

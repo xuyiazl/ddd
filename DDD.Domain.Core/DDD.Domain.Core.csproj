@@ -4,11 +4,21 @@
 		<TargetFramework>net5.0</TargetFramework>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+	  <DocumentationFile>DDD.Domain.Core.xml</DocumentationFile>
+	</PropertyGroup>
+
 	<ItemGroup>
 		<PackageReference Include="XUCore.Ddd.Domain" Version="5.1.3" />
 		<PackageReference Include="XUCore.NetCore" Version="5.1.3" />
 		<PackageReference Include="XUCore.NetCore.AspectCore" Version="5.1.3" />
 		<PackageReference Include="XUCore.NetCore.Data" Version="5.1.3" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="DDD.Domain.Core.xml">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	</ItemGroup>
 
 </Project>

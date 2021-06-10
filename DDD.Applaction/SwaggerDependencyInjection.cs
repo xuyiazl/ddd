@@ -23,7 +23,7 @@ namespace DDD.Applaction
                 options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     In = ParameterLocation.Header,
-                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+                    Description = "JWT Authorization header using the Bearer scheme.",
                     Name = "Authorization",
                     Type = SecuritySchemeType.Http,
                     Scheme = "bearer",
@@ -51,6 +51,8 @@ namespace DDD.Applaction
                 var apiXml = Path.Combine(basePath, "DDD.Applaction.xml");
                 //获取应用程序所在目录（绝对，不受工作目录影响，建议采用此方法获取路径）
                 options.IncludeXmlComments(apiXml);
+                options.IncludeXmlComments(Path.Combine(basePath, "DDD.Domain.xml"));
+                options.IncludeXmlComments(Path.Combine(basePath, "DDD.Domain.Core.xml"));
 
                 options.SwaggerControllerDescriptions(apiXml);
 

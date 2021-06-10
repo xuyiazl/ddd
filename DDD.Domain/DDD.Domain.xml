@@ -1,0 +1,175 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DDD.Domain</name>
+    </assembly>
+    <members>
+        <member name="T:DDD.Domain.Notifications.DomainNotification">
+            <summary>
+            领域通知模型，用来获取当前总线中出现的通知信息
+            继承自领域事件和 INotification（也就意味着可以拥有中介的发布/订阅模式）
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "T:DDD.Domain.Notifications.DomainNotificationHandler" -->
+        <member name="T:DDD.Domain.Sys.AdminMenu.CreateEvent.Handler">
+            <summary>
+            事件通知操作
+            </summary>
+        </member>
+        <member name="M:DDD.Domain.Sys.AdminMenu.CreateEvent.Handler.Handle(DDD.Domain.Sys.AdminMenu.CreateEvent,System.Threading.CancellationToken)">
+            <summary>
+            接受消息处理创建后的业务
+            </summary>
+            <param name="notification"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:DDD.Domain.Sys.AdminMenu.DeleteEvent.Handler">
+            <summary>
+            事件通知操作
+            </summary>
+        </member>
+        <member name="M:DDD.Domain.Sys.AdminMenu.DeleteEvent.Handler.Handle(DDD.Domain.Sys.AdminMenu.DeleteEvent,System.Threading.CancellationToken)">
+            <summary>
+            接受消息处理删除后的业务
+            </summary>
+            <param name="notification"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:DDD.Domain.Sys.AdminMenu.UpdateEvent.Handler">
+            <summary>
+            事件通知操作
+            </summary>
+        </member>
+        <member name="M:DDD.Domain.Sys.AdminMenu.UpdateEvent.Handler.Handle(DDD.Domain.Sys.AdminMenu.UpdateEvent,System.Threading.CancellationToken)">
+            <summary>
+            接受消息处理修改后的业务
+            </summary>
+            <param name="notification"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:DDD.Domain.Sys.AdminRole.CreateEvent.Handler">
+            <summary>
+            事件通知操作
+            </summary>
+        </member>
+        <member name="M:DDD.Domain.Sys.AdminRole.CreateEvent.Handler.Handle(DDD.Domain.Sys.AdminRole.CreateEvent,System.Threading.CancellationToken)">
+            <summary>
+            接受消息处理创建后的业务
+            </summary>
+            <param name="notification"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:DDD.Domain.Sys.AdminRole.DeleteEvent.Handler">
+            <summary>
+            事件通知操作
+            </summary>
+        </member>
+        <member name="M:DDD.Domain.Sys.AdminRole.DeleteEvent.Handler.Handle(DDD.Domain.Sys.AdminRole.DeleteEvent,System.Threading.CancellationToken)">
+            <summary>
+            接受消息处理删除后的业务
+            </summary>
+            <param name="notification"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:DDD.Domain.Sys.AdminRole.UpdateEvent.Handler">
+            <summary>
+            事件通知操作
+            </summary>
+        </member>
+        <member name="M:DDD.Domain.Sys.AdminRole.UpdateEvent.Handler.Handle(DDD.Domain.Sys.AdminRole.UpdateEvent,System.Threading.CancellationToken)">
+            <summary>
+            接受消息处理修改后的业务
+            </summary>
+            <param name="notification"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:DDD.Domain.Sys.AdminUser.CreateEvent.Handler">
+            <summary>
+            事件通知操作
+            </summary>
+        </member>
+        <member name="M:DDD.Domain.Sys.AdminUser.CreateEvent.Handler.Handle(DDD.Domain.Sys.AdminUser.CreateEvent,System.Threading.CancellationToken)">
+            <summary>
+            接受消息处理创建后的业务
+            </summary>
+            <param name="notification"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:DDD.Domain.Sys.AdminUser.DeleteEvent.Handler">
+            <summary>
+            事件通知操作
+            </summary>
+        </member>
+        <member name="M:DDD.Domain.Sys.AdminUser.DeleteEvent.Handler.Handle(DDD.Domain.Sys.AdminUser.DeleteEvent,System.Threading.CancellationToken)">
+            <summary>
+            接受消息处理删除后的业务
+            </summary>
+            <param name="notification"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:DDD.Domain.Sys.AdminUser.UpdateEvent.Handler">
+            <summary>
+            事件通知操作
+            </summary>
+        </member>
+        <member name="M:DDD.Domain.Sys.AdminUser.UpdateEvent.Handler.Handle(DDD.Domain.Sys.AdminUser.UpdateEvent,System.Threading.CancellationToken)">
+            <summary>
+            接受消息处理修改后的业务
+            </summary>
+            <param name="notification"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="P:DDD.Domain.Sys.AdminUser.AdminUserLoginCommand.Account">
+            <summary>
+            登录账号
+            </summary>
+        </member>
+        <member name="P:DDD.Domain.Sys.AdminUser.AdminUserLoginCommand.Password">
+            <summary>
+            密码
+            </summary>
+        </member>
+        <member name="P:DDD.Domain.Sys.AdminUser.AdminUserLoginCommand.IpAddress">
+            <summary>
+            登录IP
+            </summary>
+        </member>
+        <member name="T:DDD.Domain.Sys.LoginRecord.CreateEvent.Handler">
+            <summary>
+            事件通知操作
+            </summary>
+        </member>
+        <member name="M:DDD.Domain.Sys.LoginRecord.CreateEvent.Handler.Handle(DDD.Domain.Sys.LoginRecord.CreateEvent,System.Threading.CancellationToken)">
+            <summary>
+            接受消息处理创建后的业务
+            </summary>
+            <param name="notification"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DDD.Domain.Sys.LoginRecord.View.Create(DDD.Domain.Core.INigelDbContext)">
+            <summary>
+            linq 关联查询，关联账号信息
+            </summary>
+            <param name="db"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DDD.Domain.Sys.Permission.View.Create(DDD.Domain.Sys.Permission.PermissionViewModel,System.Int64)">
+            <summary>
+            获取当前账号的权限导航列表
+            </summary>
+            <param name="model"></param>
+            <param name="AdminID"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

@@ -13,42 +13,42 @@ namespace DDD.Persistence
         {
             //mssql
 
-            services.AddDbContext<NigelDbContext>(options =>
-            {
-                options.UseSqlServer(
-                    connectionString: configuration.GetConnectionString("NigelDBConnection"),
-                    sqlServerOptionsAction: options =>
-                    {
-                        options.EnableRetryOnFailure();
-                        //options.ExecutionStrategy(c => new MySqlRetryingExecutionStrategy(c.CurrentContext.Context));
-                        //options.ExecutionStrategy(c => new SqlServerRetryingExecutionStrategy(c.CurrentContext.Context));
-                        options.MigrationsAssembly("DDD.Persistence");
-                    }
-                    )
-                .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
-
-                //options.UseLoggerFactory(MyLoggerFactory);
-            });
-
-            // mysql
-
             //services.AddDbContext<NigelDbContext>(options =>
             //{
-            //    options.UseMySql(
-            //        connectionString: configuration.GetConnectionString("NigelDBConnection-mysql"),
-            //        serverVersion: new MySqlServerVersion(new Version(5, 7, 29)),
-            //        mySqlOptionsAction: options =>
+            //    options.UseSqlServer(
+            //        connectionString: configuration.GetConnectionString("NigelDBConnection"),
+            //        sqlServerOptionsAction: options =>
             //        {
-            //            //options.CharSetBehavior(CharSetBehavior.NeverAppend);
             //            options.EnableRetryOnFailure();
             //            //options.ExecutionStrategy(c => new MySqlRetryingExecutionStrategy(c.CurrentContext.Context));
             //            //options.ExecutionStrategy(c => new SqlServerRetryingExecutionStrategy(c.CurrentContext.Context));
+            //            options.MigrationsAssembly("DDD.Persistence");
             //        }
             //        )
             //    .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 
             //    //options.UseLoggerFactory(MyLoggerFactory);
             //});
+
+            // mysql
+
+            services.AddDbContext<NigelDbContext>(options =>
+            {
+                options.UseMySql(
+                    connectionString: configuration.GetConnectionString("NigelDBConnection-mysql"),
+                    serverVersion: new MySqlServerVersion(new Version(5, 7, 29)),
+                    mySqlOptionsAction: options =>
+                    {
+                        //options.CharSetBehavior(CharSetBehavior.NeverAppend);
+                        options.EnableRetryOnFailure();
+                        //options.ExecutionStrategy(c => new MySqlRetryingExecutionStrategy(c.CurrentContext.Context));
+                        //options.ExecutionStrategy(c => new SqlServerRetryingExecutionStrategy(c.CurrentContext.Context));
+                    }
+                    )
+                .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+
+                //options.UseLoggerFactory(MyLoggerFactory);
+            });
 
             services.AddScoped(typeof(INigelDbContext), typeof(NigelDbContext));
             services.AddScoped(typeof(INigelDbRepository), typeof(NigelDbRepository));

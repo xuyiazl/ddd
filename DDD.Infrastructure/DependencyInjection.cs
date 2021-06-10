@@ -98,37 +98,6 @@ namespace DDD.Infrastructure
                 };
             });
 
-            #region [ 本地化多语言 ]
-
-            //注册本地化多语言
-
-            if (project.Equals("api"))
-                services.AddLocalization(options => { options.ResourcesPath = "Localization"; });
-            else
-                services.AddLocalization(options => { options.ResourcesPath = "Resources"; });
-
-            services.Configure<RequestLocalizationOptions>(options =>
-            {
-                var supportedCultures = new List<CultureInfo>
-                {
-                        new CultureInfo("en-US"),
-                        new CultureInfo("zh-CN")
-                };
-
-                options.DefaultRequestCulture = new RequestCulture(culture: "zh-CN", uiCulture: "zh-CN");
-                options.SupportedCultures = supportedCultures;
-                options.SupportedUICultures = supportedCultures;
-
-                options.RequestCultureProviders = new IRequestCultureProvider[] { new RouteDataRequestCultureProvider { IndexOfCulture = 1, IndexofUiCulture = 1 } };
-            });
-
-            services.Configure<RouteOptions>(options =>
-            {
-                options.ConstraintMap.Add("culture", typeof(LanguageRouteConstraint));
-            });
-
-            #endregion
-
             IMvcBuilder mvcBuilder;
 
             if (project.Equals("api"))
@@ -139,9 +108,7 @@ namespace DDD.Infrastructure
             }
             else
             {
-                mvcBuilder = services.AddControllersWithViews()
-                    .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
-                    .AddDataAnnotationsLocalization();
+                mvcBuilder = services.AddControllersWithViews();
             }
 
             mvcBuilder

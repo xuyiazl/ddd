@@ -1,0 +1,84 @@
+﻿using DDD.Applaction.Common.Interfaces;
+using DDD.Applaction.Dtos;
+using DDD.Domain.Sys.AdminMenu;
+using DDD.Domain.Sys.AdminUser;
+using DDD.Domain.Sys.LoginRecord;
+using DDD.Domain.Sys.Permission;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using XUCore.NetCore;
+using XUCore.Paging;
+
+namespace DDD.Applaction.AdminUsers.Interfaces
+{
+    /// <summary>
+    /// 管理员登录接口
+    /// </summary>
+    public interface IAdminLoginAppService : IAppService
+    {
+        #region [ 登录 ]
+
+        /// <summary>
+        /// 登录
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<Result<LoginTokenDto>> Login([FromBody] AdminUserLoginCommand command, CancellationToken cancellationToken);
+        /// <summary>
+        /// 验证Token
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<Result<string>> VerifyTokenAsync(CancellationToken cancellationToken);
+
+        #endregion
+
+        #region [ 登录后的权限获取 ]
+
+        /// <summary>
+        /// 查询是否有权限
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<Result<bool>> GetPermissionAsync(PermissionQueryExists command, CancellationToken cancellationToken = default);
+        /// <summary>
+        /// 查询权限导航
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<Result<IList<PermissionMenuTreeDto>>> GetPermissionAsync(PermissionQueryMenu command, CancellationToken cancellationToken = default);
+        /// <summary>
+        /// 查询权限导航（快捷导航）
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<Result<IList<PermissionMenuDto>>> GetPermissionAsync(PermissionQueryMenuExpress command, CancellationToken cancellationToken = default);
+
+        #endregion
+
+        #region [ 登录记录 ]
+
+        /// <summary>
+        /// 获取最近登录记录
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<Result<IList<LoginRecordDto>>> GetRecordListAsync(LoginRecordQueryList command, CancellationToken cancellationToken = default);
+        /// <summary>
+        /// 获取所有登录记录分页
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<Result<PagedModel<LoginRecordDto>>> GetRecordPagedAsync(LoginRecordQueryPaged command, CancellationToken cancellationToken = default);
+
+        #endregion
+    }
+}

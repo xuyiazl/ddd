@@ -37,7 +37,6 @@ namespace DDD.Infrastructure.Filters
                 if (res != null)
                 {
                     res.elapsedTime = stopwatch.ElapsedMilliseconds;
-                    //res.Value?.GetType().GetProperty("elapsedTime").SetValue(res.Value, stopwatch.ElapsedMilliseconds);
 
                     actionExecutedContext.Result = res;
                 }

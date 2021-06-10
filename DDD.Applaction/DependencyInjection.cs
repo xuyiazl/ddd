@@ -1,9 +1,6 @@
-﻿using DDD.Applaction.AdminUsers.Interfaces;
-using DDD.Applaction.AdminUsers.Services;
+﻿using DDD.Applaction.Common.Interfaces;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
 
 namespace DDD.Applaction
 {
@@ -11,7 +8,12 @@ namespace DDD.Applaction
     {
         public static IServiceCollection AddApplication(this IServiceCollection services, string project = "api")
         {
-            services.AddScoped<IAdminUserAppService, AdminUserAppService>();
+            services.Scan(scan =>
+                scan.FromAssemblyOf<IAppService>()
+                .AddClasses(impl => impl.AssignableTo(typeof(IAppService)))
+                .AsImplementedInterfaces()
+                .WithScopedLifetime()
+            );
 
             if (project == "api")
             {

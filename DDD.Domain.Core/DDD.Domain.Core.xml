@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DDD.Domain.Core</name>
+    </assembly>
+    <members>
+        <member name="P:DDD.Domain.Core.Entities.BaseEntity.Status">
+            <summary>
+            数据状态
+            </summary>
+        </member>
+        <member name="P:DDD.Domain.Core.Entities.BaseEntity.Created_At">
+            <summary>
+            创建时间
+            </summary>
+        </member>
+        <member name="P:DDD.Domain.Core.Entities.BaseEntity.Updated_At">
+            <summary>
+            最后更新时间
+            </summary>
+        </member>
+        <member name="P:DDD.Domain.Core.Entities.BaseEntity.Deleted_At">
+            <summary>
+            删除时间
+            </summary>
+        </member>
+        <member name="F:DDD.Domain.Core.AccountMode.UserName">
+            <summary>
+            用户名
+            </summary>
+        </member>
+        <member name="F:DDD.Domain.Core.AccountMode.Mobile">
+            <summary>
+            手机号码
+            </summary>
+        </member>
+        <member name="F:DDD.Domain.Core.Status.Default">
+            <summary>
+            默认状态
+            </summary>
+        </member>
+        <member name="F:DDD.Domain.Core.Status.Show">
+            <summary>
+            正常显示
+            </summary>
+        </member>
+        <member name="F:DDD.Domain.Core.Status.SoldOut">
+            <summary>
+            数据下架（隐藏）
+            </summary>
+        </member>
+        <member name="F:DDD.Domain.Core.Status.Trash">
+            <summary>
+            数据已被删除，非物理删除（回收站）
+            </summary>
+        </member>
+        <member name="T:DDD.Domain.Core.Events.StoredEvent">
+            <summary>
+            事件存储模型，继承事件
+            </summary>
+        </member>
+        <member name="M:DDD.Domain.Core.Events.StoredEvent.#ctor(XUCore.Ddd.Domain.Events.Event,System.String,System.String)">
+            <summary>
+            构造方式实例化
+            </summary>
+            <param name="theEvent"></param>
+            <param name="data"></param>
+            <param name="user"></param>
+        </member>
+    </members>
+</doc>
