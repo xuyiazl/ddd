@@ -69,7 +69,7 @@ namespace DDD.Domain.AdminUsers
                      .ProjectTo<AdminUserDto>(mapper.ConfigurationProvider)
                      .ToPagedListAsync(request.CurrentPage, request.PageSize, cancellationToken);
 
-                return page?.Model;
+                return page?.ToModel();
             }
         }
     }

@@ -15,6 +15,7 @@ using XUCore.Ddd.Domain.Bus;
 using XUCore.Extensions;
 using XUCore.Helpers;
 using XUCore.NetCore;
+using XUCore.NetCore.Swagger;
 
 namespace DDD.Applaction.AdminUsers.Services
 {
@@ -52,6 +53,8 @@ namespace DDD.Applaction.AdminUsers.Services
                 creds);
 
             var jwtToken = new JwtSecurityTokenHandler().WriteToken(token);
+
+            Web.HttpContext.SigninToSwagger(jwtToken);
 
             return Success(SubCode.Success, jwtToken);
         }
