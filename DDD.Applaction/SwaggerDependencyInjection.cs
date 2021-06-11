@@ -57,7 +57,7 @@ namespace DDD.Applaction
                 options.SwaggerControllerDescriptions(apiXml);
 
                 // TODO:一定要返回true！
-                options.DocInclusionPredicate((docName, description) => true);
+                //options.DocInclusionPredicate((docName, description) => true);
             });
 
             return services;
