@@ -31,8 +31,7 @@ namespace DDD.Domain.Sys.AdminUser
             }
         }
 
-        public class Handler :
-            IRequestHandler<AdminUserQueryPaged, PagedModel<AdminUserDto>>
+        public class Handler : CommandHandler<AdminUserQueryPaged, PagedModel<AdminUserDto>>
         {
             private readonly INigelDbRepository db;
             private readonly IMapper mapper;
@@ -43,7 +42,7 @@ namespace DDD.Domain.Sys.AdminUser
                 this.mapper = mapper;
             }
 
-            public async Task<PagedModel<AdminUserDto>> Handle(AdminUserQueryPaged request, CancellationToken cancellationToken)
+            public override async Task<PagedModel<AdminUserDto>> Handle(AdminUserQueryPaged request, CancellationToken cancellationToken)
             {
                 var res = await db.Context.AdminUser
 

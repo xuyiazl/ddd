@@ -38,8 +38,7 @@ namespace DDD.Domain.Sys.LoginRecord
                     .LessThanOrEqualTo(150).WithMessage(c => $"分页大小必须小于等于150");
             }
         }
-        public class Handler :
-            IRequestHandler<LoginRecordQueryPaged, PagedModel<LoginRecordDto>>
+        public class Handler : CommandHandler<LoginRecordQueryPaged, PagedModel<LoginRecordDto>>
         {
             private readonly INigelDbRepository db;
             private readonly IMapper mapper;
@@ -50,7 +49,7 @@ namespace DDD.Domain.Sys.LoginRecord
                 this.mapper = mapper;
             }
 
-            public async Task<PagedModel<LoginRecordDto>> Handle(LoginRecordQueryPaged request, CancellationToken cancellationToken)
+            public override async Task<PagedModel<LoginRecordDto>> Handle(LoginRecordQueryPaged request, CancellationToken cancellationToken)
             {
                 var res = await View.Create(db.Context)
 

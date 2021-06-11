@@ -25,7 +25,7 @@ namespace DDD.Domain.Sys.AdminUser
             }
         }
 
-        public class Handler : IRequestHandler<AdminUserAnyByAccount, bool>
+        public class Handler : CommandHandler<AdminUserAnyByAccount, bool>
         {
             private readonly INigelDbRepository db;
             private readonly IMapper mapper;
@@ -36,7 +36,7 @@ namespace DDD.Domain.Sys.AdminUser
                 this.mapper = mapper;
             }
 
-            public async Task<bool> Handle(AdminUserAnyByAccount request, CancellationToken cancellationToken)
+            public override async Task<bool> Handle(AdminUserAnyByAccount request, CancellationToken cancellationToken)
             {
                 if (request.NotId > 0)
                 {

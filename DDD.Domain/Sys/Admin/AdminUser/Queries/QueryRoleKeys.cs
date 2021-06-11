@@ -23,8 +23,7 @@ namespace DDD.Domain.Sys.AdminUser
             }
         }
 
-        public class Handler :
-            IRequestHandler<AdminUserQueryRoleKeys, IList<long>>
+        public class Handler : CommandHandler<AdminUserQueryRoleKeys, IList<long>>
         {
             private readonly INigelDbRepository db;
             private readonly IMapper mapper;
@@ -35,7 +34,7 @@ namespace DDD.Domain.Sys.AdminUser
                 this.mapper = mapper;
             }
 
-            public async Task<IList<long>> Handle(AdminUserQueryRoleKeys request, CancellationToken cancellationToken)
+            public override async Task<IList<long>> Handle(AdminUserQueryRoleKeys request, CancellationToken cancellationToken)
             {
                 return await db.Context.AdminAuthUserRole
                     .Where(c => c.UserId == request.AdminId)

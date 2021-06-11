@@ -24,8 +24,7 @@ namespace DDD.Domain.Sys.AdminRole
             }
         }
 
-        public class Handler :
-            IRequestHandler<AdminRoleQueryDetail, AdminRoleDto>
+        public class Handler : CommandHandler<AdminRoleQueryDetail, AdminRoleDto>
         {
             private readonly INigelDbRepository db;
             private readonly IMapper mapper;
@@ -36,7 +35,7 @@ namespace DDD.Domain.Sys.AdminRole
                 this.mapper = mapper;
             }
 
-            public async Task<AdminRoleDto> Handle(AdminRoleQueryDetail request, CancellationToken cancellationToken)
+            public override async Task<AdminRoleDto> Handle(AdminRoleQueryDetail request, CancellationToken cancellationToken)
             {
                 var res = await db.Context.AdminAuthRole
                     .Where(c => c.Id == request.Id)

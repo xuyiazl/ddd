@@ -24,8 +24,7 @@ namespace DDD.Domain.Sys.AdminUser
             }
         }
 
-        public class Handler :
-            IRequestHandler<AdminUserQueryDetail, AdminUserDto>
+        public class Handler : CommandHandler<AdminUserQueryDetail, AdminUserDto>
         {
             private readonly INigelDbRepository db;
             private readonly IMapper mapper;
@@ -36,7 +35,7 @@ namespace DDD.Domain.Sys.AdminUser
                 this.mapper = mapper;
             }
 
-            public async Task<AdminUserDto> Handle(AdminUserQueryDetail request, CancellationToken cancellationToken)
+            public override async Task<AdminUserDto> Handle(AdminUserQueryDetail request, CancellationToken cancellationToken)
             {
                 var res = await db.Context.AdminUser
                     .Where(c => c.Id == request.Id)

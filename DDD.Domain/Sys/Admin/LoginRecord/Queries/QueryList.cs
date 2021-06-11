@@ -33,8 +33,7 @@ namespace DDD.Domain.Sys.LoginRecord
             }
         }
 
-        public class Handler :
-            IRequestHandler<LoginRecordQueryList, IList<LoginRecordDto>>
+        public class Handler : CommandHandler<LoginRecordQueryList, IList<LoginRecordDto>>
         {
             private readonly INigelDbRepository db;
             private readonly IMapper mapper;
@@ -45,7 +44,7 @@ namespace DDD.Domain.Sys.LoginRecord
                 this.mapper = mapper;
             }
 
-            public async Task<IList<LoginRecordDto>> Handle(LoginRecordQueryList request, CancellationToken cancellationToken)
+            public override async Task<IList<LoginRecordDto>> Handle(LoginRecordQueryList request, CancellationToken cancellationToken)
             {
                 var res = await View.Create(db.Context)
 

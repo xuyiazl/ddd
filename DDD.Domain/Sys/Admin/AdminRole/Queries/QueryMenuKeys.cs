@@ -18,8 +18,7 @@ namespace DDD.Domain.Sys.AdminRole
         public long RoleId { get; set; }
 
 
-        public class Handler :
-            IRequestHandler<AdminRoleQueryMenuKeys, IList<long>>
+        public class Handler : CommandHandler<AdminRoleQueryMenuKeys, IList<long>>
         {
             private readonly INigelDbRepository db;
             private readonly IMapper mapper;
@@ -30,7 +29,7 @@ namespace DDD.Domain.Sys.AdminRole
                 this.mapper = mapper;
             }
 
-            public async Task<IList<long>> Handle(AdminRoleQueryMenuKeys request, CancellationToken cancellationToken)
+            public override async Task<IList<long>> Handle(AdminRoleQueryMenuKeys request, CancellationToken cancellationToken)
             {
                 return await db.Context.AdminAuthRoleMenus
                     .Where(c => c.RoleId == request.RoleId)

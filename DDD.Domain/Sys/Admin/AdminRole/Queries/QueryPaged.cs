@@ -31,8 +31,7 @@ namespace DDD.Domain.Sys.AdminRole
             }
         }
 
-        public class Handler :
-            IRequestHandler<AdminRoleQueryPaged, PagedModel<AdminRoleDto>>
+        public class Handler : CommandHandler<AdminRoleQueryPaged, PagedModel<AdminRoleDto>>
         {
             private readonly INigelDbRepository db;
             private readonly IMapper mapper;
@@ -43,7 +42,7 @@ namespace DDD.Domain.Sys.AdminRole
                 this.mapper = mapper;
             }
 
-            public async Task<PagedModel<AdminRoleDto>> Handle(AdminRoleQueryPaged request, CancellationToken cancellationToken)
+            public override async Task<PagedModel<AdminRoleDto>> Handle(AdminRoleQueryPaged request, CancellationToken cancellationToken)
             {
                 var res = await db.Context.AdminAuthRole
 

@@ -24,8 +24,7 @@ namespace DDD.Domain.Sys.AdminMenu
             }
         }
 
-        public class Handler :
-            IRequestHandler<AdminMenuQueryDetail, AdminMenuDto>
+        public class Handler : CommandHandler<AdminMenuQueryDetail, AdminMenuDto>
         {
             private readonly INigelDbRepository db;
             private readonly IMapper mapper;
@@ -36,7 +35,7 @@ namespace DDD.Domain.Sys.AdminMenu
                 this.mapper = mapper;
             }
 
-            public async Task<AdminMenuDto> Handle(AdminMenuQueryDetail request, CancellationToken cancellationToken)
+            public override async Task<AdminMenuDto> Handle(AdminMenuQueryDetail request, CancellationToken cancellationToken)
             {
                 var res = await db.Context.AdminAuthMenus
                     .Where(c => c.Id == request.Id)
