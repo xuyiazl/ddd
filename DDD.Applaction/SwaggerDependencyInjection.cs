@@ -85,6 +85,8 @@ namespace DDD.Applaction
             //启用中间件服务对swagger-ui，指定Swagger JSON终结点
             app.UseSwaggerUI(c =>
             {
+                c.InjectMiniProfilerPlugin();
+
                 c.SwaggerEndpoint($"/swagger/test/swagger.json", "test API");
 
                 c.DocExpansion(Swashbuckle.AspNetCore.SwaggerUI.DocExpansion.None);

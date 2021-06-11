@@ -21,6 +21,7 @@ using XUCore.Ddd.Domain.Bus;
 using XUCore.Extensions;
 using XUCore.Helpers;
 using XUCore.NetCore;
+using XUCore.NetCore.Swagger;
 using XUCore.Paging;
 using XUCore.Timing;
 
@@ -34,12 +35,10 @@ namespace DDD.Application.Services
         private const string userId = "_userid";
         private const string userName = "_username";
         private readonly JwtSettings jwtSettings;
-        private readonly IHttpContextAccessor httpContextAccessor;
 
-        public AdminLoginAppService(IMediatorHandler bus, JwtSettings jwtSettings, IHttpContextAccessor httpContextAccessor) : base(bus)
+        public AdminLoginAppService(IMediatorHandler bus, JwtSettings jwtSettings) : base(bus)
         {
             this.jwtSettings = jwtSettings;
-            this.httpContextAccessor = httpContextAccessor;
         }
 
         #region [ 登录 ]
@@ -82,8 +81,7 @@ namespace DDD.Application.Services
 
             var jwtToken = new JwtSecurityTokenHandler().WriteToken(token);
 
-            httpContextAccessor.HttpContext.Response.Headers["access-token"] = jwtToken;
-            //httpContextAccessor.HttpContext.Response.Headers["x-access-token"] = refreshToken;
+            Web.HttpContext.SigninToSwagger(jwtToken);
 
             return Success(SubCode.Success, new LoginTokenDto
             {

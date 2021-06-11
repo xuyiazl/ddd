@@ -60,7 +60,7 @@ namespace DDD.Domain.Sys.LoginRecord
                     .ProjectTo<LoginRecordDto>(mapper.ConfigurationProvider)
                     .ToPagedListAsync(request.CurrentPage, request.PageSize, cancellationToken);
 
-                return res.Model;
+                return res.ToModel();
             }
         }
     }

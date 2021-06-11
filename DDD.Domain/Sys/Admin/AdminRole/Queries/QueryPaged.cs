@@ -54,7 +54,7 @@ namespace DDD.Domain.Sys.AdminRole
                     .ProjectTo<AdminRoleDto>(mapper.ConfigurationProvider)
                     .ToPagedListAsync(request.CurrentPage, request.PageSize, cancellationToken);
 
-                return res.Model;
+                return res.ToModel();
             }
         }
     }
