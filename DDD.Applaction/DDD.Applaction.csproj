@@ -14,7 +14,7 @@
 		</None>
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="XUCore.NetCore.Swagger" Version="5.1.4" />
+		<PackageReference Include="XUCore.NetCore.Swagger" Version="5.1.6" />
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\DDD.Domain\DDD.Domain.csproj" />
