@@ -1,12 +1,13 @@
 ﻿using DDD.Applaction.Common.Interfaces;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DDD.Applaction
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddApplication(this IServiceCollection services, string project = "api")
+        public static IServiceCollection AddApplication(this IServiceCollection services, IWebHostEnvironment environment)
         {
             services.Scan(scan =>
                 scan.FromAssemblyOf<IAppService>()
@@ -15,20 +16,14 @@ namespace DDD.Applaction
                 .WithScopedLifetime()
             );
 
-            if (project == "api")
-            {
-                services.AddSwagger();
-            }
+            services.AddSwagger(environment);
 
             return services;
         }
 
-        public static IApplicationBuilder UseApplication(this IApplicationBuilder app, string project = "api")
+        public static IApplicationBuilder UseApplication(this IApplicationBuilder app, IWebHostEnvironment environment)
         {
-            if (project == "api")
-            {
-                app.UseSwagger();
-            }
+            app.UseSwagger(environment);
 
             return app;
         }

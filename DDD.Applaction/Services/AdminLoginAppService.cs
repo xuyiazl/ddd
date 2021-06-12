@@ -1,4 +1,5 @@
-﻿using DDD.Applaction.AdminUsers.Interfaces;
+﻿using DDD.Applaction;
+using DDD.Applaction.AdminUsers.Interfaces;
 using DDD.Applaction.Common;
 using DDD.Applaction.Dtos;
 using DDD.Domain.Core;
@@ -30,7 +31,7 @@ namespace DDD.Application.Services
     /// <summary>
     /// 管理员登录接口
     /// </summary>
-    [ApiExplorerSettings(GroupName = "test1")]
+    [ApiExplorerSettings(GroupName = ApiGroup.Login)]
     public class AdminLoginAppService : AppService, IAdminLoginAppService
     {
         private const string userId = "_userid";
@@ -54,11 +55,6 @@ namespace DDD.Application.Services
         [AllowAnonymous]
         public async Task<Result<LoginTokenDto>> Login([FromBody] AdminUserLoginCommand command, CancellationToken cancellationToken)
         {
-            command.IpAddress = command.IpAddress.IsEmpty() ? Web.IP : command.IpAddress;
-
-            if (!command.IsVaild())
-                throw new Exception(command.GetErrors(","));
-
             var user = await bus.SendCommand(command);
 
             var claims = new List<Claim> {

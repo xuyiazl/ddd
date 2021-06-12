@@ -9,6 +9,7 @@ using XUCore.NetCore.DynamicWebApi;
 
 namespace DDD.Applaction.Common
 {
+    //[DynamicWebApi(Module = "v1")]
     [DynamicWebApi]
     [ApiError]
     [ApiElapsedTime]

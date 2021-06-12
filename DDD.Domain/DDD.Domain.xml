@@ -138,11 +138,6 @@
             密码
             </summary>
         </member>
-        <member name="P:DDD.Domain.Sys.AdminUser.AdminUserLoginCommand.IpAddress">
-            <summary>
-            登录IP
-            </summary>
-        </member>
         <member name="T:DDD.Domain.Sys.LoginRecord.CreateEvent.Handler">
             <summary>
             事件通知操作

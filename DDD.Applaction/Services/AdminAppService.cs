@@ -1,25 +1,24 @@
-﻿using XUCore.Ddd.Domain.Bus;
+﻿using DDD.Applaction;
+using DDD.Applaction.AdminUsers.Interfaces;
+using DDD.Applaction.Common;
+using DDD.Domain.Core;
 using DDD.Domain.Sys.AdminMenu;
 using DDD.Domain.Sys.AdminRole;
 using DDD.Domain.Sys.AdminUser;
-using DDD.Domain.Sys.LoginRecord;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using XUCore.Paging;
-using DDD.Applaction.Common;
-using DDD.Applaction.AdminUsers.Interfaces;
-using DDD.Domain.Core;
-using Microsoft.AspNetCore.Components;
+using XUCore.Ddd.Domain.Bus;
 using XUCore.NetCore;
-using Microsoft.AspNetCore.Mvc;
+using XUCore.Paging;
 
 namespace DDD.Application.Services
 {
     /// <summary>
     /// 管理员管理
     /// </summary>
-    [ApiExplorerSettings(GroupName = "test")]
+    [ApiExplorerSettings(GroupName = ApiGroup.Admin)]
     public class AdminAppService : AppService, IAdminAppService
     {
         public AdminAppService(IMediatorHandler bus) : base(bus) { }

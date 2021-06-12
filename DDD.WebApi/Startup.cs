@@ -21,16 +21,16 @@ namespace DDD.WebApi
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddInfrastructure(Configuration, Environment, "api");
+            services.AddInfrastructure(Configuration, Environment);
             services.AddPersistence(Configuration);
-            services.AddApplication("api");
+            services.AddApplication(Environment);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseInfrastructure(env, "api");
+            app.UseInfrastructure(env);
             app.UsePersistence();
-            app.UseApplication("api");
+            app.UseApplication(Environment);
         }
     }
 }

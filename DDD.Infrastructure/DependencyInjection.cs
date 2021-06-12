@@ -2,23 +2,17 @@
 using DDD.Domain.Core;
 using DDD.Infrastructure.Bus;
 using DDD.Infrastructure.Events;
-using DDD.Infrastructure.Language;
 using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Localization;
-using Microsoft.AspNetCore.Mvc.Razor;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.Globalization;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
@@ -30,13 +24,12 @@ using XUCore.NetCore.Extensions;
 using XUCore.NetCore.MessagePack;
 using XUCore.NetCore.Redis;
 using XUCore.Serializer;
-using RouteDataRequestCultureProvider = DDD.Infrastructure.Language.RouteDataRequestCultureProvider;
 
 namespace DDD.Infrastructure
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration, IWebHostEnvironment environment, string project = "api")
+        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration, IWebHostEnvironment environment)
         {
             services.AddSingleton(HtmlEncoder.Create(UnicodeRanges.All));
 
@@ -98,68 +91,36 @@ namespace DDD.Infrastructure
                 };
             });
 
-            IMvcBuilder mvcBuilder;
+            services
+               .AddControllers()
+               .AddMessagePackFormatters(options =>
+               {
+                   options.JsonSerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Local;
+                   options.JsonSerializerSettings.ContractResolver = new LimitPropsContractResolver();
 
-            if (project.Equals("api"))
-            {
-                mvcBuilder = services.AddControllers();
+                   //默认设置MessageagePack的日期序列化格式为时间戳，对外输出一致为时间戳的日期，不需要我们自己去序列化，自动操作。
+                   //C#实体内仍旧保持DateTime。跨语言MessageagePack没有DateTime类型。
+                   options.FormatterResolver = MessagePackSerializerResolver.UnixDateTimeFormatter;
+                   options.Options = MessagePackSerializerResolver.UnixDateTimeOptions;
 
-                services.AddDynamicWebApi();
-            }
-            else
-            {
-                mvcBuilder = services.AddControllersWithViews();
-            }
+               })
+               .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining(typeof(IMapFrom<>)));
 
-            mvcBuilder
-                .AddMessagePackFormatters(options =>
-                {
-                    options.JsonSerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Local;
-                    options.JsonSerializerSettings.ContractResolver = new LimitPropsContractResolver();
-
-                    //默认设置MessageagePack的日期序列化格式为时间戳，对外输出一致为时间戳的日期，不需要我们自己去序列化，自动操作。
-                    //C#实体内仍旧保持DateTime。跨语言MessageagePack没有DateTime类型。
-                    options.FormatterResolver = MessagePackSerializerResolver.UnixDateTimeFormatter;
-                    options.Options = MessagePackSerializerResolver.UnixDateTimeOptions;
-
-                })
-                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining(typeof(IMapFrom<>)));
+            services.AddDynamicWebApi();
 
             //services.AddCacheService<MemoryCacheService>();
 
             return services;
         }
 
-        public static IApplicationBuilder UseInfrastructure(this IApplicationBuilder app, IWebHostEnvironment env, string project = "api")
+        public static IApplicationBuilder UseInfrastructure(this IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (project == "api")
+            if (env.IsDevelopment())
             {
-                if (env.IsDevelopment())
-                {
-                    app.UseDeveloperExceptionPage();
-                }
-
-                app.UseStaticFiles();
-            }
-            else
-            {
-                if (env.IsDevelopment())
-                {
-                    app.UseDeveloperExceptionPage();
-                }
-                else
-                {
-                    app.UseExceptionHandler("/Home/Error");
-                }
+                app.UseDeveloperExceptionPage();
             }
 
-            #region [ 本地化多语言 ]
-
-            var localizeOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
-
-            app.UseRequestLocalization(localizeOptions.Value);
-
-            #endregion
+            app.UseStaticFiles();
 
             app.UseRouting();
 
@@ -169,26 +130,10 @@ namespace DDD.Infrastructure
             app.UseStaticHttpContext();
             app.UseStaticFiles();
 
-            if (project == "api")
+            app.UseEndpoints(endpoints =>
             {
-                app.UseEndpoints(endpoints =>
-                {
-                    endpoints.MapControllers();
-                });
-            }
-            else
-            {
-                app.UseEndpoints(endpoints =>
-                {
-                    endpoints.MapControllerRoute(
-                        name: "default",
-                        pattern: "{controller=Home}/{action=Index}/{id?}");
-
-                    endpoints.MapControllerRoute(
-                        name: "default",
-                        pattern: "{culture:culture}/{controller=Home}/{action=Index}/{id?}");
-                });
-            }
+                endpoints.MapControllers();
+            });
 
             return app;
         }

@@ -48,7 +48,7 @@ namespace DDD.Infrastructure.Filters
                     StatusCode = (int)HttpStatusCode.Unauthorized
                 };
             }
-            else if (context.Exception is ValidationException)
+            else if (context.Exception.IsValidation())
             {
                 var ex = context.Exception as ValidationException;
 

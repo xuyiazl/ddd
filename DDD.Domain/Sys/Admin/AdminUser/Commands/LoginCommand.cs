@@ -26,10 +26,6 @@ namespace DDD.Domain.Sys.AdminUser
         /// </summary>
         [Required]
         public string Password { get; set; }
-        /// <summary>
-        /// 登录IP
-        /// </summary>
-        public string IpAddress { get; set; }
 
         public override bool IsVaild()
         {
@@ -69,7 +65,7 @@ namespace DDD.Domain.Sys.AdminUser
                 {
                     user = await db.Context.AdminUser.Where(c => c.UserName.Equals(request.Account)).FirstOrDefaultAsync();
                     if (user == null)
-                        throw new Exception("账号不存在");
+                        Throw.Validation("账号不存在");
 
                     loginWay = "Mobile";
                 }
@@ -77,20 +73,20 @@ namespace DDD.Domain.Sys.AdminUser
                 {
                     user = await db.Context.AdminUser.Where(c => c.Mobile.Equals(request.Account)).FirstOrDefaultAsync();
                     if (user == null)
-                        throw new Exception("手机号码不存在");
+                        Throw.Validation("手机号码不存在");
 
                     loginWay = "UserName";
                 }
 
                 if (!user.Password.Equals(request.Password))
-                    throw new Exception("密码错误");
+                    Throw.Validation("密码错误");
                 if (user.Status != Status.Show)
-                    throw new Exception("您的帐号禁止登录,请与管理员联系!");
+                    Throw.Validation("您的帐号禁止登录,请与管理员联系!");
 
 
                 user.LoginCount += 1;
                 user.LoginLastTime = DateTime.Now;
-                user.LoginLastIp = request.IpAddress;
+                user.LoginLastIp = Web.IP;
 
                 user.LoginRecords.Add(new LoginRecordEntity
                 {
