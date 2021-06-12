@@ -19,6 +19,7 @@ namespace DDD.Application.Services
     /// <summary>
     /// 管理员管理
     /// </summary>
+    [ApiExplorerSettings(GroupName = "test")]
     public class AdminAppService : AppService, IAdminAppService
     {
         public AdminAppService(IMediatorHandler bus) : base(bus) { }

@@ -1,7 +1,13 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using Swashbuckle.AspNetCore.SwaggerUI;
 using System.IO;
+using System.Linq;
+using System.Reflection;
+using XUCore.Extensions;
 using XUCore.NetCore.Swagger;
 
 namespace DDD.Applaction
@@ -19,44 +25,20 @@ namespace DDD.Applaction
                     Title = $"test",
                     Description = "test"
                 });
-
-                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                options.SwaggerDoc("test1", new OpenApiInfo
                 {
-                    In = ParameterLocation.Header,
-                    Description = "JWT Authorization header using the Bearer scheme.",
-                    Name = "Authorization",
-                    Type = SecuritySchemeType.Http,
-                    Scheme = "bearer",
-                    BearerFormat = "JWT"
+                    Version = "v1.0.0",
+                    Title = $"test",
+                    Description = "test"
                 });
-                options.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
-                    {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference
-                            {
-                                Type = ReferenceType.SecurityScheme,
-                                Id = "Bearer"
-                            }
-                        },
-                        new string[0]
-                    }
-                });
-                options.SwaggerHttpSignDoc(services);
-                //options.SwaggerFiledDoc();
 
-                // 为 Swagger JSON and UI设置xml文档注释路径
-                var basePath = Path.GetDirectoryName(typeof(DependencyInjection).Assembly.Location);
-                var apiXml = Path.Combine(basePath, "DDD.Applaction.xml");
-                //获取应用程序所在目录（绝对，不受工作目录影响，建议采用此方法获取路径）
-                options.IncludeXmlComments(apiXml);
-                options.IncludeXmlComments(Path.Combine(basePath, "DDD.Domain.xml"));
-                options.IncludeXmlComments(Path.Combine(basePath, "DDD.Domain.Core.xml"));
+                options.AddJwtBearerDoc();
+                options.AddHttpSignDoc(services);
+                //options.AddFiledDoc();
 
-                options.SwaggerControllerDescriptions(apiXml);
+                options.AddDescriptions(typeof(DependencyInjection), "DDD.Applaction.xml", "DDD.Domain.xml", "DDD.Domain.Core.xml");
 
-                // TODO:一定要返回true！
+                // TODO:一定要返回true！true 分组无效 注释掉 必须有分组才能出现api
                 //options.DocInclusionPredicate((docName, description) => true);
             });
 
@@ -85,11 +67,12 @@ namespace DDD.Applaction
             //启用中间件服务对swagger-ui，指定Swagger JSON终结点
             app.UseSwaggerUI(c =>
             {
-                c.InjectMiniProfilerPlugin();
+                c.AddMiniProfiler();
 
                 c.SwaggerEndpoint($"/swagger/test/swagger.json", "test API");
+                c.SwaggerEndpoint($"/swagger/test1/swagger.json", "test1 API");
 
-                c.DocExpansion(Swashbuckle.AspNetCore.SwaggerUI.DocExpansion.None);
+                c.DocExpansion(DocExpansion.None);
             });
 
             return app;

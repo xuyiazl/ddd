@@ -30,6 +30,7 @@ namespace DDD.Application.Services
     /// <summary>
     /// 管理员登录接口
     /// </summary>
+    [ApiExplorerSettings(GroupName = "test1")]
     public class AdminLoginAppService : AppService, IAdminLoginAppService
     {
         private const string userId = "_userid";

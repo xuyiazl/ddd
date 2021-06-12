@@ -15,7 +15,7 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Scrutor" Version="3.3.0" />
-		<PackageReference Include="XUCore.NetCore.Swagger" Version="5.1.4" />
+		<PackageReference Include="XUCore.NetCore.Swagger" Version="5.1.6" />
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\DDD.Domain\DDD.Domain.csproj" />
