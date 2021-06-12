@@ -18,6 +18,7 @@ namespace DDD.Applaction.AdminUsers.Interfaces
     /// </summary>
     public interface IAdminAppService : IAppService
     {
+
         #region [ 账号管理 ]
 
         /// <summary>
@@ -26,70 +27,70 @@ namespace DDD.Applaction.AdminUsers.Interfaces
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<Result<int>> CreateUserAsync([FromBody] AdminUserCreateCommand command, CancellationToken cancellationToken = default);
+        Task<Result<int>> CreateUserAsync(AdminUserCreateCommand command, CancellationToken cancellationToken = default);
         /// <summary>
         /// 更新账号信息
         /// </summary>
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<Result<int>> UpdateUserAsync([FromBody] AdminUserUpdateInfoCommand command, CancellationToken cancellationToken = default);
+        Task<Result<int>> UpdateUserAsync(AdminUserUpdateInfoCommand command, CancellationToken cancellationToken = default);
         /// <summary>
         /// 更新密码
         /// </summary>
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<Result<int>> UpdateUserAsync([FromBody] AdminUserUpdatePasswordCommand command, CancellationToken cancellationToken = default);
+        Task<Result<int>> UpdateUserAsync(AdminUserUpdatePasswordCommand command, CancellationToken cancellationToken = default);
         /// <summary>
         /// 更新指定字段内容
         /// </summary>
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<Result<int>> UpdateUserAsync([FromQuery] AdminUserUpdateFieldCommand command, CancellationToken cancellationToken = default);
+        Task<Result<int>> UpdateUserAsync(AdminUserUpdateFieldCommand command, CancellationToken cancellationToken = default);
         /// <summary>
         /// 更新状态
         /// </summary>
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<Result<int>> UpdateUserAsync([FromQuery] AdminUserUpdateStatusCommand command, CancellationToken cancellationToken = default);
+        Task<Result<int>> UpdateUserAsync(AdminUserUpdateStatusCommand command, CancellationToken cancellationToken = default);
         /// <summary>
         /// 删除账号（物理删除）
         /// </summary>
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<Result<int>> DeleteUserAsync([FromQuery] AdminUserDeleteCommand command, CancellationToken cancellationToken = default);
+        Task<Result<int>> DeleteUserAsync(AdminUserDeleteCommand command, CancellationToken cancellationToken = default);
         /// <summary>
         /// 获取账号信息
         /// </summary>
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<Result<AdminUserDto>> GetUserAsync([FromQuery] AdminUserQueryDetail command, CancellationToken cancellationToken = default);
+        Task<Result<AdminUserDto>> GetUserAsync(AdminUserQueryDetail command, CancellationToken cancellationToken = default);
         /// <summary>
         /// 获取账号信息（根据账号或手机号码）
         /// </summary>
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<Result<AdminUserDto>> GetUserByAccountAsync([FromQuery] AdminUserQueryByAccount command, CancellationToken cancellationToken = default);
+        Task<Result<AdminUserDto>> GetUserAsync(AdminUserQueryByAccount command, CancellationToken cancellationToken = default);
         /// <summary>
         /// 检查账号或者手机号是否存在
         /// </summary>
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<Result<bool>> GetUserAnyAsync([FromQuery] AdminUserAnyByAccount command, CancellationToken cancellationToken = default);
+        Task<Result<bool>> GetUserAsync(AdminUserAnyByAccount command, CancellationToken cancellationToken = default);
         /// <summary>
         /// 获取账号分页
         /// </summary>
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<Result<PagedModel<AdminUserDto>>> GetUserPagedAsync([FromQuery] AdminUserQueryPaged command, CancellationToken cancellationToken = default);
+        Task<Result<PagedModel<AdminUserDto>>> GetUserAsync(AdminUserQueryPaged command, CancellationToken cancellationToken = default);
 
         #endregion
 
@@ -101,14 +102,14 @@ namespace DDD.Applaction.AdminUsers.Interfaces
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<Result<int>> CreateUserRelevanceRoleIdAsync([FromQuery] AdminUserRelevanceRoleCommand command, CancellationToken cancellationToken = default);
+        Task<Result<int>> CreateUserAsync(AdminUserRelevanceRoleCommand command, CancellationToken cancellationToken = default);
         /// <summary>
         /// 获取账号关联的角色id集合
         /// </summary>
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<Result<IList<long>>> GetUserRelevanceRoleIdsAsync([FromQuery] AdminUserQueryRoleKeys command, CancellationToken cancellationToken = default);
+        Task<Result<IList<long>>> GetUserAsync(AdminUserQueryRoleKeys command, CancellationToken cancellationToken = default);
 
         #endregion
 
@@ -129,14 +130,14 @@ namespace DDD.Applaction.AdminUsers.Interfaces
         /// <returns></returns>
         Task<Result<int>> UpdateRoleAsync(AdminRoleUpdateCommand command, CancellationToken cancellationToken = default);
         /// <summary>
-        /// 更新指定字段内容
+        /// 更新角色指定字段内容
         /// </summary>
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         Task<Result<int>> UpdateRoleAsync(AdminRoleUpdateFieldCommand command, CancellationToken cancellationToken = default);
         /// <summary>
-        /// 更新状态
+        /// 更新角色状态
         /// </summary>
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
@@ -159,23 +160,24 @@ namespace DDD.Applaction.AdminUsers.Interfaces
         /// <summary>
         /// 获取所有角色
         /// </summary>
+        /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<Result<IList<AdminRoleDto>>> GetRoleAllAsync(CancellationToken cancellationToken = default);
+        Task<Result<IList<AdminRoleDto>>> GetRoleAsync(AdminRoleQueryAll command, CancellationToken cancellationToken = default);
         /// <summary>
         /// 获取角色分页
         /// </summary>
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<Result<PagedModel<AdminRoleDto>>> GetRolePagedAsync(AdminRoleQueryPaged command, CancellationToken cancellationToken = default);
+        Task<Result<PagedModel<AdminRoleDto>>> GetRoleAsync(AdminRoleQueryPaged command, CancellationToken cancellationToken = default);
         /// <summary>
         /// 获取角色关联的所有导航id集合
         /// </summary>
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<Result<IList<long>>> GetRoleRelevanceMenuAsync(AdminRoleQueryMenuKeys command, CancellationToken cancellationToken = default);
+        Task<Result<IList<long>>> GetRoleAsync(AdminRoleQueryMenuKeys command, CancellationToken cancellationToken = default);
 
         #endregion
 
@@ -196,14 +198,14 @@ namespace DDD.Applaction.AdminUsers.Interfaces
         /// <returns></returns>
         Task<Result<int>> UpdateMenuAsync(AdminMenuUpdateCommand command, CancellationToken cancellationToken = default);
         /// <summary>
-        /// 更新指定字段内容
+        /// 更新导航指定字段内容
         /// </summary>
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         Task<Result<int>> UpdateMenuAsync(AdminMenuUpdateFieldCommand command, CancellationToken cancellationToken = default);
         /// <summary>
-        /// 更新状态
+        /// 更新导航状态
         /// </summary>
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
@@ -224,18 +226,19 @@ namespace DDD.Applaction.AdminUsers.Interfaces
         /// <returns></returns>
         Task<Result<AdminMenuDto>> GetMenuAsync(AdminMenuQueryDetail command, CancellationToken cancellationToken = default);
         /// <summary>
-        /// 获取导航
-        /// </summary>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        Task<Result<IList<AdminMenuTreeDto>>> GetMenuByTreeAsync(CancellationToken cancellationToken = default);
-        /// <summary>
-        /// 获取导航
+        /// 获取导航树形结构
         /// </summary>
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<Result<IList<AdminMenuDto>>> GetMenuByWeightAsync([FromQuery] AdminMenuQueryByWeight command, CancellationToken cancellationToken = default);
+        Task<Result<IList<AdminMenuTreeDto>>> GetMenuAsync(AdminMenuQueryByTree command, CancellationToken cancellationToken = default);
+        /// <summary>
+        /// 获取导航分页
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<Result<IList<AdminMenuDto>>> GetMenuAsync(AdminMenuQueryByWeight command, CancellationToken cancellationToken = default);
 
         #endregion
     }

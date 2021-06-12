@@ -4,6 +4,7 @@ using DDD.Domain.Core;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ namespace DDD.Domain.Sys.AdminUser
 {
     public class AdminUserQueryDetail : Command<AdminUserDto>
     {
+        [Required]
         public long Id { get; set; }
 
         public class Validator : CommandValidator<AdminUserQueryDetail>

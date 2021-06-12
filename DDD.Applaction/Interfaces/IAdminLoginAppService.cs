@@ -70,14 +70,14 @@ namespace DDD.Applaction.AdminUsers.Interfaces
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<Result<IList<LoginRecordDto>>> GetRecordListAsync(LoginRecordQueryList command, CancellationToken cancellationToken = default);
+        Task<Result<IList<LoginRecordDto>>> GetRecordAsync(LoginRecordQueryList command, CancellationToken cancellationToken = default);
         /// <summary>
         /// 获取所有登录记录分页
         /// </summary>
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<Result<PagedModel<LoginRecordDto>>> GetRecordPagedAsync(LoginRecordQueryPaged command, CancellationToken cancellationToken = default);
+        Task<Result<PagedModel<LoginRecordDto>>> GetRecordAsync(LoginRecordQueryPaged command, CancellationToken cancellationToken = default);
 
         #endregion
     }

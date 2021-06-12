@@ -31,6 +31,7 @@ namespace DDD.Application.Services
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
+        [HttpPost]
         public async Task<Result<int>> CreateUserAsync([FromBody] AdminUserCreateCommand command, CancellationToken cancellationToken = default)
         {
             var res = await bus.SendCommand(command, cancellationToken);
@@ -46,6 +47,7 @@ namespace DDD.Application.Services
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
+        [HttpPut]
         public async Task<Result<int>> UpdateUserAsync([FromBody] AdminUserUpdateInfoCommand command, CancellationToken cancellationToken = default)
         {
             var res = await bus.SendCommand(command, cancellationToken);
@@ -109,6 +111,7 @@ namespace DDD.Application.Services
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
+        [HttpDelete]
         public async Task<Result<int>> DeleteUserAsync([FromQuery] AdminUserDeleteCommand command, CancellationToken cancellationToken = default)
         {
             var res = await bus.SendCommand(command, cancellationToken);
@@ -124,7 +127,7 @@ namespace DDD.Application.Services
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        [HttpGet("{id:int}")]
+        [HttpGet]
         public async Task<Result<AdminUserDto>> GetUserAsync([FromQuery] AdminUserQueryDetail command, CancellationToken cancellationToken = default)
         {
             var res = await bus.SendCommand(command, cancellationToken);
@@ -137,7 +140,8 @@ namespace DDD.Application.Services
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<Result<AdminUserDto>> GetUserByAccountAsync([FromQuery] AdminUserQueryByAccount command, CancellationToken cancellationToken = default)
+        [HttpGet("Account")]
+        public async Task<Result<AdminUserDto>> GetUserAsync([FromQuery] AdminUserQueryByAccount command, CancellationToken cancellationToken = default)
         {
             var res = await bus.SendCommand(command, cancellationToken);
 
@@ -149,7 +153,8 @@ namespace DDD.Application.Services
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<Result<bool>> GetUserAnyAsync([FromQuery] AdminUserAnyByAccount command, CancellationToken cancellationToken = default)
+        [HttpGet("Any")]
+        public async Task<Result<bool>> GetUserAsync([FromQuery] AdminUserAnyByAccount command, CancellationToken cancellationToken = default)
         {
             var res = await bus.SendCommand(command, cancellationToken);
 
@@ -161,7 +166,8 @@ namespace DDD.Application.Services
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<Result<PagedModel<AdminUserDto>>> GetUserPagedAsync([FromQuery] AdminUserQueryPaged command, CancellationToken cancellationToken = default)
+        [HttpGet("Page")]
+        public async Task<Result<PagedModel<AdminUserDto>>> GetUserAsync([FromQuery] AdminUserQueryPaged command, CancellationToken cancellationToken = default)
         {
             var res = await bus.SendCommand(command, cancellationToken);
 
@@ -178,7 +184,8 @@ namespace DDD.Application.Services
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<Result<int>> CreateUserRelevanceRoleIdAsync([FromBody] AdminUserRelevanceRoleCommand command, CancellationToken cancellationToken = default)
+        [HttpPost("RelevanceRoleId")]
+        public async Task<Result<int>> CreateUserAsync([FromBody] AdminUserRelevanceRoleCommand command, CancellationToken cancellationToken = default)
         {
             var res = await bus.SendCommand(command, cancellationToken);
 
@@ -193,7 +200,8 @@ namespace DDD.Application.Services
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<Result<IList<long>>> GetUserRelevanceRoleIdsAsync([FromQuery] AdminUserQueryRoleKeys command, CancellationToken cancellationToken = default)
+        [HttpGet("RelevanceRoleId")]
+        public async Task<Result<IList<long>>> GetUserAsync([FromQuery] AdminUserQueryRoleKeys command, CancellationToken cancellationToken = default)
         {
             var res = await bus.SendCommand(command, cancellationToken);
 
@@ -210,6 +218,7 @@ namespace DDD.Application.Services
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
+        [HttpPost]
         public async Task<Result<int>> CreateRoleAsync([FromBody] AdminRoleCreateCommand command, CancellationToken cancellationToken = default)
         {
             var res = await bus.SendCommand(command, cancellationToken);
@@ -225,6 +234,7 @@ namespace DDD.Application.Services
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
+        [HttpPut]
         public async Task<Result<int>> UpdateRoleAsync([FromBody] AdminRoleUpdateCommand command, CancellationToken cancellationToken = default)
         {
             var res = await bus.SendCommand(command, cancellationToken);
@@ -272,6 +282,7 @@ namespace DDD.Application.Services
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
+        [HttpDelete]
         public async Task<Result<int>> DeleteRoleAsync([FromQuery] AdminRoleDeleteCommand command, CancellationToken cancellationToken = default)
         {
             var res = await bus.SendCommand(command, cancellationToken);
@@ -287,7 +298,7 @@ namespace DDD.Application.Services
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        [HttpGet("{id:int}")]
+        [HttpGet]
         public async Task<Result<AdminRoleDto>> GetRoleAsync([FromQuery] AdminRoleQueryDetail command, CancellationToken cancellationToken = default)
         {
             var res = await bus.SendCommand(command, cancellationToken);
@@ -297,11 +308,13 @@ namespace DDD.Application.Services
         /// <summary>
         /// 获取所有角色
         /// </summary>
+        /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<Result<IList<AdminRoleDto>>> GetRoleAllAsync(CancellationToken cancellationToken = default)
+        [HttpGet("All")]
+        public async Task<Result<IList<AdminRoleDto>>> GetRoleAsync([FromQuery] AdminRoleQueryAll command, CancellationToken cancellationToken = default)
         {
-            var res = await bus.SendCommand(new AdminRoleQueryAll { }, cancellationToken);
+            var res = await bus.SendCommand(command, cancellationToken);
 
             return Success(SubCode.Success, res);
         }
@@ -311,7 +324,8 @@ namespace DDD.Application.Services
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<Result<PagedModel<AdminRoleDto>>> GetRolePagedAsync([FromQuery] AdminRoleQueryPaged command, CancellationToken cancellationToken = default)
+        [HttpGet("Page")]
+        public async Task<Result<PagedModel<AdminRoleDto>>> GetRoleAsync([FromQuery] AdminRoleQueryPaged command, CancellationToken cancellationToken = default)
         {
             var res = await bus.SendCommand(command, cancellationToken);
 
@@ -323,7 +337,8 @@ namespace DDD.Application.Services
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<Result<IList<long>>> GetRoleRelevanceMenuAsync([FromQuery] AdminRoleQueryMenuKeys command, CancellationToken cancellationToken = default)
+        [HttpGet("RelevanceMenu")]
+        public async Task<Result<IList<long>>> GetRoleAsync([FromQuery] AdminRoleQueryMenuKeys command, CancellationToken cancellationToken = default)
         {
             var res = await bus.SendCommand(command, cancellationToken);
 
@@ -340,6 +355,7 @@ namespace DDD.Application.Services
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
+        [HttpPost]
         public async Task<Result<int>> CreateMenuAsync([FromBody] AdminMenuCreateCommand command, CancellationToken cancellationToken = default)
         {
             var res = await bus.SendCommand(command, cancellationToken);
@@ -355,6 +371,7 @@ namespace DDD.Application.Services
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
+        [HttpPut]
         public async Task<Result<int>> UpdateMenuAsync([FromBody] AdminMenuUpdateCommand command, CancellationToken cancellationToken = default)
         {
             var res = await bus.SendCommand(command, cancellationToken);
@@ -402,6 +419,7 @@ namespace DDD.Application.Services
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
+        [HttpDelete]
         public async Task<Result<int>> DeleteMenuAsync([FromQuery] AdminMenuDeleteCommand command, CancellationToken cancellationToken = default)
         {
             var res = await bus.SendCommand(command, cancellationToken);
@@ -417,7 +435,7 @@ namespace DDD.Application.Services
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        [HttpGet("{id:int}")]
+        [HttpGet]
         public async Task<Result<AdminMenuDto>> GetMenuAsync([FromQuery] AdminMenuQueryDetail command, CancellationToken cancellationToken = default)
         {
             var res = await bus.SendCommand(command, cancellationToken);
@@ -427,11 +445,13 @@ namespace DDD.Application.Services
         /// <summary>
         /// 获取导航树形结构
         /// </summary>
+        /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<Result<IList<AdminMenuTreeDto>>> GetMenuByTreeAsync(CancellationToken cancellationToken = default)
+        [HttpGet("Tree")]
+        public async Task<Result<IList<AdminMenuTreeDto>>> GetMenuAsync([FromQuery] AdminMenuQueryByTree command, CancellationToken cancellationToken = default)
         {
-            var res = await bus.SendCommand(new AdminMenuQueryByTree { }, cancellationToken);
+            var res = await bus.SendCommand(command, cancellationToken);
 
             return Success(SubCode.Success, res);
         }
@@ -441,7 +461,8 @@ namespace DDD.Application.Services
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<Result<IList<AdminMenuDto>>> GetMenuByWeightAsync([FromQuery] AdminMenuQueryByWeight command, CancellationToken cancellationToken = default)
+        [HttpGet("List")]
+        public async Task<Result<IList<AdminMenuDto>>> GetMenuAsync([FromQuery] AdminMenuQueryByWeight command, CancellationToken cancellationToken = default)
         {
             var res = await bus.SendCommand(command, cancellationToken);
 

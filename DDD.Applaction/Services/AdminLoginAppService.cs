@@ -155,7 +155,8 @@ namespace DDD.Application.Services
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<Result<IList<LoginRecordDto>>> GetRecordListAsync([FromQuery] LoginRecordQueryList command, CancellationToken cancellationToken = default)
+        [HttpGet("List")]
+        public async Task<Result<IList<LoginRecordDto>>> GetRecordAsync([FromQuery] LoginRecordQueryList command, CancellationToken cancellationToken = default)
         {
             var res = await bus.SendCommand(command, cancellationToken);
 
@@ -167,7 +168,8 @@ namespace DDD.Application.Services
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<Result<PagedModel<LoginRecordDto>>> GetRecordPagedAsync([FromQuery] LoginRecordQueryPaged command, CancellationToken cancellationToken = default)
+        [HttpGet("Page")]
+        public async Task<Result<PagedModel<LoginRecordDto>>> GetRecordAsync([FromQuery] LoginRecordQueryPaged command, CancellationToken cancellationToken = default)
         {
             var res = await bus.SendCommand(command, cancellationToken);
 
