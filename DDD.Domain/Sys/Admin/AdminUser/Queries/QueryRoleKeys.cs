@@ -4,6 +4,7 @@ using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,6 +20,7 @@ namespace DDD.Domain.Sys.AdminUser
         /// <summary>
         /// 管理员id
         /// </summary>
+        [Required]
         public long AdminId { get; set; }
 
         public class Validator : CommandValidator<AdminUserQueryRoleKeys>

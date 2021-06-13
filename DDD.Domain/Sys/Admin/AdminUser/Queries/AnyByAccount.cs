@@ -3,6 +3,7 @@ using DDD.Domain.Core;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
 using XUCore.Ddd.Domain.Commands;
@@ -18,10 +19,12 @@ namespace DDD.Domain.Sys.AdminUser
         /// <summary>
         /// 账号类型
         /// </summary>
+        [Required]
         public AccountMode AccountMode { get; set; }
         /// <summary>
         /// 账号
         /// </summary>
+        [Required]
         public string Account { get; set; }
         /// <summary>
         /// 排除id

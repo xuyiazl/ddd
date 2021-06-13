@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace DDD.Domain.Sys.AdminMenu
 {
@@ -21,6 +22,7 @@ namespace DDD.Domain.Sys.AdminMenu
         /// <summary>
         /// 是否是导航
         /// </summary>
+        [Required]
         public bool IsMenu { get; set; }
 
         public class Validator : CommandValidator<AdminMenuQueryByWeight>

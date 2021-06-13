@@ -4,6 +4,7 @@ using DDD.Domain.Core;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,10 +21,12 @@ namespace DDD.Domain.Sys.AdminUser
         /// <summary>
         /// 账号类型
         /// </summary>
+        [Required]
         public AccountMode AccountMode { get; set; }
         /// <summary>
         /// 账号
         /// </summary>
+        [Required]
         public string Account { get; set; }
 
         public class Validator : CommandValidator<AdminUserQueryByAccount>

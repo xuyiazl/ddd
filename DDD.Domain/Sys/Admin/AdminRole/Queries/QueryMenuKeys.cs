@@ -21,6 +21,7 @@ namespace DDD.Domain.Sys.AdminRole
         /// <summary>
         /// 角色id
         /// </summary>
+        [Required]
         public long RoleId { get; set; }
 
         public class Handler : CommandHandler<AdminRoleQueryMenuKeys, IList<long>>

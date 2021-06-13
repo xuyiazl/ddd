@@ -18,7 +18,6 @@ namespace DDD.Domain.Sys.AdminUser
     /// </summary>
     public class AdminUserQueryDetail : CommandId<AdminUserDto, long>
     {
-
         public class Validator : CommandIdValidator<AdminUserQueryDetail, AdminUserDto, long>
         {
             public Validator()

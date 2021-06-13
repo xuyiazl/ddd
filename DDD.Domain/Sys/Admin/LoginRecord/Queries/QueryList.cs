@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using XUCore.Paging;
+using System.ComponentModel.DataAnnotations;
 
 namespace DDD.Domain.Sys.LoginRecord
 {
@@ -21,6 +22,7 @@ namespace DDD.Domain.Sys.LoginRecord
         /// <summary>
         /// 管理员id
         /// </summary>
+        [Required]
         public long AdminId { get; set; }
 
         public class Validator : CommandLimitValidator<LoginRecordQueryList, IList<LoginRecordDto>>
