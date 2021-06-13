@@ -48,7 +48,7 @@ namespace DDD.Domain.Sys.AdminUser
                     //删除登录记录
                     await db.DeleteAsync<LoginRecordEntity>(c => request.Ids.Contains(c.AdminId));
                     //删除关联的角色
-                    await db.DeleteAsync<AdminUserRoleEntity>(c => request.Ids.Contains(c.UserId));
+                    await db.DeleteAsync<AdminUserRoleEntity>(c => request.Ids.Contains(c.AdminId));
                 }
 
                 return res;

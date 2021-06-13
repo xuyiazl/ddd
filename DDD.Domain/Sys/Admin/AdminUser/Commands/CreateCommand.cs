@@ -125,7 +125,7 @@ namespace DDD.Domain.Sys.AdminUser
                     entity.UserRoles = Array.ConvertAll(request.Roles, roleid => new AdminUserRoleEntity
                     {
                         RoleId = roleid,
-                        UserId = entity.Id
+                        AdminId = entity.Id
                     });
                 }
 

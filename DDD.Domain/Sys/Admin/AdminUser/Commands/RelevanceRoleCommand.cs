@@ -52,12 +52,12 @@ namespace DDD.Domain.Sys.AdminUser
             public override async Task<int> Handle(AdminUserRelevanceRoleCommand request, CancellationToken cancellationToken)
             {
                 //先清空用户的角色，确保没有冗余的数据
-                await db.DeleteAsync<AdminUserRoleEntity>(c => c.UserId == request.AdminId);
+                await db.DeleteAsync<AdminUserRoleEntity>(c => c.AdminId == request.AdminId);
 
                 var userRoles = Array.ConvertAll(request.RoleIds, roleid => new AdminUserRoleEntity
                 {
                     RoleId = roleid,
-                    UserId = request.AdminId
+                    AdminId = request.AdminId
                 });
 
                 //添加角色

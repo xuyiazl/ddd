@@ -45,7 +45,7 @@ namespace DDD.Domain.Sys.AdminUser
             public override async Task<IList<long>> Handle(AdminUserQueryRoleKeys request, CancellationToken cancellationToken)
             {
                 return await db.Context.AdminAuthUserRole
-                    .Where(c => c.UserId == request.AdminId)
+                    .Where(c => c.AdminId == request.AdminId)
                     .Select(c => c.RoleId)
                     .ToListAsync();
             }
