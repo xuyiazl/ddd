@@ -5,6 +5,7 @@ using DDD.Domain.Core;
 using DDD.Domain.Core.Entities.Sys.Admin;
 using FluentValidation;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
 using XUCore.Ddd.Domain.Bus;
@@ -14,12 +15,25 @@ using XUCore.NetCore.AspectCore.Cache;
 
 namespace DDD.Domain.Sys.AdminRole
 {
+    /// <summary>
+    /// 创建角色命令
+    /// </summary>
     public class AdminRoleCreateCommand : Command<int>, IMapFrom<AdminRoleEntity>
     {
+        /// <summary>
+        /// 角色名
+        /// </summary>
+        [Required]
         public string Name { get; set; }
+        /// <summary>
+        /// 导航关联id集合
+        /// </summary>
         public long[] MenuIds { get; set; }
+        /// <summary>
+        /// 数据状态
+        /// </summary>
+        [Required]
         public Status Status { get; set; }
-
 
         public void Mapping(Profile profile) =>
             profile.CreateMap<AdminRoleCreateCommand, AdminRoleEntity>()

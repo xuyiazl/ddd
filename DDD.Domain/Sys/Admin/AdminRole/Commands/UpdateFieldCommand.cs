@@ -8,20 +8,32 @@ using System.Threading.Tasks;
 using XUCore.Ddd.Domain.Bus;
 using XUCore.Ddd.Domain.Commands;
 using XUCore.NetCore.AspectCore.Cache;
+using System.ComponentModel.DataAnnotations;
 
 namespace DDD.Domain.Sys.AdminRole
 {
-    public class AdminRoleUpdateFieldCommand : Command<int>
+    /// <summary>
+    /// 更新部分字段
+    /// </summary>
+    public class AdminRoleUpdateFieldCommand : CommandId<int, long>
     {
-        public long Id { get; set; }
+        /// <summary>
+        /// 字段名
+        /// </summary>
+        [Required]
         public string Field { get; set; }
+        /// <summary>
+        /// 需要修改的值
+        /// </summary>
+        [Required]
         public string Value { get; set; }
 
-        public class Validator : CommandValidator<AdminRoleUpdateFieldCommand>
+        public class Validator : CommandIdValidator<AdminRoleUpdateFieldCommand, int, long>
         {
             public Validator()
             {
-                RuleFor(x => x.Id).NotEmpty().GreaterThan(0).WithName("Id");
+                AddIdValidator();
+
                 RuleFor(x => x.Field).NotEmpty().WithMessage("字段名");
             }
         }

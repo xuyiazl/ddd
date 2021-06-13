@@ -12,15 +12,34 @@ using XUCore.Ddd.Domain.Bus;
 using XUCore.Ddd.Domain.Commands;
 using XUCore.Extensions;
 using XUCore.NetCore.AspectCore.Cache;
+using System.ComponentModel.DataAnnotations;
 
 namespace DDD.Domain.Sys.AdminUser
 {
-    public class AdminUserUpdateInfoCommand : Command<int>, IMapFrom<AdminUserEntity>
+    /// <summary>
+    /// 用户信息修改命令
+    /// </summary>
+    public class AdminUserUpdateInfoCommand : CommandId<int, long>, IMapFrom<AdminUserEntity>
     {
-        public long Id { get; set; }
+        /// <summary>
+        /// 名字
+        /// </summary>
+        [Required]
         public string Name { get; set; }
+        /// <summary>
+        /// 位置
+        /// </summary>
+        [Required]
         public string Location { get; set; }
+        /// <summary>
+        /// 职位
+        /// </summary>
+        [Required]
         public string Position { get; set; }
+        /// <summary>
+        /// 公司
+        /// </summary>
+        [Required]
         public string Company { get; set; }
 
 
@@ -31,11 +50,12 @@ namespace DDD.Domain.Sys.AdminUser
                 .ForMember(c => c.Company, c => c.MapFrom(s => s.Company.SafeString()))
             ;
 
-        public class Validator : CommandValidator<AdminUserUpdateInfoCommand>
+        public class Validator : CommandIdValidator<AdminUserUpdateInfoCommand, int, long>
         {
             public Validator()
             {
-                RuleFor(x => x.Id).NotEmpty().GreaterThan(0).WithName("Id");
+                AddIdValidator();
+
                 RuleFor(x => x.Name).NotEmpty().MaximumLength(30).WithName("名字");
                 RuleFor(x => x.Company).NotEmpty().MaximumLength(30).WithName("公司");
                 RuleFor(x => x.Location).NotEmpty().MaximumLength(30).WithName("位置");

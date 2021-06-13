@@ -14,15 +14,16 @@ using XUCore.NetCore.AspectCore.Cache;
 
 namespace DDD.Domain.Sys.AdminUser
 {
-    public class AdminUserDeleteCommand : Command<int>
+    /// <summary>
+    /// 删除导航命令
+    /// </summary>
+    public class AdminUserDeleteCommand : CommandIds<int, long>
     {
-        public long[] Ids { get; set; }
-
-        public class Validator : CommandValidator<AdminUserDeleteCommand>
+        public class Validator : CommandIdsValidator<AdminUserDeleteCommand, int, long>
         {
             public Validator()
             {
-                RuleFor(x => x.Ids).NotEmpty().WithName("Id");
+                AddIdsValidator();
             }
         }
 

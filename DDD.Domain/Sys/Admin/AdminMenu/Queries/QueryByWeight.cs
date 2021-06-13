@@ -13,8 +13,14 @@ using System.Threading.Tasks;
 
 namespace DDD.Domain.Sys.AdminMenu
 {
+    /// <summary>
+    /// 查询导航列表命令
+    /// </summary>
     public class AdminMenuQueryByWeight : Command<IList<AdminMenuDto>>
     {
+        /// <summary>
+        /// 是否是导航
+        /// </summary>
         public bool IsMenu { get; set; }
 
         public class Validator : CommandValidator<AdminMenuQueryByWeight>

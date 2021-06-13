@@ -12,6 +12,9 @@ using XUCore.Ddd.Domain.Commands;
 
 namespace DDD.Domain.Sys.AdminRole
 {
+    /// <summary>
+    /// 查询所有角色命令
+    /// </summary>
     public class AdminRoleQueryAll : Command<IList<AdminRoleDto>>
     {
         public class Validator : CommandValidator<AdminRoleQueryAll>

@@ -14,6 +14,9 @@ using DDD.Domain.Core.Entities.Sys.Admin;
 
 namespace DDD.Domain.Sys.AdminMenu
 {
+    /// <summary>
+    /// 查询导航树命令
+    /// </summary>
     public class AdminMenuQueryByTree : Command<IList<AdminMenuTreeDto>>
     {
         public class Validator : CommandValidator<AdminMenuQueryByTree>

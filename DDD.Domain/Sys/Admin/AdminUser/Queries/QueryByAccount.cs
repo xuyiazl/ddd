@@ -12,9 +12,18 @@ using XUCore.Extensions;
 
 namespace DDD.Domain.Sys.AdminUser
 {
+    /// <summary>
+    /// 账号查询
+    /// </summary>
     public class AdminUserQueryByAccount : Command<AdminUserDto>
     {
+        /// <summary>
+        /// 账号类型
+        /// </summary>
         public AccountMode AccountMode { get; set; }
+        /// <summary>
+        /// 账号
+        /// </summary>
         public string Account { get; set; }
 
         public class Validator : CommandValidator<AdminUserQueryByAccount>

@@ -8,20 +8,26 @@ using System.Threading.Tasks;
 using XUCore.Ddd.Domain.Bus;
 using XUCore.Ddd.Domain.Commands;
 using XUCore.Helpers;
+using System.ComponentModel.DataAnnotations;
 
 namespace DDD.Domain.Sys.AdminUser
 {
-    public class AdminUserUpdatePasswordCommand : Command<int>
+    /// <summary>
+    /// 更新密码
+    /// </summary>
+    public class AdminUserUpdatePasswordCommand : CommandId<int, long>
     {
-        public long Id { get; set; }
+        [Required]
         public string OldPassword { get; set; }
+        [Required]
         public string NewPassword { get; set; }
 
-        public class Validator : CommandValidator<AdminUserUpdatePasswordCommand>
+        public class Validator : CommandIdValidator<AdminUserUpdatePasswordCommand, int, long>
         {
             public Validator()
             {
-                RuleFor(x => x.Id).NotEmpty().GreaterThan(0).WithName("Id");
+                AddIdValidator();
+
                 RuleFor(x => x.OldPassword).NotEmpty().MaximumLength(50).WithName("旧密码");
                 RuleFor(x => x.NewPassword).NotEmpty().MaximumLength(50).When(c => c.OldPassword != c.NewPassword).WithName("新密码");
             }

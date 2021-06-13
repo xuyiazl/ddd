@@ -9,12 +9,23 @@ using System.Threading.Tasks;
 using XUCore.Ddd.Domain.Bus;
 using XUCore.Ddd.Domain.Commands;
 using XUCore.NetCore.AspectCore.Cache;
+using System.ComponentModel.DataAnnotations;
 
 namespace DDD.Domain.Sys.AdminUser
 {
+    /// <summary>
+    /// 关联角色命令
+    /// </summary>
     public class AdminUserRelevanceRoleCommand : Command<int>
     {
+        /// <summary>
+        /// 管理员id
+        /// </summary>
+        [Required]
         public long AdminId { get; set; }
+        /// <summary>
+        /// 角色id集合
+        /// </summary>
         public long[] RoleIds { get; set; }
 
 

@@ -13,10 +13,15 @@ using XUCore.Extensions;
 
 namespace DDD.Domain.Sys.AdminRole
 {
+    /// <summary>
+    /// 查询角色关联的导航id集合
+    /// </summary>
     public class AdminRoleQueryMenuKeys : Command<IList<long>>
     {
+        /// <summary>
+        /// 角色id
+        /// </summary>
         public long RoleId { get; set; }
-
 
         public class Handler : CommandHandler<AdminRoleQueryMenuKeys, IList<long>>
         {

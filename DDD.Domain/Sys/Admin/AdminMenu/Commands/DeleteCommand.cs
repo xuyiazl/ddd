@@ -12,15 +12,16 @@ using XUCore.NetCore.AspectCore.Cache;
 
 namespace DDD.Domain.Sys.AdminMenu
 {
-    public class AdminMenuDeleteCommand : Command<int>
+    /// <summary>
+    /// 删除导航命令
+    /// </summary>
+    public class AdminMenuDeleteCommand : CommandIds<int, long>
     {
-        public long[] Ids { get; set; }
-
-        public class Validator : CommandValidator<AdminMenuDeleteCommand>
+        public class Validator : CommandIdsValidator<AdminMenuDeleteCommand, int, long>
         {
             public Validator()
             {
-                RuleFor(x => x.Ids).NotEmpty().WithName("Id");
+                AddIdsValidator();
             }
         }
 

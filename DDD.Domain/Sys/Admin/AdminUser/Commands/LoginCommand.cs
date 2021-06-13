@@ -14,6 +14,9 @@ using XUCore.Helpers;
 
 namespace DDD.Domain.Sys.AdminUser
 {
+    /// <summary>
+    /// 登录命令
+    /// </summary>
     public class AdminUserLoginCommand : Command<AdminUserDto>
     {
         /// <summary>

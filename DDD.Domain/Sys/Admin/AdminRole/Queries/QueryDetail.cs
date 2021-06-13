@@ -12,15 +12,16 @@ using XUCore.Extensions;
 
 namespace DDD.Domain.Sys.AdminRole
 {
-    public class AdminRoleQueryDetail : Command<AdminRoleDto>
+    /// <summary>
+    /// 查询一条角色记录命令
+    /// </summary>
+    public class AdminRoleQueryDetail : CommandId<AdminRoleDto, long>
     {
-        public long Id { get; set; }
-
-        public class Validator : CommandValidator<AdminRoleQueryDetail>
+        public class Validator : CommandIdValidator<AdminRoleQueryDetail, AdminRoleDto, long>
         {
             public Validator()
             {
-                RuleFor(x => x.Id).NotEmpty().GreaterThan(0).WithName("Id");
+                AddIdValidator();
             }
         }
 

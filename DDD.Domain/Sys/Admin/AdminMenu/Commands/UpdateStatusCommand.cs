@@ -12,16 +12,22 @@ using XUCore.NetCore.AspectCore.Cache;
 
 namespace DDD.Domain.Sys.AdminMenu
 {
-    public class AdminMenuUpdateStatusCommand : Command<int>
+    /// <summary>
+    /// 更新数据状态
+    /// </summary>
+    public class AdminMenuUpdateStatusCommand : CommandIds<int, long>
     {
-        public long[] Ids { get; set; }
+        /// <summary>
+        /// 数据状态
+        /// </summary>
         public Status Status { get; set; }
 
-        public class Validator : CommandValidator<AdminMenuUpdateStatusCommand>
+        public class Validator : CommandIdsValidator<AdminMenuUpdateStatusCommand, int, long>
         {
             public Validator()
             {
-                RuleFor(x => x.Ids).NotEmpty().WithName("Id");
+                AddIdsValidator();
+
                 RuleFor(x => x.Status).IsInEnum().NotEqual(Status.Default).WithName("数据状态");
             }
         }

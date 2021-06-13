@@ -10,16 +10,34 @@ using System.Threading.Tasks;
 using XUCore.Ddd.Domain.Bus;
 using XUCore.Ddd.Domain.Commands;
 using XUCore.NetCore.AspectCore.Cache;
+using System.ComponentModel.DataAnnotations;
 
 namespace DDD.Domain.Sys.LoginRecord
 {
+    /// <summary>
+    /// 记录登录记录
+    /// </summary>
     public class LoginRecordCreateCommand : Command<int>, IMapFrom<LoginRecordEntity>
     {
+        /// <summary>
+        /// 管理员id
+        /// </summary>
+        [Required]
         public long AdminId { get; set; }
+        /// <summary>
+        /// 登录方式
+        /// </summary>
+        [Required]
         public string LoginWay { get; set; }
+        /// <summary>
+        /// 登录时间
+        /// </summary>
         public DateTime LoginTime { get; set; }
+        /// <summary>
+        /// 登录ip
+        /// </summary>
+        [Required]
         public string LoginIp { get; set; }
-
 
         public void Mapping(Profile profile) =>
             profile.CreateMap<LoginRecordCreateCommand, LoginRecordEntity>()

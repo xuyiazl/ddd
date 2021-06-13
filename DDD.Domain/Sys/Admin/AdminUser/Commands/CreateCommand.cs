@@ -5,6 +5,7 @@ using DDD.Domain.Core;
 using DDD.Domain.Core.Entities.Sys.Admin;
 using FluentValidation;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
 using XUCore.Ddd.Domain.Bus;
@@ -14,15 +15,46 @@ using XUCore.NetCore.AspectCore.Cache;
 
 namespace DDD.Domain.Sys.AdminUser
 {
+    /// <summary>
+    /// 创建管理员命令
+    /// </summary>
     public class AdminUserCreateCommand : Command<int>, IMapFrom<AdminUserEntity>
     {
+        /// <summary>
+        /// 账号
+        /// </summary>
+        [Required]
         public string UserName { get; set; }
+        /// <summary>
+        /// 手机号码
+        /// </summary>
+        [Required]
         public string Mobile { get; set; }
+        /// <summary>
+        /// 密码
+        /// </summary>
+        [Required]
         public string Password { get; set; }
+        /// <summary>
+        /// 名字
+        /// </summary>
+        [Required]
         public string Name { get; set; }
+        /// <summary>
+        /// 位置
+        /// </summary>
         public string Location { get; set; }
+        /// <summary>
+        /// 职位
+        /// </summary>
         public string Position { get; set; }
+        /// <summary>
+        /// 公司
+        /// </summary>
         public string Company { get; set; }
+        /// <summary>
+        /// 角色id集合
+        /// </summary>
         public long[] Roles { get; set; }
 
 

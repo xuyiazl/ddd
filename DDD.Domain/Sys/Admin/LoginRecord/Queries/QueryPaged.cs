@@ -14,28 +14,37 @@ using XUCore.Paging;
 
 namespace DDD.Domain.Sys.LoginRecord
 {
-    public class LoginRecordQueryPaged : Command<PagedModel<LoginRecordDto>>
+    /// <summary>
+    /// 登录记录查询分页
+    /// </summary>
+    public class LoginRecordQueryPaged : CommandPage<PagedModel<LoginRecordDto>>
     {
-        public int CurrentPage { get; set; }
-        public int PageSize { get; set; }
+        /// <summary>
+        /// 搜索字段
+        /// </summary>
         public string Field { get; set; }
+        /// <summary>
+        /// 搜索关键字
+        /// </summary>
         public string Search { get; set; }
+        /// <summary>
+        /// 排序字段
+        /// </summary>
         public string Sort { get; set; }
+        /// <summary>
+        /// 排序方式 exp：“asc or desc”
+        /// </summary>
         public string Order { get; set; }
+        /// <summary>
+        /// 数据状态
+        /// </summary>
+        public Status Status { get; set; }
 
-
-        public class Validator : CommandValidator<LoginRecordQueryPaged>
+        public class Validator : CommandPageValidator<LoginRecordQueryPaged, PagedModel<LoginRecordDto>>
         {
             public Validator()
             {
-                RuleFor(x => x.CurrentPage)
-                    .NotEmpty().WithMessage("页码不可为空")
-                    .GreaterThan(0).WithMessage(c => $"页码必须大于0");
-
-                RuleFor(x => x.PageSize)
-                    .NotEmpty().WithMessage("分页大小不可为空")
-                    .GreaterThan(0).WithMessage(c => $"分页大小必须大于0")
-                    .LessThanOrEqualTo(150).WithMessage(c => $"分页大小必须小于等于150");
+                AddPageVaildator();
             }
         }
         public class Handler : CommandHandler<LoginRecordQueryPaged, PagedModel<LoginRecordDto>>

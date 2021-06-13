@@ -5,6 +5,7 @@ using DDD.Domain.Core;
 using DDD.Domain.Core.Entities.Sys.Admin;
 using FluentValidation;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
 using XUCore.Ddd.Domain.Bus;
@@ -14,16 +15,50 @@ using XUCore.NetCore.AspectCore.Cache;
 
 namespace DDD.Domain.Sys.AdminMenu
 {
+    /// <summary>
+    /// 创建导航命令
+    /// </summary>
     public class AdminMenuCreateCommand : Command<int>, IMapFrom<AdminMenuEntity>
     {
+        /// <summary>
+        /// 导航父级id
+        /// </summary>
         public long FatherId { get; set; }
+        /// <summary>
+        /// 名字
+        /// </summary>
+        [Required]
         public string Name { get; set; }
+        /// <summary>
+        /// 图标样式
+        /// </summary>
         public string Icon { get; set; }
+        /// <summary>
+        /// 链接地址
+        /// </summary>
+        [Required]
         public string Url { get; set; }
+        /// <summary>
+        /// 唯一代码（权限使用）
+        /// </summary>
+        [Required]
         public string OnlyCode { get; set; }
+        /// <summary>
+        /// 是否是导航
+        /// </summary>
         public bool IsMenu { get; set; }
+        /// <summary>
+        /// 排序权重
+        /// </summary>
         public int Weight { get; set; }
+        /// <summary>
+        /// 是否是快捷导航
+        /// </summary>
         public bool IsExpress { get; set; }
+        /// <summary>
+        /// 数据状态
+        /// </summary>
+        [Required]
         public Status Status { get; set; }
 
         public void Mapping(Profile profile) =>

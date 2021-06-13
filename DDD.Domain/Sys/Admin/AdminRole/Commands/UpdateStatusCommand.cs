@@ -12,16 +12,22 @@ using XUCore.NetCore.AspectCore.Cache;
 
 namespace DDD.Domain.Sys.AdminRole
 {
-    public class AdminRoleUpdateStatusCommand : Command<int>
+    /// <summary>
+    /// 更新数据状态
+    /// </summary>
+    public class AdminRoleUpdateStatusCommand : CommandIds<int, long>
     {
-        public long[] Ids { get; set; }
+        /// <summary>
+        /// 数据状态
+        /// </summary>
         public Status Status { get; set; }
 
-        public class Validator : CommandValidator<AdminRoleUpdateStatusCommand>
+        public class Validator : CommandIdsValidator<AdminRoleUpdateStatusCommand, int, long>
         {
             public Validator()
             {
-                RuleFor(x => x.Ids).NotEmpty().WithName("Id");
+                AddIdsValidator();
+
                 RuleFor(x => x.Status).IsInEnum().NotEqual(Status.Default).WithName("数据状态");
             }
         }

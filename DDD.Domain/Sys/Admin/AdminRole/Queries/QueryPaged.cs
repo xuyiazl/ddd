@@ -11,23 +11,37 @@ using XUCore.Paging;
 
 namespace DDD.Domain.Sys.AdminRole
 {
-    public class AdminRoleQueryPaged : Command<PagedModel<AdminRoleDto>>
+    /// <summary>
+    /// 角色查询命令
+    /// </summary>
+    public class AdminRoleQueryPaged : CommandPage<PagedModel<AdminRoleDto>>
     {
-        public int CurrentPage { get; set; }
-        public int PageSize { get; set; }
+        /// <summary>
+        /// 搜索字段
+        /// </summary>
         public string Field { get; set; }
+        /// <summary>
+        /// 搜索关键字
+        /// </summary>
         public string Search { get; set; }
+        /// <summary>
+        /// 排序字段
+        /// </summary>
         public string Sort { get; set; }
+        /// <summary>
+        /// 排序方式 exp：“asc or desc”
+        /// </summary>
         public string Order { get; set; }
+        /// <summary>
+        /// 数据状态
+        /// </summary>
         public Status Status { get; set; }
 
-
-        public class Validator : CommandValidator<AdminRoleQueryPaged>
+        public class Validator : CommandPageValidator<AdminRoleQueryPaged, PagedModel<AdminRoleDto>>
         {
             public Validator()
             {
-                RuleFor(x => x.CurrentPage).NotEmpty().GreaterThan(0).WithName("页码");
-                RuleFor(x => x.PageSize).NotEmpty().GreaterThan(0).LessThanOrEqualTo(150).WithName("分页大小");
+                AddPageVaildator();
             }
         }
 

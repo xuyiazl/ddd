@@ -12,15 +12,16 @@ using System.Threading.Tasks;
 
 namespace DDD.Domain.Sys.AdminMenu
 {
-    public class AdminMenuQueryDetail : Command<AdminMenuDto>
+    /// <summary>
+    /// 查询导航记录命令
+    /// </summary>
+    public class AdminMenuQueryDetail : CommandId<AdminMenuDto, long>
     {
-        public long Id { get; set; }
-
-        public class Validator : CommandValidator<AdminMenuQueryDetail>
+        public class Validator : CommandIdValidator<AdminMenuQueryDetail, AdminMenuDto, long>
         {
             public Validator()
             {
-                RuleFor(x => x.Id).NotEmpty().GreaterThan(0).WithName("Id");
+                AddIdValidator();
             }
         }
 

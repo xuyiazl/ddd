@@ -13,19 +13,21 @@ using XUCore.Paging;
 
 namespace DDD.Domain.Sys.LoginRecord
 {
-    public class LoginRecordQueryList : Command<IList<LoginRecordDto>>
+    /// <summary>
+    /// 查询登录记录
+    /// </summary>
+    public class LoginRecordQueryList : CommandLimit<IList<LoginRecordDto>>
     {
-        public int Limit { get; set; }
+        /// <summary>
+        /// 管理员id
+        /// </summary>
         public long AdminId { get; set; }
 
-        public class Validator : CommandValidator<LoginRecordQueryList>
+        public class Validator : CommandLimitValidator<LoginRecordQueryList, IList<LoginRecordDto>>
         {
             public Validator()
             {
-                RuleFor(x => x.Limit)
-                    .NotEmpty().WithMessage("limit不可为空")
-                    .GreaterThan(0).WithMessage(c => $"limit必须大于0")
-                    .LessThanOrEqualTo(100).WithMessage(c => $"limit必须小于等于100");
+                AddLimitVaildator();
 
                 RuleFor(x => x.AdminId)
                     .NotEmpty().WithMessage("AdminId不可为空")

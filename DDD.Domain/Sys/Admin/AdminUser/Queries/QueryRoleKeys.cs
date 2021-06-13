@@ -11,8 +11,14 @@ using XUCore.Ddd.Domain.Commands;
 
 namespace DDD.Domain.Sys.AdminUser
 {
+    /// <summary>
+    /// 查询关联角色id集合
+    /// </summary>
     public class AdminUserQueryRoleKeys : Command<IList<long>>
     {
+        /// <summary>
+        /// 管理员id
+        /// </summary>
         public long AdminId { get; set; }
 
         public class Validator : CommandValidator<AdminUserQueryRoleKeys>

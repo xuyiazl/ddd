@@ -10,10 +10,22 @@ using XUCore.Extensions;
 
 namespace DDD.Domain.Sys.AdminUser
 {
+    /// <summary>
+    /// 查询账号是否存在
+    /// </summary>
     public class AdminUserAnyByAccount : Command<bool>
     {
+        /// <summary>
+        /// 账号类型
+        /// </summary>
         public AccountMode AccountMode { get; set; }
+        /// <summary>
+        /// 账号
+        /// </summary>
         public string Account { get; set; }
+        /// <summary>
+        /// 排除id
+        /// </summary>
         public long NotId { get; set; }
 
         public class Validator : CommandValidator<AdminUserAnyByAccount>

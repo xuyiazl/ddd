@@ -13,16 +13,17 @@ using XUCore.Extensions;
 
 namespace DDD.Domain.Sys.AdminUser
 {
-    public class AdminUserQueryDetail : Command<AdminUserDto>
+    /// <summary>
+    /// 查询一条记录命令
+    /// </summary>
+    public class AdminUserQueryDetail : CommandId<AdminUserDto, long>
     {
-        [Required]
-        public long Id { get; set; }
 
-        public class Validator : CommandValidator<AdminUserQueryDetail>
+        public class Validator : CommandIdValidator<AdminUserQueryDetail, AdminUserDto, long>
         {
             public Validator()
             {
-                RuleFor(x => x.Id).NotEmpty().GreaterThan(0).WithName("Id");
+                AddIdValidator();
             }
         }
 

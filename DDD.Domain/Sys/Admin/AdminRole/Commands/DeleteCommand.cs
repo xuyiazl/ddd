@@ -12,15 +12,16 @@ using XUCore.NetCore.AspectCore.Cache;
 
 namespace DDD.Domain.Sys.AdminRole
 {
-    public class AdminRoleDeleteCommand : Command<int>
+    /// <summary>
+    /// 删除导航命令
+    /// </summary>
+    public class AdminRoleDeleteCommand : CommandIds<int, long>
     {
-        public long[] Ids { get; set; }
-
-        public class Validator : CommandValidator<AdminRoleDeleteCommand>
+        public class Validator : CommandIdsValidator<AdminRoleDeleteCommand, int, long>
         {
             public Validator()
             {
-                RuleFor(x => x.Ids).NotEmpty().WithName("Id");
+                AddIdsValidator();
             }
         }
 
