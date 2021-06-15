@@ -180,6 +180,86 @@
             数据状态
             </summary>
         </member>
+        <member name="P:DDD.Domain.Sys.AdminMenu.AdminMenuDto.FatherId">
+            <summary>
+            导航父级id
+            </summary>
+        </member>
+        <member name="P:DDD.Domain.Sys.AdminMenu.AdminMenuDto.Name">
+            <summary>
+            名字
+            </summary>
+        </member>
+        <member name="P:DDD.Domain.Sys.AdminMenu.AdminMenuDto.Icon">
+            <summary>
+            图标样式
+            </summary>
+        </member>
+        <member name="P:DDD.Domain.Sys.AdminMenu.AdminMenuDto.Url">
+            <summary>
+            链接地址
+            </summary>
+        </member>
+        <member name="P:DDD.Domain.Sys.AdminMenu.AdminMenuDto.OnlyCode">
+            <summary>
+            唯一代码（权限使用）
+            </summary>
+        </member>
+        <member name="P:DDD.Domain.Sys.AdminMenu.AdminMenuDto.IsMenu">
+            <summary>
+            是否是导航
+            </summary>
+        </member>
+        <member name="P:DDD.Domain.Sys.AdminMenu.AdminMenuDto.Weight">
+            <summary>
+            排序权重
+            </summary>
+        </member>
+        <member name="P:DDD.Domain.Sys.AdminMenu.AdminMenuDto.IsExpress">
+            <summary>
+            是否是快捷导航
+            </summary>
+        </member>
+        <member name="P:DDD.Domain.Sys.AdminMenu.AdminMenuTreeDto.FatherId">
+            <summary>
+            导航父级id
+            </summary>
+        </member>
+        <member name="P:DDD.Domain.Sys.AdminMenu.AdminMenuTreeDto.Name">
+            <summary>
+            名字
+            </summary>
+        </member>
+        <member name="P:DDD.Domain.Sys.AdminMenu.AdminMenuTreeDto.Icon">
+            <summary>
+            图标样式
+            </summary>
+        </member>
+        <member name="P:DDD.Domain.Sys.AdminMenu.AdminMenuTreeDto.Url">
+            <summary>
+            链接地址
+            </summary>
+        </member>
+        <member name="P:DDD.Domain.Sys.AdminMenu.AdminMenuTreeDto.OnlyCode">
+            <summary>
+            唯一代码（权限使用）
+            </summary>
+        </member>
+        <member name="P:DDD.Domain.Sys.AdminMenu.AdminMenuTreeDto.IsMenu">
+            <summary>
+            是否是导航
+            </summary>
+        </member>
+        <member name="P:DDD.Domain.Sys.AdminMenu.AdminMenuTreeDto.Weight">
+            <summary>
+            排序权重
+            </summary>
+        </member>
+        <member name="P:DDD.Domain.Sys.AdminMenu.AdminMenuTreeDto.IsExpress">
+            <summary>
+            是否是快捷导航
+            </summary>
+        </member>
         <member name="T:DDD.Domain.Sys.AdminMenu.AdminMenuQueryByTree">
             <summary>
             查询导航树命令
@@ -307,6 +387,11 @@
         <member name="P:DDD.Domain.Sys.AdminRole.AdminRoleUpdateStatusCommand.Status">
             <summary>
             数据状态
+            </summary>
+        </member>
+        <member name="P:DDD.Domain.Sys.AdminRole.AdminRoleDto.Name">
+            <summary>
+            角色名
             </summary>
         </member>
         <member name="T:DDD.Domain.Sys.AdminRole.AdminRoleQueryAll">
@@ -533,6 +618,56 @@
             数据状态
             </summary>
         </member>
+        <member name="P:DDD.Domain.Sys.AdminUser.AdminUserDto.UserName">
+            <summary>
+            账号
+            </summary>
+        </member>
+        <member name="P:DDD.Domain.Sys.AdminUser.AdminUserDto.Mobile">
+            <summary>
+            手机号码
+            </summary>
+        </member>
+        <member name="P:DDD.Domain.Sys.AdminUser.AdminUserDto.Name">
+            <summary>
+            名字
+            </summary>
+        </member>
+        <member name="P:DDD.Domain.Sys.AdminUser.AdminUserDto.Location">
+            <summary>
+            位置
+            </summary>
+        </member>
+        <member name="P:DDD.Domain.Sys.AdminUser.AdminUserDto.Position">
+            <summary>
+            职位
+            </summary>
+        </member>
+        <member name="P:DDD.Domain.Sys.AdminUser.AdminUserDto.Company">
+            <summary>
+            公司
+            </summary>
+        </member>
+        <member name="P:DDD.Domain.Sys.AdminUser.AdminUserDto.Picture">
+            <summary>
+            头像
+            </summary>
+        </member>
+        <member name="P:DDD.Domain.Sys.AdminUser.AdminUserDto.LoginCount">
+            <summary>
+            登录次数
+            </summary>
+        </member>
+        <member name="P:DDD.Domain.Sys.AdminUser.AdminUserDto.LoginLastTime">
+            <summary>
+            最后登录时间
+            </summary>
+        </member>
+        <member name="P:DDD.Domain.Sys.AdminUser.AdminUserDto.LoginLastIp">
+            <summary>
+            最后登录IP
+            </summary>
+        </member>
         <member name="T:DDD.Domain.Sys.AdminUser.AdminUserAnyByAccount">
             <summary>
             查询账号是否存在
@@ -650,6 +785,46 @@
             <param name="notification"></param>
             <param name="cancellationToken"></param>
             <returns></returns>
+        </member>
+        <member name="P:DDD.Domain.Sys.LoginRecord.LoginRecordDto.AdminId">
+            <summary>
+            管理员id
+            </summary>
+        </member>
+        <member name="P:DDD.Domain.Sys.LoginRecord.LoginRecordDto.LoginWay">
+            <summary>
+            登录方式
+            </summary>
+        </member>
+        <member name="P:DDD.Domain.Sys.LoginRecord.LoginRecordDto.LoginTime">
+            <summary>
+            登录时间
+            </summary>
+        </member>
+        <member name="P:DDD.Domain.Sys.LoginRecord.LoginRecordDto.LoginIp">
+            <summary>
+            登录ip
+            </summary>
+        </member>
+        <member name="P:DDD.Domain.Sys.LoginRecord.LoginRecordDto.Name">
+            <summary>
+            名字
+            </summary>
+        </member>
+        <member name="P:DDD.Domain.Sys.LoginRecord.LoginRecordDto.Mobile">
+            <summary>
+            手机
+            </summary>
+        </member>
+        <member name="P:DDD.Domain.Sys.LoginRecord.LoginRecordDto.UserName">
+            <summary>
+            账号
+            </summary>
+        </member>
+        <member name="P:DDD.Domain.Sys.LoginRecord.LoginRecordDto.Picture">
+            <summary>
+            头像
+            </summary>
         </member>
         <member name="T:DDD.Domain.Sys.LoginRecord.LoginRecordQueryList">
             <summary>
