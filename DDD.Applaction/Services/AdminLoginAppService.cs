@@ -48,6 +48,11 @@ namespace DDD.Application.Services
         /// <summary>
         /// 管理员登录
         /// </summary>
+        /// <remarks>
+        /// 初始账号密码：
+        ///     <para>username : admin</para>
+        ///     <para>password : admin</para>
+        /// </remarks>
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
